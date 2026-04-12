@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>直流电机 on Jeffrey-刘俊丰</title>
+        <link>https://jeffrey-ljf.github.io/categories/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA/</link>
+        <description>Recent content in 直流电机 on Jeffrey-刘俊丰</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Jeffrey-刘俊丰</copyright>
+        <lastBuildDate>Sun, 11 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://jeffrey-ljf.github.io/categories/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>直流电机驱动板</title>
+        <link>https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/</link>
+        <pubDate>Sun, 11 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/</guid>
+        <description>&lt;img src="https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/%E6%B5%B7%E6%8A%A5.png" alt="Featured image of post 直流电机驱动板" /&gt;&lt;h2 id=&#34;功能介绍&#34;&gt;功能介绍
+&lt;/h2&gt;&lt;p&gt;此驱动板通过一个芯片HSOP8即可实现3.3V OR 5V 控制6.5V至45V &amp;amp; 3.6A大功率直流电机驱动。无需外部MOS管、H桥MOS管，仅需一个芯片实现驱动。&lt;/p&gt;
+&lt;h3 id=&#34;33v5v-日常usb电压直接驱动&#34;&gt;3.3V/5V 日常USB电压直接驱动
+&lt;/h3&gt;&lt;p&gt;该模块直接使用3.3V/5V信号驱动直流电机，无需多个LDO进行电平转换。&lt;/p&gt;
+&lt;h3 id=&#34;支持大功率直流电机驱动&#34;&gt;支持大功率直流电机驱动
+&lt;/h3&gt;&lt;p&gt;该模块支持对6.5V至45V &amp;amp; 3.6A大功率直流电机进行直接驱动，无需额外的外部MOS管。&lt;/p&gt;
+&lt;h3 id=&#34;全元件成本极低&#34;&gt;全元件成本极低
+&lt;/h3&gt;&lt;p&gt;驱动芯片仅需💰1.7，外围电路没有其他高成本元件，电容因可靠性问题尽量使用超出平时2倍场景下限&lt;/p&gt;
+&lt;h2 id=&#34;电路设计&#34;&gt;电路设计
+&lt;/h2&gt;&lt;p&gt;该模块主要使用 &lt;code&gt;DRV8870&lt;/code&gt; 芯片&lt;/p&gt;
+&lt;h3 id=&#34;drv8870-支持介绍&#34;&gt;DRV8870 支持介绍
+&lt;/h3&gt;&lt;h4 id=&#34;drv8870-36a-刷式直流电机驱动器pwm控制芯片手册&#34;&gt;DRV8870 3.6A 刷式直流电机驱动器（PWM控制）芯片手册
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;https://www.ti.com.cn/cn/lit/ds/symlink/drv8870.pdf?ts=1775308837484&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h4 id=&#34;核心电气上限&#34;&gt;核心电气上限
+&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;●	工作电压：6.5V ~ 45V
+
+●	峰值输出电流：3.6A（短时，&amp;lt;100ms）
+
+●	连续额定电流：约1.5~2A（取决于散热、PCB铜厚、环境温度，带PowerPAD良好散热下约2A）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Electrical_Characteristics.png&#34;
+	width=&#34;1805&#34;
+	height=&#34;2000&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Electrical_Characteristics_hu_9c19c47f6448a447.png 480w, https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Electrical_Characteristics_hu_d62e1d8001692cef.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Electrical_Characteristics&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;90&#34;
+		data-flex-basis=&#34;216px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;功率计算pvi&#34;&gt;功率计算（P=V×I）
+&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;●	峰值最大功率：45V × 3.6A = 162W（仅堵转/启动瞬间，不可持续）
+
+●	连续安全功率（推荐）：
+
+○	12V系统：12V × 2A = 24W
+
+○	24V系统：24V × 2A = 48W
+
+○	36V系统：36V × 1.8A = 64.8W
+
+○	45V系统：45V × 1.5A = 67.5W
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;实用选型建议&#34;&gt;实用选型建议
+&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;●	优先匹配：12V/24V、额定电流≤2A、功率≤50W 的有刷直流电机（最稳妥）
+
+●	超过50W：必须加强PCB散热（加大铜箔、铺铜、加散热片），且避免长时间堵转/满载）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;原理图&#34;&gt;原理图
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Typical_Connections.png&#34;
+	width=&#34;2297&#34;
+	height=&#34;1816&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Typical_Connections_hu_ea226ec73628cbbe.png 480w, https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Typical_Connections_hu_962a982cb7b03a1.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Typical_Connections&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;126&#34;
+		data-flex-basis=&#34;303px&#34;
+	
+&gt;   &lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/motor_model.png&#34;
+	width=&#34;1760&#34;
+	height=&#34;1189&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/motor_model_hu_9ee9ec0e2a164b81.png 480w, https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/motor_model_hu_ee138d4effc3c512.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Motor_model&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;信号输入&#34;&gt;信号输入
+&lt;/h3&gt;&lt;p&gt;MCU的逻辑信号接入到DRV8870的两个输入引脚IN1 、IN2，DRV8870的VREF引脚为输入端提供功能，IN1 、IN2 、VREF均最高支持5V耐压，常见的3.3V以及5V 单片机系统都可以将GPIO引脚引到DRV8870的两个输入引脚IN1 、IN2 。&lt;/p&gt;
+&lt;p&gt;在DRV8870规格书，定义这两个输入引脚IN1 、IN2 的Logic Input PWM Frequency在 200KHZ占空比以下，所以我们使用时需注意这一点，不过我们也不用担心，常见的PWM都在20KHZ。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Bridge_Control.png&#34;
+	width=&#34;1863&#34;
+	height=&#34;1787&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Bridge_Control_hu_23fcfc7ef6052897.png 480w, https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Bridge_Control_hu_bc561d51bbfeab9d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Bridge_Control&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;104&#34;
+		data-flex-basis=&#34;250px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;在芯片内部有4个mos管，实现标注的无刷电机全桥驱动电路，控制方式如下：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;IN1&lt;/th&gt;
+          &lt;th&gt;IN2&lt;/th&gt;
+          &lt;th&gt;OUT1&lt;/th&gt;
+          &lt;th&gt;OUT2&lt;/th&gt;
+          &lt;th&gt;备注&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;High-Z&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;High-Z&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;两个输出引脚均为高阻态、电机无动力滑动&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;1&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Low&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;High&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;电机反转&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;1&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;High&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Low&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;电机正转&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;1&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;1&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Low&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;Low&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;电机发电制动&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;⚠️需要注意：电机无动力滑行与电机制动的区别。无动力滑行‘电机完全切断所有输入输出’，可以依靠惯性阻力低速滑行。而发电制动将电机两个输入引脚短接，在电机滑动时发电产生的电压，根据楞次定律，这两个输入引脚短接产生的电路会抑制电机转动，此为发电制动，利用发电制动让电机快速停下&lt;/p&gt;
+&lt;h3 id=&#34;电源输入与电机功率输出&#34;&gt;电源输入与电机功率输出
+&lt;/h3&gt;&lt;p&gt;在芯片手册可以知道，VM引脚为电机驱动Power input IO,支持输入电压为6.5V~45V,最大输出电流为3.6A。&lt;/p&gt;
+&lt;p&gt;ISEN引脚通过外接电阻的大小限制电机的最大电流。
+DRV8870的限流公式为 $I_{TRIP} = \frac{V_{REF}}{10 \times R_{ISEN}}$ 。例如当VREF引脚输入为3.3V时，
+此时ISEN引脚链接一个0.15欧的电阻，此时电机最大电流将会限制在2.2A。如果ISEN引脚直接连接在GND，
+那么将禁用最大电流功能。在模块中，使用一个0.1欧的电阻，在信号参考高电压（VREF引脚电压）输入为3.3V，
+此时最大电流限制在3.3A，仍未超过电流上限3.6A。如果信号参考高电压（VREF引脚电压）输入为5V，
+根据DRV8870的限流公式得出，最大电流为5A，显然超过芯片手册中最大电流3.6A的限制，此时最大电流功能不起作用。&lt;/p&gt;
+&lt;p&gt;PCB的电容需要注意耐压，电机运行时，起步电压回大幅震荡波动，注意避免因电容耐压不足导致元器件损坏。
+也可以增加TVS二极管，防止电流反冲GPIO，保护电路。&lt;/p&gt;
+&lt;h3 id=&#34;pcb布线&#34;&gt;PCB布线
+&lt;/h3&gt;&lt;p&gt;手册中的10.2 Layout Example，给出了标准布线设计样例&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Layout_Recommendation.png&#34;
+	width=&#34;1946&#34;
+	height=&#34;1191&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Layout_Recommendation_hu_d6cd928f9195b01f.png 480w, https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/Layout_Recommendation_hu_ab059a0bae134c2e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Layout_Recommendation&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;163&#34;
+		data-flex-basis=&#34;392px&#34;
+	
+&gt;   &lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/PCB_Design.png&#34;
+	width=&#34;1231&#34;
+	height=&#34;1467&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/PCB_Design_hu_7c29b3d8a918eabc.png 480w, https://jeffrey-ljf.github.io/p/%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%9D%BF/PCB_Design_hu_8f6a587da7b7a174.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;PCB_Design&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;83&#34;
+		data-flex-basis=&#34;201px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;电机和-drv8870-驱动器的两个大电流功率回路布线事项&#34;&gt;电机和 DRV8870 驱动器的两个大电流功率回路布线事项
+&lt;/h4&gt;&lt;p&gt;在设计时，需要注意连接 电机和DRV8870 的两个大电流功率回路布线需要加宽，避免大电流导致PCB发热严重。
+在电机接口 CN3的GND引脚，使用填充平面，使引脚与铺铜完全连接，避免铺铜时，焊盘与铺铜平面之间的连接过小，
+载流能力过低。
+连接ISEN的R1电阻和DRV8870 芯片下方的焊盘也一并使用填充平面让焊盘与铺铜之间完全连接。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在空白区域使用过孔打通上下两层铜皮，使用GND铺铜能够及时导通，降低模块对外的信号干扰。
+接口使用XH2.54接口插座，同样支持直接焊接2.54排针，如果需要长时间大功率输入，需要更换载流能力更强的电机与电源插座&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;基于以下几个关键的电气和热力学原因&#34;&gt;基于以下几个关键的电气和热力学原因
+&lt;/h4&gt;&lt;h5 id=&#34;降低线路电阻与电压降&#34;&gt;&lt;strong&gt;降低线路电阻与电压降&lt;/strong&gt;
+&lt;/h5&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;根据电阻公式 $R = \rho \frac{L}{A}$（其中 $A$ 为截面积），导线越宽（截面积越大），电阻越小。&lt;/li&gt;
+&lt;li&gt;电机启动或堵转时，电流可能达到额定电流的数倍。如果走线过细，电阻过大，会在导线上产生显著的电压降（$V = I \times R$）。这会导致实际到达电机或驱动器的电压低于预期，造成电机扭矩不足、启动困难或驱动器因欠压保护而停机。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h5 id=&#34;减少发热焦耳热&#34;&gt;&lt;strong&gt;减少发热（焦耳热）&lt;/strong&gt;
+&lt;/h5&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;电流流过导体产生的热量遵循焦耳定律：$P = I^2 \times R$。&lt;/li&gt;
+&lt;li&gt;由#于发热量与电流的平方成正比，大电流下如果电阻（线宽不足）较大，会产生大量热量。这不仅会导致导线绝缘层熔化，还可能使 PCB 铜箔过热，甚至损坏 DRV8870 芯片或导致周围元件性能下降。加宽走线可以显著降低温升。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;&lt;strong&gt;提高电流承载能力（安培容量）&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;不同宽度的铜箔有不同的最大安全载流能力。DRV8870 通常用于驱动较大功率的电机，其输出电流可能高达数安培甚至更高。&lt;/li&gt;
+&lt;li&gt;加宽走线（或增加铜箔厚度，如使用 2oz 或更厚的铜）可以确保在长时间运行或峰值电流下，线路不会成为系统的瓶颈或安全隐患。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;&lt;strong&gt;降低电磁干扰（EMI）&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;大电流回路通常伴随着快速变化的电流（di/dt），这会产生较强的磁场。&lt;/li&gt;
+&lt;li&gt;较宽的走线具有更低的电感，有助于减少电压尖峰和电磁辐射，从而提高系统的电磁兼容性（EMC），防止干扰到 DRV8870 的控制信号或其他敏感电路。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h5 id=&#34;设计建议&#34;&gt;&lt;strong&gt;设计建议：&lt;/strong&gt;
+&lt;/h5&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;计算线宽&lt;/strong&gt;：根据预期的最大电流（考虑峰值电流）和允许的温升，使用 IPC-2221 标准或在线 PCB 线宽计算器来确定最小线宽。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;铺铜&lt;/strong&gt;：在 PCB 布局中，除了加宽走线，通常还会在电源和地平面进行大面积铺铜，以进一步降低阻抗和散热。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;过孔&lt;/strong&gt;：如果电流非常大，单面走线可能不够，可以通过多个过孔（Via）将电流传导至背面，或者使用多层板设计。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h5 id=&#34;注意&#34;&gt;&lt;strong&gt;注意&lt;/strong&gt;：
+&lt;/h5&gt;&lt;blockquote&gt;
+&lt;p&gt;DRV8870 是一款集成 H 桥的电机驱动器，其内部 MOSFET 的导通电阻（$R_{DS(on)}$）虽然较低，但外部走线的电阻如果过大，会抵消其效率优势，并导致系统整体发热增加。因此，功率回路的布线是电机驱动设计中最关键的一环。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

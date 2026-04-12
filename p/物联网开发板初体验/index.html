@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="STM32F103RCT6 IO电路作用分析">
+<title>物联网开发板初体验</title>
+
+<link rel='canonical' href='https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/'>
+
+<link rel="stylesheet" href="/scss/style.min.e91936884f007f6384dc964080b77d088358e782d41c7ac0e2be79c8dd22f48f.css"><meta property='og:title' content="物联网开发板初体验">
+<meta property='og:description' content="STM32F103RCT6 IO电路作用分析">
+<meta property='og:url' content='https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/'>
+<meta property='og:site_name' content='Jeffrey-刘俊丰'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='物联网' /><meta property='article:tag' content='智能家居' /><meta property='article:tag' content='PCB' /><meta property='article:published_time' content='2025-03-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-04T00:00:00&#43;00:00'/><meta property='og:image' content='https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5.png' />
+<meta name="twitter:title" content="物联网开发板初体验">
+<meta name="twitter:description" content="STM32F103RCT6 IO电路作用分析"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_84fcb3b5b4dc3fa5.png" width="300"
+                            height="282" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐇</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Jeffrey-刘俊丰</a></h1>
+            <h2 class="site-description">Hi，欢迎来到我的世界</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/250193290'
+                        target="_blank"
+                        title="bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 10a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-6" /><path d="M8 3l2 3" /><path d="M16 3l-2 3" /><path d="M9 13v-2" /><path d="M15 11v2" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Jeffrey-ljf'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页 | Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E-about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于 | About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档 | Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索 | Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5-links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>技术链接 | Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://jeffrey-ljf.github.io/en/" >English</option>
+                                
+                                    <option value="https://jeffrey-ljf.github.io/" selected>中文</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#基础功能引脚电路非通用gpio">基础功能引脚电路（非通用GPIO）</a>
+      <ol>
+        <li><a href="#11-时钟系统引脚">1.1 时钟系统引脚</a></li>
+        <li><a href="#12-复位与启动模式引脚">1.2 复位与启动模式引脚</a></li>
+        <li><a href="#13-电源与接地引脚">1.3 电源与接地引脚</a></li>
+      </ol>
+    </li>
+    <li><a href="#通用gpio功能电路按模块分类">通用GPIO功能电路（按模块分类）</a>
+      <ol>
+        <li><a href="#21-人机交互led状态指示电路">2.1 人机交互：LED状态指示电路</a></li>
+        <li><a href="#22-通信接口串口与485控制电路">2.2 通信接口：串口与485控制电路</a></li>
+        <li><a href="#23-调试接口swd下载电路">2.3 调试接口：SWD下载电路</a></li>
+        <li><a href="#24-电机控制pwm输出电路">2.4 电机控制：PWM输出电路</a></li>
+        <li><a href="#25-模拟采样adc输入电路">2.5 模拟采样：ADC输入电路</a></li>
+        <li><a href="#26-gpio扩展排针引出电路">2.6 GPIO扩展：排针引出电路</a></li>
+        <li><a href="#27-预留gpio电路">2.7 预留GPIO电路</a></li>
+      </ol>
+    </li>
+  </ol>
+
+  <ol>
+    <li><a href="#系统专用io非通用gpio电路作用">系统专用IO（非通用GPIO）电路作用</a>
+      <ol>
+        <li><a href="#21-电源与地引脚">2.1 电源与地引脚</a></li>
+        <li><a href="#22-复位引脚">2.2 复位引脚</a></li>
+        <li><a href="#23-时钟引脚">2.3 时钟引脚</a></li>
+        <li><a href="#24-启动配置引脚">2.4 启动配置引脚</a></li>
+        <li><a href="#25-调试引脚">2.5 调试引脚</a></li>
+      </ol>
+    </li>
+    <li><a href="#gpioa-全io外接电路作用">GPIOA 全IO外接电路作用</a></li>
+    <li><a href="#gpiob-全io外接电路作用">GPIOB 全IO外接电路作用</a></li>
+    <li><a href="#gpioc-全io外接电路作用">GPIOC 全IO外接电路作用</a></li>
+    <li><a href="#io外接电路通用规则">IO外接电路通用规则</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#常见问题与调试提示">常见问题与调试提示</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/">
+                <img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5_hu_498fd112132089a0.png"
+                        srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5_hu_498fd112132089a0.png 800w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5_hu_ec2d7b59c459c9ee.png 1600w"
+                        width="800" 
+                        height="506" 
+                        loading="lazy"
+                        alt="Featured image of post 物联网开发板初体验" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/pcb/" >
+                PCB
+            </a>
+        
+            <a href="/categories/%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/" >
+                基础原理
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/">物联网开发板初体验</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            STM32F103RCT6 IO电路作用分析
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+
+    <footer class="article-time">
+
+    
+    <span class="post-author">作者：刘俊丰</span>
+   
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-03-4</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+
+          
+
+            
+        <div id="viewCount">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+            <time class="article-time--reading">
+                
+                <span id="vercount_value_page_pv">loading... </span>次
+            </time>
+        </div>
+
+
+
+    </footer>
+    
+
+
+
+
+
+
+
+
+
+
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h2 id="基础功能引脚电路非通用gpio">基础功能引脚电路（非通用GPIO）
+</h2><p>下面引脚是MCU的核心功能引脚，不属于普通GPIO，是系统稳定运行的基础：</p>
+<p><img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/MCU.png"
+	width="3384"
+	height="1720"
+	srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/MCU_hu_fc6e2b45e8da7e5e.png 480w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/MCU_hu_f2f1bb7a6544b2bd.png 1024w"
+	loading="lazy"
+	
+		alt="MCU电路设计"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="196"
+		data-flex-basis="472px"
+	
+></p>
+<p>电路设计关键亮点总结</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>设计点</th>
+          <th>实现方式</th>
+          <th>优势</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>单点接地</td>
+          <td>数字地/模拟地通过0Ω电阻单点连接</td>
+          <td>减少数字噪声对ADC采样的干扰，提高模拟采样精度</td>
+      </tr>
+      <tr>
+          <td>电源去耦</td>
+          <td>每个VDD引脚配0.1μF去耦电容，总线增加滤波</td>
+          <td>滤除电源高频噪声，避免MCU因电源波动死机</td>
+      </tr>
+      <tr>
+          <td>状态稳定</td>
+          <td>关键引脚（NRST、BOOT0、SWD）加上下拉电阻</td>
+          <td>防止引脚浮空导致的误触发、异常复位</td>
+      </tr>
+      <tr>
+          <td>多串口复用</td>
+          <td>3个USART分别用于调试、WIFI、485</td>
+          <td>满足不同通信场景需求，适配物联网、工业控制</td>
+      </tr>
+      <tr>
+          <td>电机驱动预留</td>
+          <td>高级定时器PWM输出</td>
+          <td>支持无刷电机FOC控制，适配嵌入式电机开发需求</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="11-时钟系统引脚">1.1 时钟系统引脚
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>引脚</th>
+          <th>电路连接</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>OSC_IN / OSC_OUT</code></td>
+          <td>外接8MHz晶振X1，配合22pF负载电容C1、C2组成<strong>外部高速晶振（HSE）电路</strong></td>
+          <td>为MCU提供8MHz外部时钟源，经内部PLL倍频生成72MHz系统时钟，是MCU运行的核心时钟</td>
+      </tr>
+      <tr>
+          <td><code>PC14-OSC32_IN / PC15-OSC32_OUT</code></td>
+          <td>原理图预留32.768kHz晶振接口（未焊接），属于<strong>外部低速晶振（LSE）</strong></td>
+          <td>为RTC实时时钟提供时钟，主电源掉电时由VBAT供电，保持时间和备份寄存器数据</td>
+      </tr>
+      <tr>
+          <td><code>VBAT</code></td>
+          <td>接3V3_MCU（或备用电池）</td>
+          <td>为RTC、备份寄存器供电，主电源掉电时维持RTC运行，避免时间丢失</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="12-复位与启动模式引脚">1.2 复位与启动模式引脚
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>引脚</th>
+          <th>电路连接</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>NRST</code></td>
+          <td>10kΩ上拉电阻R35接3V3_MCU，外接复位按键SW1，配合YT581SSJG复位监控芯片</td>
+          <td>MCU复位引脚（低电平有效）：上拉保证正常工作为高电平，按键按下拉低触发复位；监控芯片实现上电/掉电复位，防止异常死机</td>
+      </tr>
+      <tr>
+          <td><code>BOOT0(PB8)</code></td>
+          <td>10kΩ下拉电阻R2接地</td>
+          <td>启动模式选择引脚：下拉为0时，默认<strong>主闪存启动</strong>（正常运行程序）；拉高为1时，进入串口下载模式</td>
+      </tr>
+      <tr>
+          <td><code>BOOT1(PB2)</code></td>
+          <td>原理图悬空（默认下拉）</td>
+          <td>配合BOOT0选择启动模式，默认0，与BOOT0下拉组合为主闪存启动</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="13-电源与接地引脚">1.3 电源与接地引脚
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>引脚</th>
+          <th>电路连接</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>VDD_1~VDD_4 / VDDA</code></td>
+          <td>统一接3V3_MCU，每个引脚旁接0.1μF（104）去耦电容，电源总线增加多组104滤波电容</td>
+          <td>为MCU内核、I/O、ADC等模块供电；去耦电容滤除电源高频噪声，保证供电稳定</td>
+      </tr>
+      <tr>
+          <td><code>VSS_1~VSS_4 / VSSA</code></td>
+          <td>数字地与模拟地通过0Ω电阻R3<strong>单点连接</strong></td>
+          <td>电源参考地，模拟地VSSA为ADC提供干净参考，减少数字噪声对模拟采样的干扰</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h2 id="通用gpio功能电路按模块分类">通用GPIO功能电路（按模块分类）
+</h2><h3 id="21-人机交互led状态指示电路">2.1 人机交互：LED状态指示电路
+</h3><p><img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RGB_MOS.png"
+	width="1674"
+	height="1623"
+	srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RGB_MOS_hu_a8ec786781a91327.png 480w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RGB_MOS_hu_ba83e9daccffbf41.png 1024w"
+	loading="lazy"
+	
+		alt="RGB"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="103"
+		data-flex-basis="247px"
+	
+></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>引脚</th>
+          <th>电路连接</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>PA1</code></td>
+          <td>推挽输出，接红色LED（LED_R）</td>
+          <td>控制红色LED亮灭：输出低电平时点亮，高电平时熄灭，用于告警、故障状态指示</td>
+      </tr>
+      <tr>
+          <td><code>PA2</code></td>
+          <td>推挽输出，接绿色LED（LED_G）</td>
+          <td>控制绿色LED亮灭，用于系统正常运行、通信正常等状态指示</td>
+      </tr>
+      <tr>
+          <td><code>PA6</code></td>
+          <td>推挽输出，接蓝色LED（LED_B）</td>
+          <td>控制蓝色LED亮灭，用于自定义状态（如配置完成、数据传输）指示</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="22-通信接口串口与485控制电路">2.2 通信接口：串口与485控制电路
+</h3><p>STM32F103内置3个USART，原理图中分别用于不同通信场景：</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>接口</th>
+          <th>涉及引脚</th>
+          <th>电路连接</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>USART1（调试串口）</td>
+          <td><code>PA9(TX1) / PA10(RX1)</code></td>
+          <td>连接USB转串口电路，对接上位机</td>
+          <td>用于打印调试日志、接收上位机指令，是开发调试的核心串口</td>
+      </tr>
+      <tr>
+          <td>USART2（WIFI串口）</td>
+          <td><code>PA2(TX2) / PA3(RX2)</code></td>
+          <td>连接WIFI模块（如ESP8266）</td>
+          <td>实现无线通信，透传数据到云端/上位机，用于物联网场景</td>
+      </tr>
+      <tr>
+          <td>USART3（扩展串口）</td>
+          <td><code>PB10(TX3) / PB11(RX3)</code></td>
+          <td>预留/外接485/蓝牙模块</td>
+          <td>扩展串口资源，用于工业通信、外设连接</td>
+      </tr>
+      <tr>
+          <td>485收发控制</td>
+          <td><code>PA4(485_SELECT)</code></td>
+          <td>推挽输出，控制RS485芯片DE/RE引脚</td>
+          <td>RS485半双工通信的方向控制：高电平发送、低电平接收，实现远距离工业总线通信</td>
+      </tr>
+  </tbody>
+</table></div>
+<p><img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink.png"
+	width="2182"
+	height="1343"
+	srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink_hu_eb71a84be09115a1.png 480w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink_hu_186213001f7a0751.png 1024w"
+	loading="lazy"
+	
+		alt="DPLink"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="162"
+		data-flex-basis="389px"
+	
+><img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/WiFi%E4%B8%B2%E5%8F%A3%E6%A8%A1%E5%9D%97.png"
+	width="1994"
+	height="1497"
+	srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/WiFi%E4%B8%B2%E5%8F%A3%E6%A8%A1%E5%9D%97_hu_104f4c33cd6f15d5.png 480w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/WiFi%E4%B8%B2%E5%8F%A3%E6%A8%A1%E5%9D%97_hu_34a0d1b4f52c21b6.png 1024w"
+	loading="lazy"
+	
+		alt="WiFi串口模块"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
+	
+></p>
+<p><img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RS485.png"
+	width="1505"
+	height="459"
+	srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RS485_hu_32efa070dedb6b03.png 480w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RS485_hu_2d9e4dc513a1f39f.png 1024w"
+	loading="lazy"
+	
+		alt="RS485"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="327"
+		data-flex-basis="786px"
+	
+></p>
+<h3 id="23-调试接口swd下载电路">2.3 调试接口：SWD下载电路
+</h3><p><img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink.png"
+	width="2182"
+	height="1343"
+	srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink_hu_eb71a84be09115a1.png 480w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink_hu_186213001f7a0751.png 1024w"
+	loading="lazy"
+	
+		alt="DPLink"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="162"
+		data-flex-basis="389px"
+	
+></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>引脚</th>
+          <th>电路连接</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>PA13(SWCLK)</code></td>
+          <td>10kΩ上拉电阻R4接3V3_MCU，SWD时钟线</td>
+          <td>SWD调试接口的时钟信号，配合SWDIO实现程序烧录、在线调试</td>
+      </tr>
+      <tr>
+          <td><code>PA14(SWDIO)</code></td>
+          <td>10kΩ上拉电阻R5接3V3_MCU，SWD数据线</td>
+          <td>SWD调试接口的数据信号，与调试器（GAPLINK）通信，下载/调试程序</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="24-电机控制pwm输出电路">2.4 电机控制：PWM输出电路
+</h3><p><img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/Motor.png"
+	width="1130"
+	height="491"
+	srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/Motor_hu_fc3ac4068e08660b.png 480w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/Motor_hu_7d4d2bd01d24c5af.png 1024w"
+	loading="lazy"
+	
+		alt="Motor"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="230"
+		data-flex-basis="552px"
+	
+></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>引脚</th>
+          <th>电路连接</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>PC6</code></td>
+          <td>复用为TIM8_CH1，输出PWM（PC6_PWM_MOTOR1）</td>
+          <td>高级定时器PWM输出，控制电机1的转速/转向，用于无刷电机FOC驱动</td>
+      </tr>
+      <tr>
+          <td><code>PC7</code></td>
+          <td>复用为TIM8_CH2，输出PWM（PC7_PWM_MOTOR2）</td>
+          <td>高级定时器PWM输出，控制电机2的转速/转向，双电机驱动场景</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="25-模拟采样adc输入电路">2.5 模拟采样：ADC输入电路
+</h3><p><img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/ADC.png"
+	width="1791"
+	height="994"
+	srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/ADC_hu_989e38f75cef4f72.png 480w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/ADC_hu_a43381ed49fbb660.png 1024w"
+	loading="lazy"
+	
+		alt="ADC"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="180"
+		data-flex-basis="432px"
+	
+></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>引脚</th>
+          <th>电路连接</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>PC1(ADC1_IN11)</code></td>
+          <td>模拟输入，标注<code>V</code>（电压采样）</td>
+          <td>采集电源电压、电池电压等模拟信号，用于电源监测、过压保护</td>
+      </tr>
+      <tr>
+          <td><code>PC2(ADC1_IN12)</code></td>
+          <td>模拟输入，标注<code>A</code>（电流采样）</td>
+          <td>采集电机电流、负载电流等模拟信号，用于过流保护、FOC电流闭环控制</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="26-gpio扩展排针引出电路">2.6 GPIO扩展：排针引出电路
+</h3><p>原理图中设计了2路排针（<code>U7</code>/<code>U9</code>），引出MCU剩余GPIO：</p>
+<ul>
+<li><strong>U7（20Pin排针）</strong>：引出<code>PA0-PA7</code>、<code>PB0-PB1</code>、<code>PB12-PB15</code>、<code>PA8-PA12</code>、<code>PC13</code>等GPIO</li>
+<li><strong>U9（15Pin排针）</strong>：引出<code>PB3-PB9</code>、<code>PB12-PB15</code>、<code>PC10-PC12</code>等GPIO</li>
+<li><strong>核心作用</strong>：将GPIO对外引出，方便外接传感器、模块、外设，用于二次开发、功能扩展（如I2C OLED、SPI Flash、外部中断等）</li>
+</ul>
+<h3 id="27-预留gpio电路">2.7 预留GPIO电路
+</h3><p>原理图中未接线的GPIO（如<code>PB0/PB1</code>、<code>PB6/PB7</code>、<code>PD0-PD7</code>、<code>PA15</code>等），均为预留功能：</p>
+<ul>
+<li><code>PB6/PB7</code>：复用为I2C1_SCL/SDA，可连接I2C设备</li>
+<li><code>PB3/PB4/PA15</code>：复用为SPI1_SCK/MISO/NSS，可连接SPI设备</li>
+<li><code>PA11/PA12</code>：复用为USB_DM/DP，可实现USB通信</li>
+<li><code>PD0-PD7</code>：通用GPIO，可用于外部中断、GPIO输出等自定义功能</li>
+</ul>
+<hr>
+<h1 id="stm32f103rct6-各io口外接电路作用分析">STM32F103RCT6 各IO口外接电路作用分析
+</h1><blockquote>
+<p>片IO基础说明
+STM32F103RCT6为<strong>64脚LQFP封装</strong>，含<strong>GPIOA、GPIOB、GPIOC</strong> 3组通用IO，外加电源、复位、时钟、调试、启动配置等专用IO；所有IO支持<strong>输入/输出/上拉/下拉/复用</strong>，外接电路围绕<strong>电平匹配、驱动、保护、通信、采样、控制</strong>设计。</p>
+</blockquote>
+<p><img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5.png"
+	width="3846"
+	height="2431"
+	srcset="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5_hu_89148dc078a4ff52.png 480w, /p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5_hu_4bf1d2e1986f3a3d.png 1024w"
+	loading="lazy"
+	
+		alt="PCB"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="158"
+		data-flex-basis="379px"
+	
+></p>
+<hr>
+<h2 id="系统专用io非通用gpio电路作用">系统专用IO（非通用GPIO）电路作用
+</h2><h3 id="21-电源与地引脚">2.1 电源与地引脚
+</h3><ul>
+<li><strong>VDDx（1/16/32/48脚）</strong>：接3.3V，每脚并联<strong>0.1μF去耦电容</strong>到地
+作用：为内核、IO、外设供电，电容滤除高频噪声，保证供电稳定。</li>
+<li><strong>VDDA（51脚）</strong>：接3.3V，串联磁珠+并联电容
+作用：为ADC、DAC提供<strong>纯净模拟电源</strong>，隔离数字噪声。</li>
+<li><strong>VSSx/VSSA（8/23/35/47/52脚）</strong>：接GND，VSSA与VSS单点共地
+作用：数字/模拟参考地，提升ADC采样精度。</li>
+<li><strong>VBAT（36脚）</strong>：接3.3V或备用电池
+作用：主电掉电时为RTC、备份寄存器供电，保留时间与数据。</li>
+</ul>
+<h3 id="22-复位引脚">2.2 复位引脚
+</h3><ul>
+<li><strong>NRST（7脚）</strong>：10kΩ上拉到3.3V+按键接地+复位芯片
+作用：低电平复位；上拉保证常态稳定，按键手动复位，监控芯片实现上电/掉电复位。</li>
+</ul>
+<h3 id="23-时钟引脚">2.3 时钟引脚
+</h3><ul>
+<li><strong>PD0/OSC_IN（53脚）、PD1/OSC_OUT（54脚）</strong>：接8MHz晶振+22pF负载电容
+作用：构成<strong>HSE外部高速时钟</strong>，提供系统主时钟源。</li>
+<li><strong>PC14/OSC32_IN（46脚）、PC15/OSC32_OUT（45脚）</strong>：接32.768kHz晶振
+作用：构成<strong>LSE外部低速时钟</strong>，为RTC提供精准时钟。</li>
+</ul>
+<h3 id="24-启动配置引脚">2.4 启动配置引脚
+</h3><ul>
+<li><strong>BOOT0（60脚，PB8）</strong>：10kΩ下拉电阻
+作用：常态为<strong>主闪存启动</strong>；拉高进入ISP串口下载模式。</li>
+<li><strong>BOOT1（33脚，PB2）</strong>：下拉/悬空
+作用：与BOOT0配合选择启动区域，默认闪存启动。</li>
+</ul>
+<h3 id="25-调试引脚">2.5 调试引脚
+</h3><ul>
+<li><strong>PA13/SWDIO（40脚）、PA14/SWCLK（41脚）</strong>：10kΩ上拉到3.3V
+作用：SWD下载调试接口，上拉防止浮空干扰，保证程序烧录稳定。</li>
+</ul>
+<hr>
+<h2 id="gpioa-全io外接电路作用">GPIOA 全IO外接电路作用
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>IO引脚</th>
+          <th>典型外接电路</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>PA0</td>
+          <td>按键上拉/下拉、ADC采样、PWM</td>
+          <td>通用输入/模拟采样/定时器PWM</td>
+      </tr>
+      <tr>
+          <td>PA1</td>
+          <td>LED推挽输出、ADC、PWM</td>
+          <td>状态指示/模拟采集/电机调速</td>
+      </tr>
+      <tr>
+          <td>PA2</td>
+          <td>USART2_TX、LED、PWM</td>
+          <td>串口发送/指示灯/定时器输出</td>
+      </tr>
+      <tr>
+          <td>PA3</td>
+          <td>USART2_RX、ADC、PWM</td>
+          <td>串口接收/电压采样</td>
+      </tr>
+      <tr>
+          <td>PA4</td>
+          <td>SPI1_NSS、DAC、485_DE</td>
+          <td>SPI片选/模拟输出/485方向控制</td>
+      </tr>
+      <tr>
+          <td>PA5</td>
+          <td>SPI1_SCK、ADC</td>
+          <td>SPI时钟/模拟输入</td>
+      </tr>
+      <tr>
+          <td>PA6</td>
+          <td>SPI1_MISO、PWM、ADC</td>
+          <td>SPI数据输入/电机PWM</td>
+      </tr>
+      <tr>
+          <td>PA7</td>
+          <td>SPI1_MOSI、PWM、ADC</td>
+          <td>SPI数据输出/驱动控制</td>
+      </tr>
+      <tr>
+          <td>PA8</td>
+          <td>TIM1_CH1、PWM</td>
+          <td>高级定时器PWM、高频输出</td>
+      </tr>
+      <tr>
+          <td>PA9</td>
+          <td>USART1_TX</td>
+          <td>调试串口发送</td>
+      </tr>
+      <tr>
+          <td>PA10</td>
+          <td>USART1_RX</td>
+          <td>调试串口接收</td>
+      </tr>
+      <tr>
+          <td>PA11</td>
+          <td>USB_D-、CAN_RX</td>
+          <td>USB负端/CAN接收</td>
+      </tr>
+      <tr>
+          <td>PA12</td>
+          <td>USB_D+、CAN_TX</td>
+          <td>USB正端/CAN发送</td>
+      </tr>
+      <tr>
+          <td>PA15</td>
+          <td>SPI1_NSS、复用IO</td>
+          <td>SPI片选/通用IO</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h2 id="gpiob-全io外接电路作用">GPIOB 全IO外接电路作用
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>IO引脚</th>
+          <th>典型外接电路</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>PB0</td>
+          <td>ADC、PWM、按键</td>
+          <td>模拟采样/电机控制/按键输入</td>
+      </tr>
+      <tr>
+          <td>PB1</td>
+          <td>ADC、PWM、LED</td>
+          <td>电压采集/指示灯/PWM输出</td>
+      </tr>
+      <tr>
+          <td>PB2</td>
+          <td>BOOT1、下拉电阻</td>
+          <td>启动配置/通用IO</td>
+      </tr>
+      <tr>
+          <td>PB3</td>
+          <td>SPI1_SCK、复用</td>
+          <td>SPI时钟/JTAG复用</td>
+      </tr>
+      <tr>
+          <td>PB4</td>
+          <td>SPI1_MISO、上拉</td>
+          <td>SPI数据输入</td>
+      </tr>
+      <tr>
+          <td>PB5</td>
+          <td>SPI1_MOSI、I2C_SMBA</td>
+          <td>SPI数据输出/I2C管理</td>
+      </tr>
+      <tr>
+          <td>PB6</td>
+          <td>I2C1_SCL、上拉4.7kΩ</td>
+          <td>I2C时钟，上拉保证总线稳定</td>
+      </tr>
+      <tr>
+          <td>PB7</td>
+          <td>I2C1_SDA、上拉4.7kΩ</td>
+          <td>I2C数据，开漏必须上拉</td>
+      </tr>
+      <tr>
+          <td>PB8</td>
+          <td>BOOT0、TIM4_CH1</td>
+          <td>启动配置/定时器PWM</td>
+      </tr>
+      <tr>
+          <td>PB9</td>
+          <td>TIM4_CH2、I2C1_SCL</td>
+          <td>PWM输出/I2C复用</td>
+      </tr>
+      <tr>
+          <td>PB10</td>
+          <td>USART3_TX、I2C2_SCL</td>
+          <td>串口3发送/I2C时钟</td>
+      </tr>
+      <tr>
+          <td>PB11</td>
+          <td>USART3_RX、I2C2_SDA</td>
+          <td>串口3接收/I2C数据</td>
+      </tr>
+      <tr>
+          <td>PB12</td>
+          <td>SPI2_NSS、USB</td>
+          <td>SPI2片选/USB控制</td>
+      </tr>
+      <tr>
+          <td>PB13</td>
+          <td>SPI2_SCK、PWM</td>
+          <td>SPI2时钟/定时器输出</td>
+      </tr>
+      <tr>
+          <td>PB14</td>
+          <td>SPI2_MISO、PWM</td>
+          <td>SPI2数据输入/电机控制</td>
+      </tr>
+      <tr>
+          <td>PB15</td>
+          <td>SPI2_MOSI、PWM</td>
+          <td>SPI2数据输出/驱动输出</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h2 id="gpioc-全io外接电路作用">GPIOC 全IO外接电路作用
+</h2><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>IO引脚</th>
+          <th>典型外接电路</th>
+          <th>核心作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>PC0</td>
+          <td>ADC1_IN10、传感器输入</td>
+          <td>模拟采样/传感器信号采集</td>
+      </tr>
+      <tr>
+          <td>PC1</td>
+          <td>ADC1_IN11、电压检测</td>
+          <td>电源电压监测</td>
+      </tr>
+      <tr>
+          <td>PC2</td>
+          <td>ADC1_IN12、电流采样</td>
+          <td>负载电流采集</td>
+      </tr>
+      <tr>
+          <td>PC3</td>
+          <td>ADC1_IN13、温度采样</td>
+          <td>模拟温度信号输入</td>
+      </tr>
+      <tr>
+          <td>PC4</td>
+          <td>ADC1_IN14、按键</td>
+          <td>模拟输入/数字按键</td>
+      </tr>
+      <tr>
+          <td>PC5</td>
+          <td>ADC1_IN15、LED</td>
+          <td>模拟采集/状态指示</td>
+      </tr>
+      <tr>
+          <td>PC6</td>
+          <td>TIM8_CH1、PWM</td>
+          <td>高级定时器PWM、电机驱动</td>
+      </tr>
+      <tr>
+          <td>PC7</td>
+          <td>TIM8_CH2、PWM</td>
+          <td>双电机PWM控制</td>
+      </tr>
+      <tr>
+          <td>PC8</td>
+          <td>TIM8_CH3、PWM</td>
+          <td>舵机/LED调光</td>
+      </tr>
+      <tr>
+          <td>PC9</td>
+          <td>TIM8_CH4、PWM</td>
+          <td>通用PWM输出</td>
+      </tr>
+      <tr>
+          <td>PC10</td>
+          <td>UART4_TX、SPI3_SCK</td>
+          <td>串口4发送/SPI时钟</td>
+      </tr>
+      <tr>
+          <td>PC11</td>
+          <td>UART4_RX、SPI3_MISO</td>
+          <td>串口4接收/SPI数据输入</td>
+      </tr>
+      <tr>
+          <td>PC12</td>
+          <td>UART5_TX、SPI3_MOSI</td>
+          <td>串口5发送/SPI数据输出</td>
+      </tr>
+      <tr>
+          <td>PC13</td>
+          <td>按键/LED、低功耗输出</td>
+          <td>通用IO/状态指示</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<h2 id="io外接电路通用规则">IO外接电路通用规则
+</h2><ol>
+<li><strong>输出类（LED/继电器/驱动）</strong>
+推挽输出：IO直接驱动，低电平点亮LED；大功率外设加三极管/MOS管隔离。</li>
+<li><strong>输入类（按键/传感器）</strong>
+上拉/下拉电阻：按键接地=上拉输入；传感器信号=下拉/跟随电平。</li>
+<li><strong>通信类（I2C/SPI/串口）</strong>
+I2C必须<strong>4.7kΩ上拉</strong>；串口加TVS管防静电；485加收发器与方向控制。</li>
+<li><strong>模拟类（ADC）</strong>
+串联限流电阻+并联电容滤波，避免高压损坏，提升采样稳定。</li>
+<li><strong>保护类</strong>
+所有IO可加<strong>ESD管、限流电阻</strong>，防止静电、过压烧坏芯片。</li>
+</ol>
+<hr>
+<h2 id="总结">总结
+</h2><p>STM32F103RCT6的IO电路围绕<strong>供电稳定、通信可靠、驱动安全、采样精准</strong>设计：</p>
+<ul>
+<li>专用IO保障系统启动、时钟、复位、调试；</li>
+<li>通用IO适配<strong>输入检测、输出控制、通信交互、模拟采样、PWM驱动</strong>；</li>
+<li>外接电阻、电容、晶振、接口芯片，决定IO的实际功能与稳定性。</li>
+</ul>
+<hr>
+<h2 id="常见问题与调试提示">常见问题与调试提示
+</h2><ol>
+<li><strong>SWD下载失败</strong>：检查PA13/PA14的上拉电阻是否焊接，调试器接线是否正确，BOOT0是否为低电平</li>
+<li><strong>ADC采样不准</strong>：检查模拟地与数字地的单点连接，VDDA是否接3V3，是否有电源噪声</li>
+<li><strong>485通信异常</strong>：检查PA4的控制逻辑是否正确（发送时拉高、接收时拉低）</li>
+<li><strong>电机不转</strong>：检查PC6/PC7的PWM输出是否正常，驱动电路接线是否正确</li>
+</ol>
+<hr>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+        
+            <a href="/tags/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/">智能家居</a>
+        
+            <a href="/tags/pcb/">PCB</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%86.d857b69a6a1606f36f1787c54e6d434a_hu_e761a3baeabb3f45.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 永磁无刷电机原理"
+                        
+                        data-hash="md5-2Fe2mmoWBvNvF4fFTm1DSg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">永磁无刷电机原理</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2026 Jeffrey-刘俊丰
+    </section>
+    
+    <section class="powerby">
+        
+            希望这一个开始，将是永恒的初心 <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+
+
+
+<script>
+
+const cssPath = "https://jeffrey-ljf.github.io/waifu/waifu.css"
+const tipsJsonPath = "https://jeffrey-ljf.github.io/waifu/waifu-tips.json"
+const live2d_path = "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/";
+
+
+
+
+
+function loadExternalResource(url, type) {
+	return new Promise((resolve, reject) => {
+		let tag;
+
+		if (type === "css") {
+			tag = document.createElement("link");
+			tag.rel = "stylesheet";
+			tag.href = url;
+		}
+		else if (type === "js") {
+			tag = document.createElement("script");
+			tag.src = url;
+		}
+		if (tag) {
+			tag.onload = () => resolve(url);
+			tag.onerror = () => reject(url);
+			document.head.appendChild(tag);
+		}
+	});
+}
+
+
+if (screen.width >= 768) {
+	Promise.all([
+		loadExternalResource(cssPath, "css"),
+		loadExternalResource(live2d_path + "live2d.min.js", "js"),
+		loadExternalResource(live2d_path + "waifu-tips.js", "js")
+	]).then(() => {
+		
+		initWidget({
+			waifuPath: tipsJsonPath,
+                         
+			
+			cdnPath: "https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/",
+			tools: ["hitokoto", "asteroids", "switch-model", "switch-texture", "photo", "info", "quit"]
+		});
+	});
+}
+
+console.log(`
+  く__,.ヘヽ.        /  ,ー､ 〉
+           ＼ ', !-─‐-i  /  /´
+           ／｀ｰ'       L/／｀ヽ､
+         /   ／,   /|   ,   ,       ',
+       ｲ   / /-‐/  ｉ  L_ ﾊ ヽ!   i
+        ﾚ ﾍ 7ｲ｀ﾄ   ﾚ'ｧ-ﾄ､!ハ|   |
+          !,/7 '0'     ´0iソ|    |
+          |.从"    _     ,,,, / |./    |
+          ﾚ'| i＞.､,,__  _,.イ /   .i   |
+            ﾚ'| | / k_７_/ﾚ'ヽ,  ﾊ.  |
+              | |/i 〈|/   i  ,.ﾍ |  i  |
+             .|/ /  ｉ：    ﾍ!    ＼  |
+              kヽ>､ﾊ    _,.ﾍ､    /､!
+              !'〈//｀Ｔ´', ＼ ｀'7'ｰr'
+              ﾚ'ヽL__|___i,___,ンﾚ|ノ
+                  ﾄ-,/  |___./
+                  'ｰ'    !_,.:
+`);
+</script>
+
+
+
+<div id="particles-js"></div>
+
+<script src=https://jeffrey-ljf.github.io/background/particles.min.js></script>
+<script>
+  particlesJS.load('particles-js', "https://jeffrey-ljf.github.io/background/particlesjs-config.json", function() {
+    console.log('particles.js loaded - callback');
+  });
+</script>
+
+<style>
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;         
+  min-height: 100vh;    
+  z-index: -1;
+  pointer-events: none; 
+  overflow: hidden;     
+}
+ 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+	
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
+
+
+    </body>
+</html>

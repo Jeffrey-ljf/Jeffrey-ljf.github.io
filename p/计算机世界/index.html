@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="微观到人类层面的通俗解释">
+<title>计算机世界</title>
+
+<link rel='canonical' href='https://jeffrey-ljf.github.io/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%96%E7%95%8C/'>
+
+<link rel="stylesheet" href="/scss/style.min.e91936884f007f6384dc964080b77d088358e782d41c7ac0e2be79c8dd22f48f.css"><meta property='og:title' content="计算机世界">
+<meta property='og:description' content="微观到人类层面的通俗解释">
+<meta property='og:url' content='https://jeffrey-ljf.github.io/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%96%E7%95%8C/'>
+<meta property='og:site_name' content='Jeffrey-刘俊丰'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='汇编' /><meta property='article:tag' content='递归' /><meta property='article:tag' content='解释器' /><meta property='article:published_time' content='2022-04-12T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-04-12T00:00:00&#43;00:00'/><meta property='og:image' content='https://jeffrey-ljf.github.io/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%96%E7%95%8C/%E6%B5%B7%E6%8A%A5.png' />
+<meta name="twitter:title" content="计算机世界">
+<meta name="twitter:description" content="微观到人类层面的通俗解释"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://jeffrey-ljf.github.io/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%96%E7%95%8C/%E6%B5%B7%E6%8A%A5.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_84fcb3b5b4dc3fa5.png" width="300"
+                            height="282" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐇</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Jeffrey-刘俊丰</a></h1>
+            <h2 class="site-description">Hi，欢迎来到我的世界</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/250193290'
+                        target="_blank"
+                        title="bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 10a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-6" /><path d="M8 3l2 3" /><path d="M16 3l-2 3" /><path d="M9 13v-2" /><path d="M15 11v2" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Jeffrey-ljf'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页 | Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E-about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于 | About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档 | Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索 | Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5-links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>技术链接 | Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://jeffrey-ljf.github.io/en/" >English</option>
+                                
+                                    <option value="https://jeffrey-ljf.github.io/" selected>中文</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#抽象转应用">抽象转应用</a></li>
+    <li><a href="#如何将人类抽象化的表达转化为cpu逻辑电路可以理解的具体实现">如何将人类抽象化的表达转化为CPU逻辑电路可以理解的具体实现？</a></li>
+    <li><a href="#怎样弥补底层细节与上层抽象的差距">怎样弥补底层细节与上层抽象的差距</a></li>
+    <li><a href="#代码的本质是递归">代码的本质是递归</a></li>
+    <li><a href="#先看语法这代指英语本身">先看语法（这代指英语本身）</a></li>
+    <li><a href="#那编译器怎么理解语法树的">那编译器怎么理解语法树的</a></li>
+    <li><a href="#编译器底层与抽象层的翻译官">编译器：底层与抽象层的翻译官</a></li>
+    <li><a href="#虚拟机">虚拟机</a></li>
+    <li><a href="#小故事">小故事</a></li>
+    <li><a href="#linker-链接器">Linker 链接器</a></li>
+    <li><a href="#被依赖的模块必须找到该接口的实现">被依赖的模块必须找到该接口的实现</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%96%E7%95%8C/">
+                <img src="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%96%E7%95%8C/%E6%B5%B7%E6%8A%A5_hu_330a037988112dfc.png"
+                        srcset="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%96%E7%95%8C/%E6%B5%B7%E6%8A%A5_hu_330a037988112dfc.png 800w, /p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%96%E7%95%8C/%E6%B5%B7%E6%8A%A5_hu_d2f8b1b11d1609b.png 1600w"
+                        width="800" 
+                        height="571" 
+                        loading="lazy"
+                        alt="Featured image of post 计算机世界" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%80%92%E5%BD%92/" >
+                递归
+            </a>
+        
+            <a href="/categories/%E8%A7%A3%E9%87%8A%E5%99%A8/" >
+                解释器
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%96%E7%95%8C/">计算机世界</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            微观到人类层面的通俗解释
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+
+    <footer class="article-time">
+
+    
+    <span class="post-author">作者：刘俊丰</span>
+   
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2022-04-12</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 2 分钟
+                </time>
+            </div>
+        
+
+          
+
+            
+        <div id="viewCount">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+            <time class="article-time--reading">
+                
+                <span id="vercount_value_page_pv">loading... </span>次
+            </time>
+        </div>
+
+
+
+    </footer>
+    
+
+
+
+
+
+
+
+
+
+
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h2 id="抽象转应用">抽象转应用
+</h2><p>汇编语言：将计算机理解的机器指令映射成人类可以理解的单词</p>
+<p>CPU ：一个十分简单的处理机器指令的逻辑电路，简单到不能理解任何稍微复杂表达，但人类天生习惯抽象化的表达</p>
+<blockquote>
+<p>比如：你还记得我说的那个人吧，他整天穿着黑的短裤，工作在富士康，家住在玉竹新村，是个写代码的，天天‘996’，这个人是个‘好人’，这种情况下，我们想表达一件事情是非常困难的，因为我们需要具体表达这个人的所有细节，但我们有了‘张三’这种抽象后，一切都十分简单了，我们只需要通过某个人名字，如‘张三’这种抽象进行交流，再也不用通过这个人的一推细节进行交流，抽象化的表达大大增强了人类社会的表现力，提高了效率，屏蔽了细节，这就是抽象的力量。</p>
+</blockquote>
+<h2 id="如何将人类抽象化的表达转化为cpu逻辑电路可以理解的具体实现">如何将人类抽象化的表达转化为CPU逻辑电路可以理解的具体实现？
+</h2><p>怎样弥补底层细节与上层抽象的差距</p>
+<p>底层细节：叫CPU执行 ‘ 给我端一杯水 ’ 这个‘行为’</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">CPU会  ：迈出右腿
+</span></span><span class="line"><span class="cl">          停住
+</span></span><span class="line"><span class="cl">          迈出左边
+</span></span><span class="line"><span class="cl">          停住
+</span></span><span class="line"><span class="cl">          重复上述步骤直到饮水机傍边（注意：这五句话包含了很多细节，if while来实现到饮水机这个动作）
+</span></span><span class="line"><span class="cl">找到水杯
+</span></span><span class="line"><span class="cl">          抬起你的左手
+</span></span><span class="line"><span class="cl">          抓住你的水杯
+</span></span><span class="line"><span class="cl">          移动到出水口
+</span></span><span class="line"><span class="cl">          伸出你的右手
+</span></span><span class="line"><span class="cl">          打开出水口开关
+</span></span><span class="line"><span class="cl">          如果水没有接满
+</span></span><span class="line"><span class="cl">          则继续等待
+</span></span><span class="line"><span class="cl">          如果水已经接满
+</span></span><span class="line"><span class="cl">          则关闭水开关
+</span></span><span class="line"><span class="cl">          向后转180°
+</span></span><span class="line"><span class="cl">          迈出右腿
+</span></span><span class="line"><span class="cl">          停住
+</span></span><span class="line"><span class="cl">          迈出左腿
+</span></span><span class="line"><span class="cl">          停住
+</span></span><span class="line"><span class="cl">          重复上述步骤直到回到原点位置</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="怎样弥补底层细节与上层抽象的差距">怎样弥补底层细节与上层抽象的差距
+</h2><p>Why          how      what</p>
+<p>Why ：观察 CPU 执行的大多数指令操作都是平铺直述的套路</p>
+<pre><code>    套路：整个实现 ‘给我端杯水’ 这个‘行为’，大多数完成某个特定动作
+    如：伸出你的右手 、 伸出你的左手
+</code></pre>
+<p>我们暂且把这种抽象化的 ‘伸出你的左手‘ 完成特定动作的语句叫陈述句</p>
+<blockquote>
+<p>计算机的世界只有陈述句，一切皆为陈述句</p>
+</blockquote>
+<p>你就会发现这些陈述句皆为了 how to do</p>
+<p>当不涉及 how to do 的某个特定动作，而是涉及到某个 状态，根据当前特定状态（如选择左右两边那条路），‘向右偏45°，再直走‘ 还是 ’向左偏45°，再直走‘ 来选择执行那段特定动作的指令时，套路：
+If else   if  else</p>
+<p>当需要不断重复的某些指令，就像限定汽车只要燃油量在10%以上，就原地打转，while（(fuel_oil&gt;0.1））:
+呼啦转转转；</p>
+<blockquote>
+<p>当某 ‘ 块 ‘ 由多个特定动作的指令完成某一行为的指令，重复被程序引用时，只是实现的个别细节有区别，将多个趋同的 ’块‘ 指令 打包在一起，使用一个迎合人类抽象化表达的符号 ’张三‘ 来 代指 ’块指令‘，在取个高雅的名字，这就是 ’ 张三 ‘ 函数；</p>
+</blockquote>
+<p>有些人可能不明白什么叫将多个趋同的 ‘块’ 指令打包在一起是什么意思？
+“这个人喜欢唱歌、声线独特，胸音浑厚，音域广，被称为‘亚洲流行音乐天王’，人称‘歌神“，想必大家会说这是 ‘张学友’ ，因为我们虽然前面几段话无法分清，但是只要有不断多的 ‘标签’ 我们是可以推断出这是谁</p>
+<p>那出现一个 “这个人喜欢唱歌、声线独特，胸音浑厚，音域广，他整天穿着黑的短裤，自称 ‘北上广张学友’ “ 虽然这个人虽然少了某些特征，但是大部分还是和真人 ‘张学友’ 重合的。</p>
+<h2 id="代码的本质是递归">代码的本质是递归
+</h2><p>代码的本质是递归（即有递归整合的代码就是语法）</p>
+<p>如何理解代码的本质：使用数学递归表达的代码为语法</p>
+<p>代码就如同《盗梦空间》的梦，是的，‘梦‘，一层梦中还有一层梦，梦中梦中梦，… ，一层嵌套一层，子子孙孙无穷匮也，通过这些梦整合成梦之空间，
+每个梦的存在就是梦之空间这个程序合理性，当没有每个中间梦作为连接底层和上层梦的桥梁，盗梦这一假设将不存在。</p>
+<p>将最初之梦表达为f(x),，使用数列表达式：f(x) = f(x-1) + f(x-2) ，而f(x-1) 的梦又依赖 f(x-2) 和 f(x-3) ，f(x-2)的梦又依赖 f(x-3) 和 f(x-4)。。。子子孙孙无穷匮也。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">f(x)
+</span></span><span class="line"><span class="cl">                f(x-1)                        f(x-2)
+</span></span><span class="line"><span class="cl">f(x-2)                    f(x-3)        f(x-3)               f(x-4)
+</span></span><span class="line"><span class="cl"> …………………………………………………………………………………………………………………………….</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>每个梦 f(x) 表示 完成某个特定动作的指令 或 由 多个特定动作指令 或 多个 块指令 整合一起共同完成 某个特定 ‘行为‘ 或 ’事件‘ 的 指令 ’块‘ ，也可以将 块指令 称为函数 或 对象 ，而f(x) 又依赖 f(x-1) 和 f(x-2)</p>
+<h2 id="先看语法这代指英语本身">先看语法（这代指英语本身）
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"> Statement
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">If   bool    statement
+</span></span><span class="line"><span class="cl">           While   bool      statement
+</span></span><span class="line"><span class="cl">                           If      bool       statement
+</span></span><span class="line"><span class="cl">………………………………………….</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>原点父节点的statement通过语法来嵌套多个叶子结点statement，整合在一起，这个语境通过上下文才成立。
+就像一个机器人的成立要依托多个组件（其他语句或指令）
+通过 多个 特定动作（叶子结点）组成的二叉树（完成一个事件），这就是语法树
+通过分支的具体实现特定动作等细节的指令 来 完成一个事件</p>
+<p>再次回到语法的本质是递归</p>
+<p>计算机在处理人类大量抽象化的 ‘符号‘ 会按照不同语句的语法规则，将每个语句（再次强调：语句就是完成某个特定动作的指令，如迈出右腿）所定义的规则，将一条条指令用树的形式组织起来。</p>
+<p>如何理解树这个概念</p>
+<p>树就是我们上班从园区西华门开始到办公室座位，完成这个事件的全部过程</p>
+<p>看到这，我们就发现这里存在大量重复需要判断路口方向的 语句块 ，我们可以将判断路口方向的 ‘行为 ‘打包成 ’判断路口函数‘
+就会变成</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">判断路口函数（）
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">分叉路口，判断方向
+</span></span><span class="line"><span class="cl">     While   bool     直走
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">If  bool   进入大门
+</span></span><span class="line"><span class="cl">        If    bool  判断路口函数（）
+</span></span><span class="line"><span class="cl">                               { 判断路口函数（）
+</span></span><span class="line"><span class="cl">                                              {
+</span></span><span class="line"><span class="cl">判断路口函数（）
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">。。。。。。。。。
+</span></span><span class="line"><span class="cl"> }</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>树是不是十分贴合，这只是为了简便讲述，其实现实很为复杂，即便一条路也受到其他因数的影响，每个事件个体就像一条弦，每个又数以万亿条时间线组合成为人这个个体，人是事件总和的代词，想象一束光源（电影院投影仪）映射在一块幕布上，这一束光通过了空气层，中间有一块块玻璃，映射到幕布
+实体上，假设空气对光约束力相较于玻璃和幕布是弱，而这一过程，无论是玻璃、幕布还是空气，她们都是由一个个光膜平行组成，这是维度不同，越接近光源维度越高，假定最底层幕布的一粒像素点因为幕布的材料变化，导致人看到这个像素点好像丢失，但是实际上只是幕布这是 ’实体‘ 对光粒子（灵魂）约束力变弱了，用三维的角度来看就是二维事件失真了，因为三维空间的高度存在导致三维空间一刀切的结果就是无数二维空间的崩塌，其实二维世界看着是 ‘崩塌’但是，这只是三维世界干预二维的结果，可能在高纬度看来，就就像一束光转到幕布过程中，突然出现了一块小石子，导致小石子以下的维度，那片空间全部消失，但是高纬度的原点映射光源还在，只要幕布之上那边高纬度空间的小石子消失，那片空间将生机盎然。</p>
+<h2 id="那编译器怎么理解语法树的">那编译器怎么理解语法树的
+</h2><p>我前面提到CPU ：一个十分简单的处理机器指令的逻辑电路，简单到不能理解任何稍微复杂表达，但人类天生习惯抽象化的表达</p>
+<p>语法树越顶层越依赖底层</p>
+<p>在二叉树世界，最底层的叶子结点不依赖任何其他节点</p>
+<pre><code>                                34
+                        23                11
+                 12          11       6        5
+                          10     1  4   2    3     2
+                       6     4     2 2  1 1  1 2   1   1
+</code></pre>
+<p>在该二叉树 6  4  2  2  1  1  1  2  1  1为最小叶子结点</p>
+<h2 id="编译器底层与抽象层的翻译官">编译器：底层与抽象层的翻译官
+</h2><blockquote>
+<p>编译器：也叫翻译器，我前面讲过，编译器主要用来将人类认识的代码翻译成CPU可以认识的指令，将人类的代码按照语法的定义把代码用树的形式组织起来，从语法树的最底层叶子结点开始翻译成机器指令，再把结果应用到叶子结点的父节点，父节点又可以将翻译的结果应用到父节点的父节点，一层层向上传递，最终整棵树都可以翻译成具体的机器指令，（代码的本质是递归）和我们写的 ‘hello world’程序没有本质区别，只是更复杂</p>
+</blockquote>
+<p>但是，假设编译器这个翻译官，将南美拉丁语翻译成一串串国际通用的 ‘英语’ ，因为世界上有各式各样的国家（我们假定国家为不同的CPU），因为除了部分母语或 ‘官方通用语言是英语’ 之外的大部分国家其实是无法理解这项语言的，也就是说，联合国发表的一项通用法案想让世界绝大部分国家遵守，这些国家（CPU）只要将法案转成自己本国的母语才能执行。</p>
+<p>显然，我们希望一个人写的代码，尽可能在更多平台运行，但我们又不想将一个X86的程序，重新编译（翻译）ARM（这个国家本土语言），因为这相当与重写代码，那就没办法了吗？</p>
+<p>我们前面说过不同类型的CPU有自己的 ‘语言‘
+而英语，她含有 ‘通用‘ ’标准‘ 的标签 ，但是不同CPU（国家），是由本地几千年演化好了，不可能你英语是国际语言，我就不讲普通话了，既然CPU是设计厂商设计好的，不能修改，那我们可以设计一个外交部，将英语（可执行文件，一推机器指令的集合）解释成中文（机器指令），但是不可能翻译的完美，我们只能以 ’仿真‘ 的形式去模拟英语的语境，我们通过 ’自己定义一套标准处理编译器机器指令的指令’ ，做到 ‘一次编写，到处编译</p>
+<h2 id="虚拟机">虚拟机
+</h2><p>我们把每个国家的外交部，起个高级点的名字&mdash;&ndash;虚拟机，也可以叫解释器，</p>
+<p>有些人可能会混淆编译器和虚拟机的界限
+我们的代码都是按照特定语法（递归）来编写的，编译器在根据该语言（java、python）的语法将java or python 的代码解析成语法树，通过下至上的原则遍历语法树，生成由机器指令构成的可执行文件，然后给虚拟机执行，
+而虚拟机相当于CPU的智脑，告诉CPU 怎么看懂执行。</p>
+<p>虽然高级语言的抽象表达能力很强，代价是牺牲了对底层的控制能力</p>
+<h2 id="小故事">小故事
+</h2><p>就如同一种文字翻译一种文字，由于缺少对当地文化和饮食习惯的了解，加上作者一直受到的是本土化教育和思维的培养，无法感同身受的理解他国单一文字组合在一起会撞出怎么令人热血激昂的火花，且大多数翻译者对本国文化的不自信，大多数译作的结果只能虚有其表，缺其神韵，而后者才是读者与人类几千年来无数优秀灵魂的直视的根本。</p>
+<p>所以回到编译器本身，在计算机世界，小到脚本，web服务器，往往动辄几百上千行，而代码的本质是递归，即为了简化开发维护成本和难度，存在多个源文件项目相互递归调用。</p>
+<p>上面我们讲过编译器，就是一个只有翻译功能的程序（注意，这里只是为了方便讲解编译器只是克服大家对编译器的畏惧心里，希望不要给大家留下编译器很简答的印象，相反，现代编译器是十分智能且极其复杂的，实现一个编译器是困难的，实现一个好的编译器更是难上加难），那一本书翻译过后需要做什么呢？</p>
+<h2 id="linker-链接器">Linker 链接器
+</h2><p>对多个文本进行归纳，整理章节而后装订成书，显然这不是编译器的工作职责，此时我们就需要一个可以实现上述功能的程序&mdash;&ndash;Linker 链接器</p>
+<p>以GCC编译器为例，假设我们使用的while 代码片段属于源文件code.c，经过编译器将人类的代码按照语法的定义把代码用树的形式组织起来，从语法树的最底层叶子结点开始翻译成机器指令，再把结果应用到叶子结点的父节点，父节点又可以将翻译的结果应用到父节点的父节点，一层层向上传递，最终整棵树都可以翻译成具体的机器指令，这些生成的二进制机器指令会被放到一个叫code.o的文件中去，o （object），我们把以.o结尾的文件叫目标文件。</p>
+<p>但是编译器是一个源文件就会生成对应一个目标文件，假设我们的项目比较复杂，有6个源文件，那就会产生6个目标文件，但是我们最终只会有一个可执行的程序，比如我们点QQ、Egde快捷方式一样，就是这快捷方式就是这两个程序的可执行程序exe的地址映射，那显然有什么东西将这6个目标文件整理合并成最终的可执行程序才行，这就是Linker的职责所在</p>
+<p>看而不思—白看
+思而不习—白想
+习而不用—白学</p>
+<p>就拿装订一本书来说，这本书的内容由多个笔者共同执笔完成，每个人负责一部分章节，就是产生以下几种情况：</p>
+<blockquote>
+<p>1)书中的某个章节的论点需要引用其他章节的论据，而好比一个程序依赖其他模块的 ‘编程接口’ 或 ‘变量’ （该变量含有的功能是我们程序不具有的，为什么不自己写一个呢，不要重复发明轮子，这是每个程序员的知道的，其他人写好的程序直接拿来用就好了，前提这是开源代码，这也是计算机为什么发展这么迅猛的重要原因之一，若每个程序员故步自封，设下技术壁垒，这种方式不论对哪个行业将是自取灭亡的结果），如我们在interrupter.c源文件中实现了对我们登录界面的拦截操作，其他模块需要使用到该功能，这就是模块间的依赖，Linker的职责之一就是保证这种依赖是成立的，即被依赖的模块必须找到该接口的实现</p>
+</blockquote>
+<h2 id="被依赖的模块必须找到该接口的实现">被依赖的模块必须找到该接口的实现
+</h2><p>什么叫被依赖的模块必须找到该接口的实现？
+就拿工程师来讲，实现办公需要电脑，但是假设电脑主机虽然有实现鼠标和键盘的功能，但是尴尬的是没有实现鼠标和键盘连接的USB-A接口，那我们怎么办公，可能又有杠精说了，兔兔我蓝牙鼠标键盘不就行了，本质上就是蓝牙模块中集成了实现键盘鼠标连接的接口，而主机就是被依赖的模块（主机由多模块组成），没有USB_A和蓝牙作为该模块接口的实现，主机将是废铜烂铁。</p>
+<p>回到装订书这个例子，每个章节被引用的内容必须存在，这本书才是上下文语境完整的书，这个确认被引用内容存在的操作，在中国论文查重环境逐渐畸形的环境下叫 ‘符号决议’（Symbol Resolution）,我们想成 被引用的外部 ‘符号’ 要在其他模块找到 唯一对应的实现。</p>
+<p>外部： 是其他章节相较于本章节的内容</p>
+<p>‘符号’： 是我只要知道 ‘张三’ 这个人 很会编程就行，可以完成任务，不需要知道 ‘张三’ 是练习时长两年半的练习生，会 ‘唱’ ‘跳’ ‘rap’ , 喜欢看军事，爱好天文学，信点八卦风水学，整天看着天空发呆。。。
+还会一推杂七杂八的兴趣爱好，我打（引用）’张三‘ 的小手机就可以联系到这个人，这就是 ‘调用’ 也叫 ‘引用’</p>
+<p>其他模块找到 唯一对应的实现 ：这就是 ’张三‘ 本人</p>
+<blockquote>
+<p>2)无数个 不同职责的 ’张三‘ 在把自己可以完成什么任务的白皮书内容进行汇总合并后，才能形成一本完整的书，这本书就好比我们通过链接（记录无数个 ’张三‘ 小手机）后最终生成的可执行文件</p>
+</blockquote>
+<blockquote>
+<p>3)既然一本书每个章节被引用的内容必须知道在其他章节的第几页，比如笔者想引用 “篮球如何让男生成为高质量优质男”这一章节的内容，笔者可能会写，“篮球如何让男生成为高质量优质男“的讲解详细请参照第N页，实际上我在写 ” 篮球如何让男生成为高质量优质男 “ 这个章节，我压根就不知道这张的内容到底会在第几页，所以凡是其他章节在引用这篇内容时 我会 篮球如何让男生成为高质量优质男 = N 来表示，只有书定稿了，我才知道这个 N 到底是几 ，假设内容在第618 页，此时我可以用软件 将关键字筛选为 篮球如何让男生成为高质量优质男 ，将所有出现 这60个字节的文字 全部替换为100 ，即 N = 100 ，这就是重定位
+这很想我们excel 通过 查找 将所有与关键字相关不同筛选、替换、删除操作一样。</p>
+</blockquote>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E6%B1%87%E7%BC%96/">汇编</a>
+        
+            <a href="/tags/%E9%80%92%E5%BD%92/">递归</a>
+        
+            <a href="/tags/%E8%A7%A3%E9%87%8A%E5%99%A8/">解释器</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2026 Jeffrey-刘俊丰
+    </section>
+    
+    <section class="powerby">
+        
+            希望这一个开始，将是永恒的初心 <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+
+
+
+<script>
+
+const cssPath = "https://jeffrey-ljf.github.io/waifu/waifu.css"
+const tipsJsonPath = "https://jeffrey-ljf.github.io/waifu/waifu-tips.json"
+const live2d_path = "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/";
+
+
+
+
+
+function loadExternalResource(url, type) {
+	return new Promise((resolve, reject) => {
+		let tag;
+
+		if (type === "css") {
+			tag = document.createElement("link");
+			tag.rel = "stylesheet";
+			tag.href = url;
+		}
+		else if (type === "js") {
+			tag = document.createElement("script");
+			tag.src = url;
+		}
+		if (tag) {
+			tag.onload = () => resolve(url);
+			tag.onerror = () => reject(url);
+			document.head.appendChild(tag);
+		}
+	});
+}
+
+
+if (screen.width >= 768) {
+	Promise.all([
+		loadExternalResource(cssPath, "css"),
+		loadExternalResource(live2d_path + "live2d.min.js", "js"),
+		loadExternalResource(live2d_path + "waifu-tips.js", "js")
+	]).then(() => {
+		
+		initWidget({
+			waifuPath: tipsJsonPath,
+                         
+			
+			cdnPath: "https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/",
+			tools: ["hitokoto", "asteroids", "switch-model", "switch-texture", "photo", "info", "quit"]
+		});
+	});
+}
+
+console.log(`
+  く__,.ヘヽ.        /  ,ー､ 〉
+           ＼ ', !-─‐-i  /  /´
+           ／｀ｰ'       L/／｀ヽ､
+         /   ／,   /|   ,   ,       ',
+       ｲ   / /-‐/  ｉ  L_ ﾊ ヽ!   i
+        ﾚ ﾍ 7ｲ｀ﾄ   ﾚ'ｧ-ﾄ､!ハ|   |
+          !,/7 '0'     ´0iソ|    |
+          |.从"    _     ,,,, / |./    |
+          ﾚ'| i＞.､,,__  _,.イ /   .i   |
+            ﾚ'| | / k_７_/ﾚ'ヽ,  ﾊ.  |
+              | |/i 〈|/   i  ,.ﾍ |  i  |
+             .|/ /  ｉ：    ﾍ!    ＼  |
+              kヽ>､ﾊ    _,.ﾍ､    /､!
+              !'〈//｀Ｔ´', ＼ ｀'7'ｰr'
+              ﾚ'ヽL__|___i,___,ンﾚ|ノ
+                  ﾄ-,/  |___./
+                  'ｰ'    !_,.:
+`);
+</script>
+
+
+
+<div id="particles-js"></div>
+
+<script src=https://jeffrey-ljf.github.io/background/particles.min.js></script>
+<script>
+  particlesJS.load('particles-js', "https://jeffrey-ljf.github.io/background/particlesjs-config.json", function() {
+    console.log('particles.js loaded - callback');
+  });
+</script>
+
+<style>
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;         
+  min-height: 100vh;    
+  z-index: -1;
+  pointer-events: none; 
+  overflow: hidden;     
+}
+ 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+	
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
+
+
+    </body>
+</html>
