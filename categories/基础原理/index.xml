@@ -1,0 +1,2793 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>基础原理 on Jeffrey-刘俊丰</title>
+        <link>https://jeffrey-ljf.github.io/categories/%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/</link>
+        <description>Recent content in 基础原理 on Jeffrey-刘俊丰</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Jeffrey-刘俊丰</copyright>
+        <lastBuildDate>Sun, 11 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://jeffrey-ljf.github.io/categories/%E5%9F%BA%E7%A1%80%E5%8E%9F%E7%90%86/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>永磁无刷电机原理</title>
+        <link>https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/</link>
+        <pubDate>Sun, 11 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/</guid>
+        <description>&lt;img src="https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%8E%9F%E7%90%86.png" alt="Featured image of post 永磁无刷电机原理" /&gt;&lt;h2 id=&#34;电动机原理&#34;&gt;电动机原理
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;所谓电动机，就是用电产生动力的机，其原理就是电磁力之间的转换,通过电磁⼒转换实现运动。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;无刷电机的核心结构&#34;&gt;无刷电机的核心结构
+&lt;/h3&gt;&lt;p&gt;一个简单的无刷电机模型，主要有两部分构成，一个是 &lt;code&gt;定子&lt;/code&gt; 有三个线圈和一个永磁铁线圈固定不动，还有一个就是 &lt;code&gt;转子&lt;/code&gt; ，就是外围的永磁铁。本章主要讲的是正弦波驱动&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;永磁同步PMSM&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;PMSM特性&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;正弦波&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;反电动势&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;具有正弦波反电动势&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;运行电流&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;正弦波电流&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;绕组方式&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;定子绕组为分布绕组，永磁转子形成正弦磁场&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;控制方式&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;控制算法复杂(FOC)&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;运行方式&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;绕组三相全部导通&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;驱动方法&#34;&gt;驱动方法
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;通过改变线圈通电⽅向切换磁极，推动永磁铁旋转&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;线圈固定不动， 永磁铁可以转动。我们知道线圈都可以当做电磁铁。只要给线圈通电，它就会变得和磁铁一样。磁铁同极相斥，异极相吸，所以永磁铁会被电磁铁朝外的两极吸引和排斥。最终达到平衡位置。如果把电磁铁的电源反过来接，它的磁极也会反过来。然后永磁铁也会转到相反的位置，好复习完这些知识，我们就能明白，只用三个线圈，怎么让永磁铁转起来了？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;六步换相驱动法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%85%AD%E6%AD%A5%E6%8D%A2%E7%9B%B8.gif&#34;
+	width=&#34;640&#34;
+	height=&#34;360&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%85%AD%E6%AD%A5%E6%8D%A2%E7%9B%B8_hu_4ba22c418df047f7.gif 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%85%AD%E6%AD%A5%E6%8D%A2%E7%9B%B8_hu_b287e18d5734bf5d.gif 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;六步换相&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;177&#34;
+		data-flex-basis=&#34;426px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;通过依次变换 &lt;code&gt;A点&lt;/code&gt; 、&lt;code&gt;B点&lt;/code&gt;、&lt;code&gt;C点&lt;/code&gt; 三点的电势差，从 $U_{AB}$ -&amp;gt; $U_{CB}$ -&amp;gt; $U_{CA}$ -&amp;gt; $U_{BA}$ -&amp;gt; $U_{BC}$ -&amp;gt; $U_{AC}$按照这个顺序通电。只需要六步，就能让磁铁转一圈，一直重复这一过程，它就转起来了。是不是很简单？我们把电机能转的部分叫做转子固定的部分，叫做定子。把切换三根相线电压正负的过程称之为换相。
+电机转一圈需要换向六次，这就是六步换向驱动法了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;gpio控制三相半桥电路实现无刷电机换相&#34;&gt;GPIO控制三相半桥电路实现无刷电机换相
+&lt;/h2&gt;&lt;h3 id=&#34;三极管三个极&#34;&gt;三极管三个极
+&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;• B = Base  →  基极（控制极）
+
+• E = Emitter  →  发射极（载流子发射端）
+
+• C = Collector  →  集电极（载流子收集端)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;简单讲，B 控制，E 流出，C 流入（NPN），B 控制，E 流入，C 流出（PNP）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/GPIO%E6%8E%A7%E5%88%B6%E4%B8%89%E7%9B%B8%E5%8D%8A%E6%A1%A5%E7%94%B5%E8%B7%AF.gif&#34;
+	width=&#34;640&#34;
+	height=&#34;552&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/GPIO%E6%8E%A7%E5%88%B6%E4%B8%89%E7%9B%B8%E5%8D%8A%E6%A1%A5%E7%94%B5%E8%B7%AF_hu_b4f0aeef977eb118.gif 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/GPIO%E6%8E%A7%E5%88%B6%E4%B8%89%E7%9B%B8%E5%8D%8A%E6%A1%A5%E7%94%B5%E8%B7%AF_hu_a69f2c0b6b21446d.gif 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;GPIO控制三相半桥电路&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;115&#34;
+		data-flex-basis=&#34;278px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;MCU的逻辑信号分别接入&lt;code&gt;PNP型三极管&lt;/code&gt;、&lt;code&gt;NPN型三极管&lt;/code&gt;的控制极（Base基极），上面的&lt;code&gt;PNP型三极管&lt;/code&gt;的E发射极接外部上拉电源3.3V，为V_OUT 提供参考高电压
+而下面的&lt;code&gt;NPN型三极管&lt;/code&gt;的E发射极接 GND, 为V_OUT 提供参考低电压，当二者都不导通时，V_OUT处于悬空状态&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;GPIO_1&lt;/th&gt;
+          &lt;th&gt;GPIO_2&lt;/th&gt;
+          &lt;th&gt;PNP&lt;/th&gt;
+          &lt;th&gt;NPN&lt;/th&gt;
+          &lt;th&gt;V_OUT&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;导通&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;截止&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;接入3.3V&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;1&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;导通&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;导通&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;同时接入3.3V &amp;amp; GND，电源直接短接，三极管爆炸&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;1&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;0&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;截止&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;截止&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;悬空状态&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;1&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;1&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;截止&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;em&gt;导通&lt;/em&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;接入GND&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;⚠️需要注意：当上管和下管直接导通时，电流远远超过500毫安，远超芯片手册的额定功耗P=V×I。所以只需要几秒钟的时间，三极管就烧糊，所以我们在写软件逻辑时，必须学会谨慎操作。因为一个小失误，真的有可能直接烧坏元件。上电之前先排除掉可能出现的意外，多用万用表测测。&lt;/p&gt;
+&lt;h3 id=&#34;三相半桥电路&#34;&gt;三相半桥电路
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/GPIO%E6%8E%A7%E5%88%B6%E4%B8%89%E7%9B%B8%E5%8D%8A%E6%A1%A5%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E6%8D%A2%E7%9B%B8.png&#34;
+	width=&#34;3349&#34;
+	height=&#34;1738&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/GPIO%E6%8E%A7%E5%88%B6%E4%B8%89%E7%9B%B8%E5%8D%8A%E6%A1%A5%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E6%8D%A2%E7%9B%B8_hu_1e19ad790c260016.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/GPIO%E6%8E%A7%E5%88%B6%E4%B8%89%E7%9B%B8%E5%8D%8A%E6%A1%A5%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E6%8D%A2%E7%9B%B8_hu_d5303e3345691bbe.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;GPIO控制三相半桥电路实现无刷电机换相&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;192&#34;
+		data-flex-basis=&#34;462px&#34;
+	
+&gt; &lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%85%AD%E6%AD%A5%E6%8D%A2%E7%9B%B8%E6%AD%A5%E5%BA%8F.png&#34;
+	width=&#34;3846&#34;
+	height=&#34;1727&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%85%AD%E6%AD%A5%E6%8D%A2%E7%9B%B8%E6%AD%A5%E5%BA%8F_hu_6ff61239c81e5e7d.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%85%AD%E6%AD%A5%E6%8D%A2%E7%9B%B8%E6%AD%A5%E5%BA%8F_hu_f41846711cb70b34.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;六步换相步序&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;222&#34;
+		data-flex-basis=&#34;534px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;六步换相控制：通过GPIO控制三相半桥电路实现⽆刷电机换相。
+相序影响：三相接线顺序仅影响电机正反转⽅向，可任意连接。
+⽅向调整：调换任意两相接线可反转电机旋转⽅向。
+控制端连接：上管控制端接`GPIO_PA8-10`，下管控制端接`GPIO_PB13-15`。
+PWM输出口：六个IO口均为⾼级定时器TIM1的PWM输出通道，为后续拓展预留。
+供电要求：需连接板载5V系统供电。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;六步换相源码&#34;&gt;六步换相源码
+&lt;/h3&gt;&lt;h4 id=&#34;电机相序控制宏&#34;&gt;电机相序控制宏
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#include &amp;#34;stm32f10x.h&amp;#34; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//  PA8, PA9, PA10 为 PNP 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//  PB13, PB14, PB15 为 NPN 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_H_SET   do{\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOA, GPIO_Pin_8,Bit_RESET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOB, GPIO_Pin_13,Bit_RESET)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    }while(0)  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_L_SET   do{\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOA, GPIO_Pin_8,Bit_SET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOB, GPIO_Pin_13,Bit_SET)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    }while(0)  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_O_SET   do{\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOA, GPIO_Pin_8,Bit_SET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOB, GPIO_Pin_13,Bit_RESET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    }while(0)  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_H_SET   do{\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOA, GPIO_Pin_9,Bit_RESET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOB, GPIO_Pin_14,Bit_RESET)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    }while(0)  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_L_SET   do{\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOA, GPIO_Pin_9,Bit_SET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOB, GPIO_Pin_14,Bit_SET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    }while(0) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_O_SET   do{\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOA, GPIO_Pin_9,Bit_SET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOB, GPIO_Pin_14,Bit_RESET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    }while(0) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_H_SET   do{\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOA, GPIO_Pin_10,Bit_RESET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOB, GPIO_Pin_15,Bit_RESET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    }while(0)  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_L_SET   do{\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOA, GPIO_Pin_10,Bit_SET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOB, GPIO_Pin_15,Bit_SET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    }while(0)  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_O_SET   do{\
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOA, GPIO_Pin_10,Bit_SET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                  GPIO_WriteBit(GPIOB, GPIO_Pin_15,Bit_RESET) 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    }while(0) &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h4 id=&#34;过零检测&#34;&gt;过零检测
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;  1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 67
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 68
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 69
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 70
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 71
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 72
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 73
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 74
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 75
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 76
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 77
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 78
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 79
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 80
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 81
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 82
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 83
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 84
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 85
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 86
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 87
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 88
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 89
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 90
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 91
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 92
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 93
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 94
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 95
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 96
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 97
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 98
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 99
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;100
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;101
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;102
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;103
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;104
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;105
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// --- 全局变量 ---
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;volatile uint8_t step_reg = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint16_t time_set = 500; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void Delay_ms(uint16_t ms)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    uint32_t i, j;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    for(i = 0; i &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;ms&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;++)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;na&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;j &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;0;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;j&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;8000&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;++);&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;na&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;RCC_APB2PeriphClockCmd&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;RCC_APB2Periph_TIM1&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;ENABLE&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;RCC_APB2PeriphClockCmd&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;RCC_APB2Periph_GPIOA&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;RCC_APB2Periph_GPIOB&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;ENABLE&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;GPIO_InitTypeDef&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_InitStructure&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;GPIO_InitStructure&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIO_Mode &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;GPIO_Mode_Out_PP;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;GPIO_InitStructure&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIO_Pin &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;GPIO_Pin_8&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_9&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_10&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;GPIO_InitStructure&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIO_Speed &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;GPIO_Speed_50MHz;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;GPIO_Init&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIOA&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIO_InitStructure&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;GPIO_InitStructure&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIO_Pin &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;GPIO_Pin_13&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_14&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_15&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;GPIO_Init&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIOB&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIO_InitStructure&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;GPIO_ResetBits&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIOA&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_8&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_9&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_10&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;GPIO_ResetBits&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;GPIOB&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_13&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_14&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;GPIO_Pin_15&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   &lt;span class=&#34;na&#34;&gt;Delay_ms&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;time_set&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   &lt;span class=&#34;na&#34;&gt;step_reg&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;++;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   &lt;span class=&#34;na&#34;&gt;step_reg&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;%=&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;6&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   &lt;span class=&#34;na&#34;&gt;switch&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;step_reg&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   &lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;0:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;C_0_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;B_L_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;1:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;A_O_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;C_H_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;2:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;B_O_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;A_L_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;3:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;C_O_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;B_H_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;4:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;A_O_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;C_L_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;5:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;A_H_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;na&#34;&gt;B_0_SET&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;break&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;na&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;zero_point_control&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;zero_state &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   &lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;zero_count&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;++;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;na&#34;&gt;if&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;zero_count&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;= 4)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    zero_count = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    zero_state = 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    step_T = time_count;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    time_count = 0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    else
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     zero_count == 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    } 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  else if(zero_state == 1)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    if(time_count &amp;gt; step_T/2)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     zero_state = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     step_reg = (step_reg+1)%6;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    } 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;反电动势原理&#34;&gt;反电动势原理
+&lt;/h2&gt;&lt;p&gt;首先电机的原理已经有所了解，就是电转势、势转力的过程，而反过来，力也可转势、再势转电，所以无刷电机也可以是发电机。&lt;/p&gt;
+&lt;p&gt;无刷电机的三条逻辑线任意选两根线接到 &lt;code&gt;LED&lt;/code&gt; 上，用手拨动电机，会发现LED神奇的亮起来了，而且随我们拨动越快，LED就越亮，
+通过示波器的探针接到这两根线，我们可以看到，转电机的时候会产生正弦变化的电压，这就是 &lt;code&gt;反电动势&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;从示波器视图中可以发现一些规律，比如转得越快，电压越高，频率越快&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;○	电机兼具电动和发电特性，转动无刷电机可产生正弦变化的反电动势，转速越快，反电动势电压越高、频率越高，其幅值与转子转速正相关。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;电磁感应定律&#34;&gt;电磁感应定律
+&lt;/h3&gt;&lt;p&gt;$U_{b}(θ) = n B S w cos θ$&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$U_{b}$ 表示电机反电动势
+θ表示转子磁场和线圈横截面的角度
+&lt;code&gt;n&lt;/code&gt; 表示线圈匝数
+&lt;code&gt;B&lt;/code&gt;表示匀强磁场强度
+&lt;code&gt;S&lt;/code&gt;表示线圈横截面积
+w表示转子转速&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;其中&lt;code&gt;n&lt;/code&gt; 、&lt;code&gt;B&lt;/code&gt;、&lt;code&gt;S&lt;/code&gt; 都是电机自身固定的参数，我们只需要看 &lt;code&gt;欧米伽w&lt;/code&gt; 、 &lt;code&gt;西塔θ &lt;/code&gt; ，这二位美女就可以了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;转速&lt;code&gt;欧米伽&lt;/code&gt;越大反电动势幅值越大，同时角度&lt;code&gt;西塔&lt;/code&gt;变化也越快，波形也越密集，这与之前实验观察的结论一致。现在如果我们在外部接入一个电源，使其产生正向电流，让它变回一个电动机。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;设定$U_{A}$是电源，电压$U_{B}$是反电动势，$U_{r}$是线圈内阻分压。根据基尔霍夫电压定律，在同一回路中，两个电压互为相反数可得：$U_{A}+U_{B}+U_{r}=0$&lt;/p&gt;
+&lt;h3 id=&#34;基尔霍夫电压定律&#34;&gt;基尔霍夫电压定律
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E7%94%B5%E5%8E%8B%E5%AE%9A%E5%BE%8B.png&#34;
+	width=&#34;2230&#34;
+	height=&#34;836&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E7%94%B5%E5%8E%8B%E5%AE%9A%E5%BE%8B_hu_a61e5b37d2684af0.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E7%94%B5%E5%8E%8B%E5%AE%9A%E5%BE%8B_hu_d14af82ce19e6b60.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;基尔霍夫电压定律&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;266&#34;
+		data-flex-basis=&#34;640px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;由基尔霍夫电压定律推导电路电压关系，明确电源电压、反电动势、线圈内阻分压的关联，且需先界定回路和方向再分析电压。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在下图中，我们设定顺时针为正方向电源，在这个回路中的电压等于下侧节点电势。减去上侧节点电势，所以是负数，而电流与参考方向相同，是正数。电流与电压相乘，是负数。所以电能做负功。在电源内部表现为电池化学能转化为电能。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%94%B5%E6%B1%A0%E5%8C%96%E5%AD%A6%E8%83%BD%E8%BD%AC%E5%8C%96%E4%B8%BA%E7%94%B5%E8%83%BD.png&#34;
+	width=&#34;2376&#34;
+	height=&#34;939&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%94%B5%E6%B1%A0%E5%8C%96%E5%AD%A6%E8%83%BD%E8%BD%AC%E5%8C%96%E4%B8%BA%E7%94%B5%E8%83%BD_hu_96ebe5c81f0c0df6.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%94%B5%E6%B1%A0%E5%8C%96%E5%AD%A6%E8%83%BD%E8%BD%AC%E5%8C%96%E4%B8%BA%E7%94%B5%E8%83%BD_hu_6880efaee05ec873.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;电池化学能转化为电能&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;253&#34;
+		data-flex-basis=&#34;607px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;这才与常理一致。明白这个原理，就知道这个等式为什么这么写了，我们回到熟悉的六步换向对三个线圈分别列出电磁感应公式。设定A线圈与磁场角度为&lt;code&gt;西塔θ&lt;/code&gt;，转子转速为&lt;code&gt;欧米伽w&lt;/code&gt;，正极朝外,就有   $U_{Ab}(θ) = n B S w cos θ_{A}$  ，因为共用同一转子，&lt;code&gt;欧米伽w&lt;/code&gt;相同,而 &lt;code&gt;西塔θ&lt;/code&gt; 是三个线圈与同一转子的角度，三个线圈两两互为120°呈现旋转对称，按照同样设定列出其他两个公式，都是正极朝外，所以有$θ_{A} = θ_{B} - 120° = θ_{C} + 120° $&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%85%B1%E7%94%A8%E5%90%8C%E4%B8%80%E8%BD%AC%E5%AD%90_%E6%AC%A7%E7%B1%B3%E4%BC%BDw%E7%9B%B8%E5%90%8C.png&#34;
+	width=&#34;2329&#34;
+	height=&#34;1001&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%85%B1%E7%94%A8%E5%90%8C%E4%B8%80%E8%BD%AC%E5%AD%90_%E6%AC%A7%E7%B1%B3%E4%BC%BDw%E7%9B%B8%E5%90%8C_hu_c25376c2dbc42406.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%85%B1%E7%94%A8%E5%90%8C%E4%B8%80%E8%BD%AC%E5%AD%90_%E6%AC%A7%E7%B1%B3%E4%BC%BDw%E7%9B%B8%E5%90%8C_hu_b85688ade81679df.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;共用同一转子_欧米伽w相同&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;232&#34;
+		data-flex-basis=&#34;558px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;只要导体（绕组线圈）在磁场中做相对运动，切割磁感线，就会在导体两端感应出电动势（电压），和导体里有没有电流、有没有接负载，完全没有关系。&lt;/p&gt;
+&lt;p&gt;就像发电机：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;●	发电机的线圈在磁场里转动，哪怕你不接任何负载、线圈里没有电流，线圈两端依然会感应出电压，这就是反电动势的本质。
+
+●	电机的绕组，本质就是发电机的线圈：只要转子带着磁场在转动，绕组就会切割磁感线，持续产生反电动势，和绕组有没有通电、有没有电流，完全是两个独立的物理过程。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;三相&#34;&gt;三相
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;图里的状态是：A、B相导通（有电流，驱动电机），C相悬空（无电流）
+转子在持续转动：A、B相的电流产生的磁场，推着转子磁场旋转，整个电机在高速转动。
+C相绕组一直在切割磁感线：C相的线圈，和转子的永磁磁场一直在做相对运动，持续切割磁感线。
+电磁感应产生$ U_{Cb}$：根据法拉第定律，C相绕组两端会感应出反电动势$ U_{Cb}$，哪怕C相悬空、线圈里没有任何电流，这个电压依然存在。
+为什么要悬空？ 只有让C相完全悬空、没有电流，C相的端电压才只由反电动势决定（没有电阻压降 ），我们才能通过ADC采样C相电压，精准检测反电动势的过零点，判断转子位置。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;三个定子线圈呈120°旋转对称，共用同一转子，反电动势满足旋转对称的三角函数规律，可通过公式2UC-UB-UA=3UCB消除内阻分压，得到纯粹的反电动势。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;力矩与六步换向的角度优化&#34;&gt;力矩与六步换向的角度优化
+&lt;/h3&gt;&lt;p&gt;线圈在磁场中的力矩随与转子磁场的角度变化，0°时力矩最大，90°时为0，180°时反向最大；无刷电机始终两个线圈同时通电，合力矩等效于一个根号三倍的虚拟线圈。&lt;/p&gt;
+&lt;p&gt;六步换向每步转子转过60°，为提升力矩效率，需将最大扭矩点落在60°区间中点，即换向初始角度-30°、结束角度+30°。&lt;/p&gt;
+&lt;p&gt;虚拟线圈的轴向角度与悬空线圈的径向角度一致，悬空线圈反电动势过零点出现在轴向角度-90°，且检测到过零点后，需等转子再转30°再换向。&lt;/p&gt;
+&lt;h3 id=&#34;反电动势波形的实验验证&#34;&gt;反电动势波形的实验验证
+&lt;/h3&gt;&lt;p&gt;强制六步换向实验：打印出的反电动势波形能观察到转子振荡、自感脉冲，但因虚拟线圈角度为-60°到0°，错过过零点，无法检测。&lt;/p&gt;
+&lt;p&gt;三步换向实验：让线圈磁场一次转120°（步序加二），转子追赶阶段为-120°到0°，成功捕捉到悬空线圈-90°处的过零点，且波形峰值更大，验证了过零点的存在。&lt;/p&gt;
+&lt;p&gt;实验中观察到换向时线圈断开会产生高压尖峰，但通过50%PWM长时间测试，IO口可承受该瞬时电流和电压。&lt;/p&gt;
+&lt;h3 id=&#34;过零检测与电机启动闭环控制方案&#34;&gt;过零检测与电机启动/闭环控制方案
+&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;○	启动方案：先强制换向到第零步并保持100毫秒，让电机归位且振荡消失；再换向到第二步保持5毫秒，转子转过30°经过首个不明显过零点；最后换向到第三步，线圈领先转子150°，转子持续加速并出现清晰过零点，此时接入闭环控制。
+
+○	闭环过零检测换向：检测到反电动势过零点后计时，计时达到换相间隔一半时换向，循环“等待过零点-等待半周期延时”两个环节；需先设定换相周期初始值，再通过统计两次换向间隔时长持续刷新周期。
+
+○	干扰解决：过零检测中易受线圈自感尖峰、电磁干扰影响出现丢步和振荡，可采用软件滤波（连续四次判定过零为真再动作）过滤脉冲干扰。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&#34;根据反电动势波形精确控制六步换相&#34;&gt;根据反电动势波形精确控制六步换相
+&lt;/h4&gt;&lt;p&gt;产生
+通过检测反电动势波形，实现过零检测算法&lt;/p&gt;
+&lt;p&gt;在找零点之前，我们首先了解力矩的概念，回到上面六步换相，对 &lt;code&gt;A线圈&lt;/code&gt; 的电磁感应公式，将 A设定为 &lt;code&gt;H&lt;/code&gt;状态， 此时设定 &lt;code&gt;A线圈&lt;/code&gt; 与转子的磁场角度为西塔θ，
+转子转速为欧米伽ω,根据右手定则得出， &lt;code&gt;A线圈&lt;/code&gt; 正极朝外，就有$U_{Ab}=nBSωcosθ_{A}$
+同样设定下，分别让 B、C 设定为 &lt;code&gt;H&lt;/code&gt;状态,得出都是正极朝外的结果。
+其中，转速欧米伽，由于三个线圈共用一个转子，所以三者的欧米伽ω相同。
+而 &lt;code&gt;线圈与转子的磁场角度&lt;/code&gt;西塔θ是三个线圈与同一个转子的角度，三个线圈两两互为120°呈现旋转对称，所以有下面规律：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$ θ_{A}$ = $θ_{B}$ - 120°
+$θ_{A}$ = $θ_{C}$ + 120°&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;力矩的概念&#34;&gt;力矩的概念
+&lt;/h2&gt;&lt;h3 id=&#34;安培定律&#34;&gt;安培定律
+&lt;/h3&gt;&lt;p&gt;安培定律推到出线圈在匀强磁场的力矩公式&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%8C%80%E5%BC%BA%E7%A3%81%E5%9C%BA%E7%9A%84%E5%8A%9B%E7%9F%A9%E5%85%AC%E5%BC%8F.png&#34;
+	width=&#34;2003&#34;
+	height=&#34;1050&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%8C%80%E5%BC%BA%E7%A3%81%E5%9C%BA%E7%9A%84%E5%8A%9B%E7%9F%A9%E5%85%AC%E5%BC%8F_hu_207b432a694bbecb.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%8C%80%E5%BC%BA%E7%A3%81%E5%9C%BA%E7%9A%84%E5%8A%9B%E7%9F%A9%E5%85%AC%E5%BC%8F_hu_1a7e9f9fd483d96.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;匀强磁场的力矩公式&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;190&#34;
+		data-flex-basis=&#34;457px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;力&lt;/th&gt;
+          &lt;th&gt;公式&lt;/th&gt;
+          &lt;th&gt;Remark&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;力矩M&lt;/td&gt;
+          &lt;td&gt;M=nBSIcosθ&lt;/td&gt;
+          &lt;td&gt;力矩公式中包含电流 I,θ 为法线与磁场夹角&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;感应电动势E&lt;/td&gt;
+          &lt;td&gt;U=nBSωcosθ&lt;/td&gt;
+          &lt;td&gt;θ 为定子横截面与转子磁场夹角&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;结果匀强磁场的力矩公式和电磁感应公式展示出惊人的一致性，这并非巧合。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%8A%9B%E7%9F%A9%E5%85%AC%E5%BC%8F%E5%92%8C%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E5%85%AC%E5%BC%8F%E7%9A%84%E6%83%8A%E4%BA%BA%E4%B8%80%E8%87%B4%E6%80%A7.png&#34;
+	width=&#34;1642&#34;
+	height=&#34;759&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%8A%9B%E7%9F%A9%E5%85%AC%E5%BC%8F%E5%92%8C%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E5%85%AC%E5%BC%8F%E7%9A%84%E6%83%8A%E4%BA%BA%E4%B8%80%E8%87%B4%E6%80%A7_hu_c7c6fece7cca52ca.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%8A%9B%E7%9F%A9%E5%85%AC%E5%BC%8F%E5%92%8C%E7%94%B5%E7%A3%81%E6%84%9F%E5%BA%94%E5%85%AC%E5%BC%8F%E7%9A%84%E6%83%8A%E4%BA%BA%E4%B8%80%E8%87%B4%E6%80%A7_hu_ce4ff48f1ffb860d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;力矩公式和电磁感应公式的惊人一致性&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;216&#34;
+		data-flex-basis=&#34;519px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;爱因斯坦在狭义相对论已经论证了，&lt;code&gt;磁场&lt;/code&gt;和&lt;code&gt;电场&lt;/code&gt;是&lt;code&gt;不同参考系&lt;/code&gt;下的&lt;code&gt;同一个实体&lt;/code&gt;，电磁感应定律和洛伦公式描述的其实是&lt;code&gt;同一个物理现象&lt;/code&gt;。
+根据牛顿第三定律得出，线圈受到的力矩和转子的受到的力矩等向反大 (去除非匀强磁场的影响)&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;θ&lt;/th&gt;
+          &lt;th&gt;力矩大小&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;0°&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;正向最大&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;90°零点位置&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;减至零&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;180°&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;反向最大&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BD%AC%E5%AD%90%E5%9C%A8%E4%B8%8D%E5%90%8C%E8%A7%92%E5%BA%A6%E4%B8%8B%E7%9A%84%E5%8A%9B%E7%9F%A9%E5%A4%A7%E5%B0%8F.gif&#34;
+	width=&#34;640&#34;
+	height=&#34;272&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BD%AC%E5%AD%90%E5%9C%A8%E4%B8%8D%E5%90%8C%E8%A7%92%E5%BA%A6%E4%B8%8B%E7%9A%84%E5%8A%9B%E7%9F%A9%E5%A4%A7%E5%B0%8F_hu_a18702c5b3f8bd06.gif 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BD%AC%E5%AD%90%E5%9C%A8%E4%B8%8D%E5%90%8C%E8%A7%92%E5%BA%A6%E4%B8%8B%E7%9A%84%E5%8A%9B%E7%9F%A9%E5%A4%A7%E5%B0%8F_hu_14dedd120ec80ec.gif 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;转子在不同角度下的力矩大小&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;235&#34;
+		data-flex-basis=&#34;564px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;而电机要的就是力矩，只有 &lt;code&gt;0°&lt;/code&gt; 时，力矩最大，效率最高,这是无刷电机工作的关键&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/0%C2%B0%60%E6%97%B6_%E5%8A%9B%E7%9F%A9%E6%9C%80%E5%A4%A7%E6%95%88%E7%8E%87%E6%9C%80%E9%AB%98.png&#34;
+	width=&#34;2041&#34;
+	height=&#34;847&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/0%C2%B0%60%E6%97%B6_%E5%8A%9B%E7%9F%A9%E6%9C%80%E5%A4%A7%E6%95%88%E7%8E%87%E6%9C%80%E9%AB%98_hu_e69cf07c2ef15fa9.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/0%C2%B0%60%E6%97%B6_%E5%8A%9B%E7%9F%A9%E6%9C%80%E5%A4%A7%E6%95%88%E7%8E%87%E6%9C%80%E9%AB%98_hu_6e8ebb84f88c8327.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;0° 时 , 力矩最大效率最高&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;240&#34;
+		data-flex-basis=&#34;578px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;虚拟线圈的最大扭矩角度&#34;&gt;虚拟线圈的最大扭矩角度
+&lt;/h3&gt;&lt;p&gt;无刷电机工作的原理：两个线圈同时通电，夹角为120度，最后一个线圈处于悬空状态&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;和前面论证单个力矩不同的是，无刷电机总有两个线圈同时通电，所以我们先要计算两个力矩的合力
+首先是两个线圈&lt;code&gt;西塔θ&lt;/code&gt;夹角为120°，&lt;code&gt;A线圈&lt;/code&gt;和&lt;code&gt;B线圈&lt;/code&gt;的电流方向互为相反数&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;力矩&lt;/th&gt;
+          &lt;th&gt;公式&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;$M_{A}$&lt;/td&gt;
+          &lt;td&gt;$nBSIcosθ_{A}$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;$M_{B}$&lt;/td&gt;
+          &lt;td&gt;$-nBSIcosθ_{B}$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;$M_{N}$= $M_{A}$ + $M_{B}$&lt;/td&gt;
+          &lt;td&gt;$ \sqrt{3} $ nBSI($cosθ_{B}$ - 30°)&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E4%B8%A4%E4%B8%AA%E5%8A%9B%E7%9F%A9%E7%9A%84%E5%90%88%E5%8A%9B.png&#34;
+	width=&#34;2321&#34;
+	height=&#34;1026&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E4%B8%A4%E4%B8%AA%E5%8A%9B%E7%9F%A9%E7%9A%84%E5%90%88%E5%8A%9B_hu_a48a08b5aad169ea.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E4%B8%A4%E4%B8%AA%E5%8A%9B%E7%9F%A9%E7%9A%84%E5%90%88%E5%8A%9B_hu_a9e8f84e436f472e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;两个线圈的合力&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;226&#34;
+		data-flex-basis=&#34;542px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;上面可得，两个线圈的合力等于一个$ \sqrt{3} $ 的线圈摆在下图这个位置，结果和之前的磁铁定性分析一致。&lt;/p&gt;
+&lt;p&gt;虚拟线圈的最大扭矩角度&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%99%9A%E6%8B%9F%E7%BA%BF%E5%9C%88%E7%9A%84%E6%9C%80%E5%A4%A7%E6%89%AD%E7%9F%A9%E8%A7%92%E5%BA%A6.png&#34;
+	width=&#34;1139&#34;
+	height=&#34;898&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%99%9A%E6%8B%9F%E7%BA%BF%E5%9C%88%E7%9A%84%E6%9C%80%E5%A4%A7%E6%89%AD%E7%9F%A9%E8%A7%92%E5%BA%A6_hu_377b34a8d2956c11.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%99%9A%E6%8B%9F%E7%BA%BF%E5%9C%88%E7%9A%84%E6%9C%80%E5%A4%A7%E6%89%AD%E7%9F%A9%E8%A7%92%E5%BA%A6_hu_885f5f72b852fe15.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;虚拟线圈的最大扭矩角度：0°&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;126&#34;
+		data-flex-basis=&#34;304px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;六步换相角度&#34;&gt;六步换相角度
+&lt;/h2&gt;&lt;p&gt;每一步转子转过60°，最大效率就是让&lt;code&gt;扭转点&lt;/code&gt;放在60°区间的中点，此时力矩最大&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/60%C2%B0%E5%8C%BA%E9%97%B4%E7%9A%84%E6%9C%80%E5%A4%A7%E6%89%AD%E7%9F%A9%E7%82%B9.png&#34;
+	width=&#34;848&#34;
+	height=&#34;707&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/60%C2%B0%E5%8C%BA%E9%97%B4%E7%9A%84%E6%9C%80%E5%A4%A7%E6%89%AD%E7%9F%A9%E7%82%B9_hu_39ffc88cea7acbff.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/60%C2%B0%E5%8C%BA%E9%97%B4%E7%9A%84%E6%9C%80%E5%A4%A7%E6%89%AD%E7%9F%A9%E7%82%B9_hu_4790c9c158250e60.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;60°区间的最大扭矩点&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;119&#34;
+		data-flex-basis=&#34;287px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;换相优化&#34;&gt;换相优化
+&lt;/h4&gt;&lt;p&gt;也就是说，按六步换相来讲，每一步刚开始时的角度为-30°，结束角度为+30°时，换相角度获得力矩为最高效率&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E6%8D%A2%E7%9B%B8%E4%BC%98%E5%8C%96.png&#34;
+	width=&#34;778&#34;
+	height=&#34;687&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E6%8D%A2%E7%9B%B8%E4%BC%98%E5%8C%96_hu_c9b1b96aee3b2618.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E6%8D%A2%E7%9B%B8%E4%BC%98%E5%8C%96_hu_e41bca6640665f94.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;换相优化&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;113&#34;
+		data-flex-basis=&#34;271px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;虚拟线圈&#34;&gt;虚拟线圈
+&lt;/h2&gt;&lt;p&gt;为了直观，我们用虚拟线圈的轴向直线和转子的角度来分析。那么，前面的径向角度&lt;code&gt;-30°&lt;/code&gt;到&lt;code&gt;+30°度&lt;/code&gt;就变成了轴向的&lt;code&gt;-120°&lt;/code&gt;到&lt;code&gt;-60°&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%99%9A%E6%8B%9F%E7%BA%BF%E5%9C%88%E7%9A%84%E8%BD%B4%E5%90%91%E7%9B%B4%E7%BA%BF%E5%92%8C%E8%BD%AC%E5%AD%90%E7%9A%84%E8%A7%92%E5%BA%A6.gif&#34;
+	width=&#34;640&#34;
+	height=&#34;360&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%99%9A%E6%8B%9F%E7%BA%BF%E5%9C%88%E7%9A%84%E8%BD%B4%E5%90%91%E7%9B%B4%E7%BA%BF%E5%92%8C%E8%BD%AC%E5%AD%90%E7%9A%84%E8%A7%92%E5%BA%A6_hu_11fd179a881fab46.gif 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%99%9A%E6%8B%9F%E7%BA%BF%E5%9C%88%E7%9A%84%E8%BD%B4%E5%90%91%E7%9B%B4%E7%BA%BF%E5%92%8C%E8%BD%AC%E5%AD%90%E7%9A%84%E8%A7%92%E5%BA%A6_hu_b9cd6c18156d16d0.gif 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;虚拟线圈的轴向直线和转子的角度&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;177&#34;
+		data-flex-basis=&#34;426px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;除了直观还有一个好处，就是&lt;code&gt;虚拟线圈的轴向角度&lt;/code&gt;恰好等于&lt;code&gt;悬空线圈的径向角度&lt;/code&gt;。所以B线圈的径向角度也是&lt;code&gt;-120°&lt;/code&gt;到&lt;code&gt;-60°&lt;/code&gt;。而这个区间对应的反电动势曲线如图。其中点&lt;code&gt;-90°&lt;/code&gt;，就是过零点。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/-90%C2%B0%E4%B8%BA%E8%BF%87%E9%9B%B6%E7%82%B9.png&#34;
+	width=&#34;815&#34;
+	height=&#34;516&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/-90%C2%B0%E4%B8%BA%E8%BF%87%E9%9B%B6%E7%82%B9_hu_884954946b124a99.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/-90%C2%B0%E4%B8%BA%E8%BF%87%E9%9B%B6%E7%82%B9_hu_e956a9a9eb26f1e7.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;-90°为过零点&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;157&#34;
+		data-flex-basis=&#34;379px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;好消息是$U_{B}$确实经过了零点。坏消息是这个零点没那么贴心，并不是说检测到零点就可以换相了。而是要在零点出现之后，再等转子&lt;code&gt;转过30度&lt;/code&gt;才开始换向。我们把虚线平移到这里，当然角度还是不变的。我们只要知道两个通电线圈的连线与转子磁场的角度，就是悬空线圈反电动势的角度就行了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E9%80%9A%E7%94%B5%E7%BA%BF%E5%9C%88%E7%9A%84%E8%BF%9E%E7%BA%BF%E4%B8%8E%E8%BD%AC%E5%AD%90%E7%A3%81%E5%9C%BA%E7%9A%84%E8%A7%92%E5%BA%A6%E7%AD%89%E4%BA%8E%E6%82%AC%E7%A9%BA%E7%BA%BF%E5%9C%88%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%9A%84%E8%A7%92%E5%BA%A6.png&#34;
+	width=&#34;1179&#34;
+	height=&#34;872&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E9%80%9A%E7%94%B5%E7%BA%BF%E5%9C%88%E7%9A%84%E8%BF%9E%E7%BA%BF%E4%B8%8E%E8%BD%AC%E5%AD%90%E7%A3%81%E5%9C%BA%E7%9A%84%E8%A7%92%E5%BA%A6%E7%AD%89%E4%BA%8E%E6%82%AC%E7%A9%BA%E7%BA%BF%E5%9C%88%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%9A%84%E8%A7%92%E5%BA%A6_hu_220ff3c88f152bcf.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E9%80%9A%E7%94%B5%E7%BA%BF%E5%9C%88%E7%9A%84%E8%BF%9E%E7%BA%BF%E4%B8%8E%E8%BD%AC%E5%AD%90%E7%A3%81%E5%9C%BA%E7%9A%84%E8%A7%92%E5%BA%A6%E7%AD%89%E4%BA%8E%E6%82%AC%E7%A9%BA%E7%BA%BF%E5%9C%88%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%9A%84%E8%A7%92%E5%BA%A6_hu_301a9c6bf1eefc7d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;通电线圈的连线与转子磁场的角度等于悬空线圈反电动势的角度&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;135&#34;
+		data-flex-basis=&#34;324px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;过零点分析&#34;&gt;过零点分析
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;过零点分析：通过虚拟线圈轴向直线和转⼦⻆度进⾏直观分析。&lt;/li&gt;
+&lt;li&gt;⻆度转换：径向⻆度负30度到正30度对应轴向负120度到负60度。&lt;/li&gt;
+&lt;li&gt;虚拟线圈特性：虚拟线圈轴向⻆度等于&lt;code&gt;悬空线圈&lt;/code&gt;径向⻆度。&lt;/li&gt;
+&lt;li&gt;反电动势曲线：B线圈径向⻆度负120度到负60度对应特定反电动势曲线。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;过零点位置：反电动势曲线中负90度为过零点。&lt;/li&gt;
+&lt;li&gt;换相时机：检测到过零点后需等待转⼦再转过30度才开始换向。&lt;/li&gt;
+&lt;li&gt;⻆度关系：通电线圈连线与转⼦磁场⻆度等于悬空线圈反电动势⻆度。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;反电动势的求出&#34;&gt;反电动势的求出
+&lt;/h3&gt;&lt;p&gt;我们需要想办法使用三个ADC检测的电压将反电动势算出来，根据基尔霍夫定压定律有: $(U_{B}-U_{C}) + U_{Cb}-U_{Bb} + U_{Br} =0$。&lt;/p&gt;
+&lt;p&gt;又因为三个线圈的反电动势是旋转对称，他们的正极都是朝外，通过消除内阻分压，利用三角函数诱导公式简化得到纯粹的反电动势&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%BA%BF%E5%9C%88%E6%82%AC%E7%A9%BA%E6%97%B6%E7%BA%AF%E7%B2%B9%E7%9A%84%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF.png&#34;
+	width=&#34;2289&#34;
+	height=&#34;1086&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%BA%BF%E5%9C%88%E6%82%AC%E7%A9%BA%E6%97%B6%E7%BA%AF%E7%B2%B9%E7%9A%84%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF_hu_e4e795f47c866af2.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%BA%BF%E5%9C%88%E6%82%AC%E7%A9%BA%E6%97%B6%E7%BA%AF%E7%B2%B9%E7%9A%84%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF_hu_fa14975b8d6b924e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;线圈悬空时纯粹的反电动势&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;210&#34;
+		data-flex-basis=&#34;505px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;过零检测所需的所有信息&#34;&gt;过零检测所需的所有信息
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E6%A3%80%E6%B5%8B%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF.png&#34;
+	width=&#34;2161&#34;
+	height=&#34;906&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E6%A3%80%E6%B5%8B%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF_hu_48fc3aaa9f3a9fed.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E6%A3%80%E6%B5%8B%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF_hu_acd744e0c34c735a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;过零检测所需的所有信息&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;572px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;反电动势的波形&#34;&gt;反电动势的波形
+&lt;/h3&gt;&lt;p&gt;用串口助手将反电动势波形打印出来&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E4%B8%B2%E5%8F%A3%E5%8A%A9%E6%89%8B%E6%89%93%E5%8D%B0%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E6%B3%A2%E5%BD%A2.gif&#34;
+	width=&#34;640&#34;
+	height=&#34;240&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E4%B8%B2%E5%8F%A3%E5%8A%A9%E6%89%8B%E6%89%93%E5%8D%B0%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E6%B3%A2%E5%BD%A2_hu_dd8951308c733161.gif 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E4%B8%B2%E5%8F%A3%E5%8A%A9%E6%89%8B%E6%89%93%E5%8D%B0%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E6%B3%A2%E5%BD%A2_hu_dfe567bd0411c738.gif 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;串口助手打印反电动势波形&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;266&#34;
+		data-flex-basis=&#34;640px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;从 转子震荡和自感脉冲曲线，看三个相悬空时的反电动势波形，从每个相悬空时的波形可以看出，找不到发生在-90度时的零点&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E6%89%BE%E4%B8%8D%E5%88%B0%E5%8F%91%E7%94%9F%E5%9C%A8-90%E5%BA%A6%E6%97%B6%E7%9A%84%E9%9B%B6%E7%82%B9.png&#34;
+	width=&#34;2245&#34;
+	height=&#34;846&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E6%89%BE%E4%B8%8D%E5%88%B0%E5%8F%91%E7%94%9F%E5%9C%A8-90%E5%BA%A6%E6%97%B6%E7%9A%84%E9%9B%B6%E7%82%B9_hu_e22467beadf8b286.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E6%89%BE%E4%B8%8D%E5%88%B0%E5%8F%91%E7%94%9F%E5%9C%A8-90%E5%BA%A6%E6%97%B6%E7%9A%84%E9%9B%B6%E7%82%B9_hu_4ad4bd732e6dd89d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;找不到发生在-90度时的零点&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;265&#34;
+		data-flex-basis=&#34;636px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;由于六步这种强制换相，每次换相时，虚拟线圈的角度在-60°到0°，早就错过-90°过零点&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E9%94%99%E8%BF%87-90%C2%B0%E8%BF%87%E9%9B%B6%E7%82%B9.gif&#34;
+	width=&#34;640&#34;
+	height=&#34;480&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E9%94%99%E8%BF%87-90%C2%B0%E8%BF%87%E9%9B%B6%E7%82%B9_hu_75f23821e351db8a.gif 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E9%94%99%E8%BF%87-90%C2%B0%E8%BF%87%E9%9B%B6%E7%82%B9_hu_1d81081b855e40d5.gif 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;错过-90°过零点&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;震荡曲线的构成&#34;&gt;震荡曲线的构成
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E9%9C%87%E8%8D%A1%E6%9B%B2%E7%BA%BF%E7%9A%84%E6%9E%84%E6%88%90.png&#34;
+	width=&#34;2279&#34;
+	height=&#34;811&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E9%9C%87%E8%8D%A1%E6%9B%B2%E7%BA%BF%E7%9A%84%E6%9E%84%E6%88%90_hu_f5ebf9f77c480c02.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E9%9C%87%E8%8D%A1%E6%9B%B2%E7%BA%BF%E7%9A%84%E6%9E%84%E6%88%90_hu_8716f3cb86c6ddaf.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;震荡曲线的构成&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;281&#34;
+		data-flex-basis=&#34;674px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;换相刚开始，由于通电线圈突然断开，产生高压尖峰，电流流经三极管基极Base和IO
+的保护二极管释放掉，直接让IO口承担高达600mA的瞬时电流，5.5V的瞬时高压&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/IO%E5%8F%A3%E6%89%BF%E6%8B%85%E9%AB%98%E8%BE%BE600mA%E7%9A%84%E7%9E%AC%E6%97%B6%E7%94%B5%E6%B5%81.png&#34;
+	width=&#34;2416&#34;
+	height=&#34;802&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/IO%E5%8F%A3%E6%89%BF%E6%8B%85%E9%AB%98%E8%BE%BE600mA%E7%9A%84%E7%9E%AC%E6%97%B6%E7%94%B5%E6%B5%81_hu_767336156d330a56.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/IO%E5%8F%A3%E6%89%BF%E6%8B%85%E9%AB%98%E8%BE%BE600mA%E7%9A%84%E7%9E%AC%E6%97%B6%E7%94%B5%E6%B5%81_hu_f05c08fca47abc23.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;IO口承担高达600mA的瞬时电流&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;301&#34;
+		data-flex-basis=&#34;722px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;分析反电动势的变化与电机的关系&#34;&gt;分析反电动势的变化与电机的关系
+&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;换相刚开始，&lt;code&gt;线圈&lt;/code&gt;超前&lt;code&gt;转子&lt;/code&gt;60度
+转子受到扭矩开始追赶、加速，转子在赶上线圈之前，扭矩不断减小（即加速度不断减小的加速运动）
+追赶上之后，轴向角度为0度
+由于惯性，转子继续向前转，开始做减速度逐渐增大的减速运动，直到速度减到0
+开始反向加速，如此循环&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%88%86%E6%9E%90%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%9A%84%E5%8F%98%E5%8C%96%E4%B8%8E%E7%94%B5%E6%9C%BA%E7%9A%84%E5%85%B3%E7%B3%BB.gif&#34;
+	width=&#34;640&#34;
+	height=&#34;480&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%88%86%E6%9E%90%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%9A%84%E5%8F%98%E5%8C%96%E4%B8%8E%E7%94%B5%E6%9C%BA%E7%9A%84%E5%85%B3%E7%B3%BB_hu_39480a2f06daaa3b.gif 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%88%86%E6%9E%90%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%9A%84%E5%8F%98%E5%8C%96%E4%B8%8E%E7%94%B5%E6%9C%BA%E7%9A%84%E5%85%B3%E7%B3%BB_hu_a62c8636de8e1727.gif 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;分析反电动势的变化与电机的关系&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;320px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;反电动势的变化&#34;&gt;反电动势的变化
+&lt;/h3&gt;&lt;p&gt;在追赶阶段，悬空线圈的径向角度是-60°到0°
+按曲线来看，反电动势的初值是正数且逐渐增大，
+但刚起步的时候，进行的是初速度为0的加速度运动，直到转子追赶上线圈（此时吸力最大），电压达到峰值，速度达到最大，之后转子超过线圈，开始减速，次数的余弦曲线开始不断减小，转速也不断减小，根据电磁感应定律，$U = n B S w cos θ$，转子由于惯性超过0度，继续向前转，开始做减速度逐渐增大的减速运动，直到速度减到0，开始反向加速，如此循环，欧米伽不断减小，到0，再不断增大，每次势能不断减小，直到为0，电压直线下滑，0，反向增大，以此类推，电压过程呈现周期性重复变化&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E6%82%AC%E7%A9%BA%E7%BA%BF%E5%9C%88%E7%9A%84%E5%BE%84%E5%90%91%E8%A7%92%E5%BA%A6%E6%98%AF-60%C2%B0%E5%88%B00%C2%B0.png&#34;
+	width=&#34;931&#34;
+	height=&#34;882&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E6%82%AC%E7%A9%BA%E7%BA%BF%E5%9C%88%E7%9A%84%E5%BE%84%E5%90%91%E8%A7%92%E5%BA%A6%E6%98%AF-60%C2%B0%E5%88%B00%C2%B0_hu_a41c6fe5e3565f72.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E6%82%AC%E7%A9%BA%E7%BA%BF%E5%9C%88%E7%9A%84%E5%BE%84%E5%90%91%E8%A7%92%E5%BA%A6%E6%98%AF-60%C2%B0%E5%88%B00%C2%B0_hu_e91d1ec0a1eb21a2.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;悬空线圈的径向角度是-60°到0°&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;253px&#34;
+	
+&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%88%86%E6%9E%90%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%9A%84%E5%8F%98%E5%8C%96%E4%B8%8E%E7%94%B5%E5%8E%8B%E7%9A%84%E5%85%B3%E7%B3%BB.png&#34;
+	width=&#34;2217&#34;
+	height=&#34;911&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%88%86%E6%9E%90%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%9A%84%E5%8F%98%E5%8C%96%E4%B8%8E%E7%94%B5%E5%8E%8B%E7%9A%84%E5%85%B3%E7%B3%BB_hu_b0559a6fd6054a41.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E5%88%86%E6%9E%90%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF%E7%9A%84%E5%8F%98%E5%8C%96%E4%B8%8E%E7%94%B5%E5%8E%8B%E7%9A%84%E5%85%B3%E7%B3%BB_hu_b3b23c6d253b821c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;分析反电动势的变化与电压的关系&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;243&#34;
+		data-flex-basis=&#34;584px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;零点在哪&#34;&gt;零点在哪
+&lt;/h3&gt;&lt;p&gt;前面我们已经知道，-90度的时候就是悬空线圈的过零点，所以使用六步换相是行不通的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E6%A3%80%E6%B5%8B%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF.png&#34;
+	width=&#34;2161&#34;
+	height=&#34;906&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E6%A3%80%E6%B5%8B%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF_hu_48fc3aaa9f3a9fed.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E6%A3%80%E6%B5%8B%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF_hu_acd744e0c34c735a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;过零检测所需的所有信息&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;572px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;我们使用三步换相，每次让线圈磁场转120度，所以在程序上只要让步序一次加2就可以，从下面曲线得出，相比较之前，电压尖峰更大了，此时由于转子的加速行程翻倍，追赶阶段变成了从-120度到0度。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E4%B8%89%E6%AD%A5%E6%8D%A2%E7%9B%B8.gif&#34;
+	width=&#34;640&#34;
+	height=&#34;336&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E4%B8%89%E6%AD%A5%E6%8D%A2%E7%9B%B8_hu_d84d3d8c387e3d53.gif 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E4%B8%89%E6%AD%A5%E6%8D%A2%E7%9B%B8_hu_ea49834e84a84edb.gif 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;三步换相&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;190&#34;
+		data-flex-basis=&#34;457px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;运动分析&#34;&gt;运动分析
+&lt;/h4&gt;&lt;p&gt;前面我们已经知道，-90度的时候就是悬空线圈的过零点&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E6%A3%80%E6%B5%8B%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF.png&#34;
+	width=&#34;2161&#34;
+	height=&#34;906&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E6%A3%80%E6%B5%8B%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF_hu_48fc3aaa9f3a9fed.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E6%A3%80%E6%B5%8B%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E4%BF%A1%E6%81%AF_hu_acd744e0c34c735a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;过零检测所需的所有信息&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;238&#34;
+		data-flex-basis=&#34;572px&#34;
+	
+&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/-90%C2%B0%E8%BF%87%E9%9B%B6%E7%82%B9.png&#34;
+	width=&#34;2226&#34;
+	height=&#34;953&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/-90%C2%B0%E8%BF%87%E9%9B%B6%E7%82%B9_hu_874873069364dd1a.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/-90%C2%B0%E8%BF%87%E9%9B%B6%E7%82%B9_hu_51d18a937f88990e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;-90°过零点&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;233&#34;
+		data-flex-basis=&#34;560px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;转子从-120度开始，从速度0开始加速，而余弦曲线的绝对值却是逐渐减小的，所以反电动势的绝对值从速度0开始增加的，到转速增速比不过曲线（电磁感应）的降速，（电✌️势）反电动势开始减小，在-90度减到0度，之后余弦曲线随角度增加而增加，同时随着加速度正向增大，转速持续增大，电压持续增大，到0度最大，反复如此&lt;/p&gt;
+&lt;h2 id=&#34;程序设计&#34;&gt;程序设计
+&lt;/h2&gt;&lt;p&gt;如果电机转速太慢，就检测不到清晰的反电动势了，而如果角度不对（-60度到0度），也检测不到过零点，好了，说了这么多，开始我们的设计之旅，如果设计出一个有效的电机启动方案呢。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E7%82%B9%E7%9A%84%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF.png&#34;
+	width=&#34;2266&#34;
+	height=&#34;842&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E7%82%B9%E7%9A%84%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF_hu_dfe00195f829bebd.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%BF%87%E9%9B%B6%E7%82%B9%E7%9A%84%E5%8F%8D%E7%94%B5%E5%8A%A8%E5%8A%BF_hu_9920de16949b7b5a.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;过零点的反电动势&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;269&#34;
+		data-flex-basis=&#34;645px&#34;
+	
+&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%A7%92%E5%BA%A6%E4%B8%8D%E5%AF%B9%EF%BC%88-60%E5%BA%A6%E5%88%B00%E5%BA%A6%EF%BC%89%EF%BC%8C%E4%B9%9F%E6%A3%80%E6%B5%8B%E4%B8%8D%E5%88%B0%E8%BF%87%E9%9B%B6%E7%82%B9.png&#34;
+	width=&#34;920&#34;
+	height=&#34;862&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%A7%92%E5%BA%A6%E4%B8%8D%E5%AF%B9%EF%BC%88-60%E5%BA%A6%E5%88%B00%E5%BA%A6%EF%BC%89%EF%BC%8C%E4%B9%9F%E6%A3%80%E6%B5%8B%E4%B8%8D%E5%88%B0%E8%BF%87%E9%9B%B6%E7%82%B9_hu_924fb30a7e8a032c.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E8%A7%92%E5%BA%A6%E4%B8%8D%E5%AF%B9%EF%BC%88-60%E5%BA%A6%E5%88%B00%E5%BA%A6%EF%BC%89%EF%BC%8C%E4%B9%9F%E6%A3%80%E6%B5%8B%E4%B8%8D%E5%88%B0%E8%BF%87%E9%9B%B6%E7%82%B9_hu_d9a16839f35a94f0.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;角度不对（-60°到0°），也检测不到过零点&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;106&#34;
+		data-flex-basis=&#34;256px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;串口打印时间间隔：0.1ms，从下图得出，电机从静止到零点用时大约用5ms时间，期间转了大概30度，此时反电动势曲线很清晰，这个时候我们就可以切换到闭环过零点换相（转子平稳旋转的前提下，检测到反电动势的零点开始计时，当计时等于换相时间间隔的一半的时候再次换相）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%94%B5%E6%9C%BA%E4%BB%8E%E9%9D%99%E6%AD%A2%E5%88%B0%E9%9B%B6%E7%82%B9%E7%94%A8%E6%97%B6%E5%A4%A7%E7%BA%A6%E7%94%A85ms%E6%97%B6%E9%97%B4.png&#34;
+	width=&#34;2278&#34;
+	height=&#34;852&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%94%B5%E6%9C%BA%E4%BB%8E%E9%9D%99%E6%AD%A2%E5%88%B0%E9%9B%B6%E7%82%B9%E7%94%A8%E6%97%B6%E5%A4%A7%E7%BA%A6%E7%94%A85ms%E6%97%B6%E9%97%B4_hu_a7cbd0504ce36bbe.png 480w, https://jeffrey-ljf.github.io/p/%E6%B0%B8%E7%A3%81%E6%97%A0%E5%88%B7%E7%94%B5%E6%9C%BA%E5%8E%9F%E7%90%86/%E7%94%B5%E6%9C%BA%E4%BB%8E%E9%9D%99%E6%AD%A2%E5%88%B0%E9%9B%B6%E7%82%B9%E7%94%A8%E6%97%B6%E5%A4%A7%E7%BA%A6%E7%94%A85ms%E6%97%B6%E9%97%B4_hu_b378a020046573d1.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;电机从静止到零点用时大约用5ms时间&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;267&#34;
+		data-flex-basis=&#34;641px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;计时的作用&#34;&gt;计时的作用
+&lt;/h3&gt;&lt;p&gt;在转子过零点时，等待转子转过大约30度的时候在换相，换相之后的下一步时等待过零点，如此循环，整个过程分为两个环节，一个是等待过零点，一个是等待半周期延时&lt;/p&gt;
+&lt;h3 id=&#34;电机启动方案&#34;&gt;电机启动方案
+&lt;/h3&gt;&lt;p&gt;首先先强制换相到第0步（A 0 ， B  L ， C H），并持续100ms，目的让电机转到位并等待震荡消失,
+而后直接换相到第二步（A H， B 0 ， C L），让线圈领先转子120度并保持5ms ，期间转子转过大约30度，经过第一个零点（-90度），此时过零点不明显，我们不用看，而是直接换相到第三步（A 0， B H， C L），此时线圈领先转子150度，转子转转过60度出现第二个零点，而60度区间里，转子将会持续加速，这样既可以保证不失步，又可以获得清晰的过零点，所以在第三步的时候，直接接到闭环控制的等待过零点环节就可以了。&lt;/p&gt;
+&lt;h3 id=&#34;接入闭环&#34;&gt;接入闭环
+&lt;/h3&gt;&lt;p&gt;我们需要给换相周期一个差不多的初始值，之后的闭环流程中，需要统计两次换相间隔时长，而后刷新这个周期，这样完整的闭环控制就完成了&lt;/p&gt;
+&lt;p&gt;线圈自感尖峰，堵转，电磁干扰，都会造成电机停转蜂鸣现象，而这里的高频均匀的震荡，很可能受到尖峰电压的干扰，此时我们做一个简单的软件滤波就够用了&lt;/p&gt;
+&lt;p&gt;定义一个计数，在过零检测判为true时不再立即动作，而是计数，连续判定四次为真的时候再动作，这样足够过滤绝大多数脉冲干扰了&lt;/p&gt;
+&lt;p&gt;##三步换相源码&lt;/p&gt;
+&lt;h3 id=&#34;宏定义&#34;&gt;宏定义
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; #ifndef __STM32F10X_H
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define __STM32F10X_H
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#include &amp;#34;stm32f10x.h&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#endif
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_H_SET    GPIO_ResetBits(GPIOA, GPIO_Pin_8)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_H_SET    GPIO_ResetBits(GPIOA, GPIO_Pin_9)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_H_SET    GPIO_ResetBits(GPIOA, GPIO_Pin_10)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_H_CLR    GPIO_SetBits(GPIOA, GPIO_Pin_8)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_H_CLR    GPIO_SetBits(GPIOA, GPIO_Pin_9)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_H_CLR    GPIO_SetBits(GPIOA, GPIO_Pin_10)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_L_SET    GPIO_SetBits(GPIOB, GPIO_Pin_13)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_L_SET    GPIO_SetBits(GPIOB, GPIO_Pin_14)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_L_SET    GPIO_SetBits(GPIOB, GPIO_Pin_15)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_L_CLR    GPIO_ResetBits(GPIOB, GPIO_Pin_13)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_L_CLR    GPIO_ResetBits(GPIOB, GPIO_Pin_14)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_L_CLR    GPIO_ResetBits(GPIOB, GPIO_Pin_15)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// 全部关闭
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define ALL_OFF() do{ A_H_CLR; B_H_CLR; C_H_CLR; A_L_CLR; B_L_CLR; C_L_CLR; }while(0)&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;全局变量&#34;&gt;全局变量
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint8_t  zero_state  = 0;    // 0=等待过零  1=延时换相
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint8_t  step_reg    = 0;    // 换相步阶 0~5
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint32_t time_count  = 0;    // 定时器计时
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint32_t step_T      = 0;    // 电周期
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint8_t  zero_count  = 0;    // 过零滤波计数
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;int16_t  bef         = 0;    // 上一次反电动势
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;int16_t  bemf        = 0;    // 当前反电动势&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;gpio-初始化&#34;&gt;GPIO 初始化
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void Delay_ms(uint32_t ms)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    uint32_t i,j;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    for(i=ms; i&amp;gt;0; i--)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        for(j=7200; j&amp;gt;0; j--);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void GPIO_Init_Config(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitTypeDef GPIO_InitStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    // PA8 PA9 PA10 PNP上桥
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_Init(GPIOA, &lt;span class=&#34;ni&#34;&gt;&amp;amp;GPIO_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    // PB13 PB14 PB15 NPN下桥
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_Init(GPIOB, &lt;span class=&#34;ni&#34;&gt;&amp;amp;GPIO_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ALL_OFF(); 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;adc-初始化反电动势采样&#34;&gt;ADC 初始化（反电动势采样)
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void ADC_Init_Config(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_InitTypeDef ADC_InitStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitTypeDef GPIO_InitStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    // 假设反电动势采样 = PA0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AIN;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_Init(GPIOA, &lt;span class=&#34;ni&#34;&gt;&amp;amp;GPIO_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_InitStructure.ADC_Mode               = ADC_Mode_Independent;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_InitStructure.ADC_ScanConvMode       = DISABLE;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_InitStructure.ADC_ExternalTrigConv   = ADC_ExternalTrigConv_None;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_InitStructure.ADC_DataAlign          = ADC_DataAlign_Right;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_InitStructure.ADC_NbrOfChannel       = 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_Init(ADC1, &lt;span class=&#34;ni&#34;&gt;&amp;amp;ADC_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_Cmd(ADC1, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_ResetCalibration(ADC1);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    while(ADC_GetResetCalibrationStatus(ADC1));
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_StartCalibration(ADC1);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    while(ADC_GetCalibrationStatus(ADC1));
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// 读取反电动势
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;int16_t Get_BEMF(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_55Cycles5);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    return (int16_t)(ADC_GetConversionValue(ADC1) - 2048);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;定时器2中断1ms-定时&#34;&gt;定时器2中断（1ms 定时）
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void TIM2_Init_Config(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    NVIC_InitTypeDef NVIC_InitStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    // 1ms 中断
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM_TimeBaseStructure.TIM_Period        = 72-1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM_TimeBaseStructure.TIM_Prescaler     = 1000-1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM_TimeBaseStructure.TIM_CounterMode   = TIM_CounterMode_Up;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM_TimeBaseInit(TIM2, &lt;span class=&#34;ni&#34;&gt;&amp;amp;TIM_TimeBaseStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    NVIC_InitStructure.NVIC_IRQChannel                   = TIM2_IRQn;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    NVIC_Init(&lt;span class=&#34;ni&#34;&gt;&amp;amp;NVIC_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM_Cmd(TIM2, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// 中断服务函数
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void TIM2_IRQHandler(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    if(TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        time_count++;         // 系统计时
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        bemf = Get_BEMF();    // 采样反电动势
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        zero_point_control();// 无感过零换相
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;过零检测-1&#34;&gt;过零检测
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void zero_point_control(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    if(zero_state == 0)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        // 过零检测
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        if( (step_reg%2==0 &lt;span class=&#34;err&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; bef&amp;gt;0 &lt;span class=&#34;err&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; bemf&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;||&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;step_reg&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;=1&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;bef&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;bemf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;0) )
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            zero_count ++;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            if(zero_count &amp;gt;= 4)  // 滤波4次确认过零
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                zero_count = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                zero_state = 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                step_T = time_count;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                time_count = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        else
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            zero_count = 0; // 没检测到就清零
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    else if(zero_state == 1)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        if(time_count &amp;gt; step_T/2)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            zero_state = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            step_reg = (step_reg + 1) % 6; // 换相
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    bef = bemf; // 更新上次值
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;换相函数&#34;&gt;换相函数
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void Motor_Run(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ALL_OFF();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    switch(step_reg)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        case 0: A_H_SET; B_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        case 1: B_H_SET; C_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        case 2: C_H_SET; A_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        case 3: A_H_SET; C_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        case 4: B_H_SET; A_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        case 5: C_H_SET; B_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id=&#34;main函数&#34;&gt;Main函数
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;int main(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    GPIO_Init_Config();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ADC_Init_Config();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM2_Init_Config();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ALL_OFF();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Delay_ms(500);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    // 启动强制定位
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    step_reg = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Motor_Run();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Delay_ms(50);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    while(1)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        Motor_Run(); 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;烧录代码&#34;&gt;烧录代码
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;ADC 采样 + 定时器中断 + 换相&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;  1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 67
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 68
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 69
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 70
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 71
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 72
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 73
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 74
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 75
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 76
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 77
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 78
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 79
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 80
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 81
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 82
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 83
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 84
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 85
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 86
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 87
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 88
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 89
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 90
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 91
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 92
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 93
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 94
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 95
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 96
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 97
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 98
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 99
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;100
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;101
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;102
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;103
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;104
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;105
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;106
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;107
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;108
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;109
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;110
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;111
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;112
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;113
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;114
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;115
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;116
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;117
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;118
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;119
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;120
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;121
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;122
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;123
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;124
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;125
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;126
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;127
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;128
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;129
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;130
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;131
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;132
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;133
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;134
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;135
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;136
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;137
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;138
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;139
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;140
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;141
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;142
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;143
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;144
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;145
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;146
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;147
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;148
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;149
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;150
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;151
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;152
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;153
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;154
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;155
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;156
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;157
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;158
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;159
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;160
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;161
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;162
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;163
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;164
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;165
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;166
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;167
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;168
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;169
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;170
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;171
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;172
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;173
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;174
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;175
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;176
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;177
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;178
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;179
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;180
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;181
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;182
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;183
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;184
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;185
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;186
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;187
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;188
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;189
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;190
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#include &amp;#34;stm32f10x.h&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== 三相桥宏定义 ====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// 上桥 PNP：低电平有效
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_H_SET    GPIO_ResetBits(GPIOA, GPIO_Pin_8)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_H_SET    GPIO_ResetBits(GPIOA, GPIO_Pin_9)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_H_SET    GPIO_ResetBits(GPIOA, GPIO_Pin_10)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_H_CLR    GPIO_SetBits(GPIOA, GPIO_Pin_8)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_H_CLR    GPIO_SetBits(GPIOA, GPIO_Pin_9)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_H_CLR    GPIO_SetBits(GPIOA, GPIO_Pin_10)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;// 下桥 NPN：高电平有效
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_L_SET    GPIO_SetBits(GPIOB, GPIO_Pin_13)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_L_SET    GPIO_SetBits(GPIOB, GPIO_Pin_14)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_L_SET    GPIO_SetBits(GPIOB, GPIO_Pin_15)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define A_L_CLR    GPIO_ResetBits(GPIOB, GPIO_Pin_13)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define B_L_CLR    GPIO_ResetBits(GPIOB, GPIO_Pin_14)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define C_L_CLR    GPIO_ResetBits(GPIOB, GPIO_Pin_15)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;#define ALL_OFF()  do{A_H_CLR;B_H_CLR;C_H_CLR;A_L_CLR;B_L_CLR;C_L_CLR;}while(0)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== 全局变量 ====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint8_t  zero_state = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint8_t  step_reg   = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint32_t time_count = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint32_t step_T     = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint8_t  zero_count = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;int16_t  bef        = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;int16_t  bemf       = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uint32_t time_set   = 5;  // 启动延时
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== 延时 ====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void Delay_ms(uint32_t ms) {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  uint32_t i,j;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  for(i=ms; i&amp;gt;0; i--)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    for(j=7200; j&amp;gt;0; j--);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== ADC 初始化（反电动势采样 PA0）====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void ADC_Init_Config(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1 | RCC_APB2Periph_GPIOA, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_InitTypeDef GPIO_InitStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_InitTypeDef ADC_InitStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_Init(GPIOA, &lt;span class=&#34;ni&#34;&gt;&amp;amp;GPIO_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_InitStructure.ADC_ScanConvMode = DISABLE;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_InitStructure.ADC_NbrOfChannel = 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_Init(ADC1, &lt;span class=&#34;ni&#34;&gt;&amp;amp;ADC_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_Cmd(ADC1, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_ResetCalibration(ADC1);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  while(ADC_GetResetCalibrationStatus(ADC1));
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_StartCalibration(ADC1);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  while(ADC_GetCalibrationStatus(ADC1));
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== 读取反电动势 ====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;int16_t Get_BEMF(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_55Cycles5);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  return (int16_t)(ADC_GetConversionValue(ADC1) - 2048);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== 定时器2中断（1ms）====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void TIM2_Init_Config(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  NVIC_InitTypeDef NVIC_InitStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  TIM_TimeBaseStructure.TIM_Period = 72-1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  TIM_TimeBaseStructure.TIM_Prescaler = 1000-1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  TIM_TimeBaseInit(TIM2, &lt;span class=&#34;ni&#34;&gt;&amp;amp;TIM_TimeBaseStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  NVIC_Init(&lt;span class=&#34;ni&#34;&gt;&amp;amp;NVIC_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  TIM_Cmd(TIM2, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== 定时器中断服务函数 ====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void TIM2_IRQHandler(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  if(TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    time_count++;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    bemf = Get_BEMF();    // ADC采样
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    zero_point_control(); // 无感控制
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== 换相输出====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void Motor_Output(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ALL_OFF();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  switch(step_reg)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    case 0: C_H_SET; B_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    case 1: A_H_SET; C_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    case 2: B_H_SET; A_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    case 3: C_H_SET; B_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    case 4: A_H_SET; C_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    case 5: B_H_SET; C_L_SET; break;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== zero_point_control====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;void zero_point_control(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  if(zero_state == 0)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    zero_count ++;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    if(zero_count &amp;gt;= 4)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      zero_count = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      zero_state = 1;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      step_T = time_count;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      time_count = 0;  // 补了分号
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  else
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    zero_count = 0; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  if(zero_state == 1)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    if(time_count &amp;gt; step_T/2)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      zero_state = 0;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      step_reg = (step_reg+1)%6;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;//==================== MAIN 函数 ====================
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;int main(void)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  // 1. 时钟
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOB, ENABLE);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  // 2. GPIO 初始化
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_InitTypeDef GPIO_InitStructure;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_Init(GPIOA, &lt;span class=&#34;ni&#34;&gt;&amp;amp;GPIO_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  GPIO_Init(GPIOB, &lt;span class=&#34;ni&#34;&gt;&amp;amp;GPIO_InitStructure);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ALL_OFF();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  // ADC + TIM2 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ADC_Init_Config();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  TIM2_Init_Config();
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  while(1)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Delay_ms(time_set);
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    step_reg++;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    step_reg %= 6;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    Motor_Output();  // 换相输出
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;三步换向定义：通过改变线圈磁场⽅向实现转⼦转向的技术&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 磁场旋转⻆度：每次旋转120度，通过程序步序加⼆实现。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 实验现象观察：换向后峰值增⼤，转⼦加速形成翻倍效果。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 追赶阶段变化：从负120度到0度，负90度为悬空线圈过零点。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 反电动势特性：从零开始增加，转速增速与曲线降速关系决定峰值。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 余弦曲线⾏为：绝对值逐渐减⼩，过零点后随⻆度增加⽽增加。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 电压变化规律：在0度达到最⼤值，过程呈现周期性重复。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;控制策略&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 控制策略设计:综合电机转速和⻆度检测设计启动⽅案
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 反电动势检测:转速太低时⽆法检测清晰反电动势
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 过零点检测:⻆度不正确时⽆法检测过零点
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 启动时间测量:从静⽌到零点约5毫秒，转过30度
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 闭环切换时机:反电动势清晰时可切换⾄闭环过零点画像
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 闭环过零点换项定义:转⼦平稳旋转时检测反电动势零点后计时换相
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 换相计时原理:计时等于换相间隔⼀半时执⾏换相
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 换相等待⻆度:转⼦过零点后等待转过约30度再换向
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 控制循环流程:等待过零点和等待半周期延时两个环节循环
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;电机启动⽅案&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-diff&#34; data-lang=&#34;diff&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 强制换向启动：⾸先强制换向到第零步并持续100毫秒，确保电机转到位且振荡消失。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 两步换向策略：直接换向到第⼆步，线圈领先转⼦120度，保持5毫秒使转⼦转过约30度。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 过零点处理：忽略第⼀个不明显过零点，直接换向到第三步，线圈领先转⼦150度。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 加速区间：转⼦在60度区间内持续加速，确保不湿布并获得清晰过零点。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 闭环控制接⼊：切换到第三步时接⼊闭环控制，初始画像周期需设定近似值。
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt; 周期刷新：闭环流程中统计两次换向间隔时⻓并刷新周期，完成闭环控制。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>物联网开发板初体验</title>
+        <link>https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/</link>
+        <pubDate>Tue, 04 Mar 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/</guid>
+        <description>&lt;img src="https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5.png" alt="Featured image of post 物联网开发板初体验" /&gt;&lt;hr&gt;
+&lt;h2 id=&#34;基础功能引脚电路非通用gpio&#34;&gt;基础功能引脚电路（非通用GPIO）
+&lt;/h2&gt;&lt;p&gt;下面引脚是MCU的核心功能引脚，不属于普通GPIO，是系统稳定运行的基础：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/MCU.png&#34;
+	width=&#34;3384&#34;
+	height=&#34;1720&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/MCU_hu_fc6e2b45e8da7e5e.png 480w, https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/MCU_hu_f2f1bb7a6544b2bd.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;MCU电路设计&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;196&#34;
+		data-flex-basis=&#34;472px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;电路设计关键亮点总结&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;设计点&lt;/th&gt;
+          &lt;th&gt;实现方式&lt;/th&gt;
+          &lt;th&gt;优势&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;单点接地&lt;/td&gt;
+          &lt;td&gt;数字地/模拟地通过0Ω电阻单点连接&lt;/td&gt;
+          &lt;td&gt;减少数字噪声对ADC采样的干扰，提高模拟采样精度&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;电源去耦&lt;/td&gt;
+          &lt;td&gt;每个VDD引脚配0.1μF去耦电容，总线增加滤波&lt;/td&gt;
+          &lt;td&gt;滤除电源高频噪声，避免MCU因电源波动死机&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;状态稳定&lt;/td&gt;
+          &lt;td&gt;关键引脚（NRST、BOOT0、SWD）加上下拉电阻&lt;/td&gt;
+          &lt;td&gt;防止引脚浮空导致的误触发、异常复位&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;多串口复用&lt;/td&gt;
+          &lt;td&gt;3个USART分别用于调试、WIFI、485&lt;/td&gt;
+          &lt;td&gt;满足不同通信场景需求，适配物联网、工业控制&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;电机驱动预留&lt;/td&gt;
+          &lt;td&gt;高级定时器PWM输出&lt;/td&gt;
+          &lt;td&gt;支持无刷电机FOC控制，适配嵌入式电机开发需求&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;11-时钟系统引脚&#34;&gt;1.1 时钟系统引脚
+&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;引脚&lt;/th&gt;
+          &lt;th&gt;电路连接&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;OSC_IN / OSC_OUT&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;外接8MHz晶振X1，配合22pF负载电容C1、C2组成&lt;strong&gt;外部高速晶振（HSE）电路&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;为MCU提供8MHz外部时钟源，经内部PLL倍频生成72MHz系统时钟，是MCU运行的核心时钟&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PC14-OSC32_IN / PC15-OSC32_OUT&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;原理图预留32.768kHz晶振接口（未焊接），属于&lt;strong&gt;外部低速晶振（LSE）&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;为RTC实时时钟提供时钟，主电源掉电时由VBAT供电，保持时间和备份寄存器数据&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;VBAT&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;接3V3_MCU（或备用电池）&lt;/td&gt;
+          &lt;td&gt;为RTC、备份寄存器供电，主电源掉电时维持RTC运行，避免时间丢失&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;12-复位与启动模式引脚&#34;&gt;1.2 复位与启动模式引脚
+&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;引脚&lt;/th&gt;
+          &lt;th&gt;电路连接&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;NRST&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;10kΩ上拉电阻R35接3V3_MCU，外接复位按键SW1，配合YT581SSJG复位监控芯片&lt;/td&gt;
+          &lt;td&gt;MCU复位引脚（低电平有效）：上拉保证正常工作为高电平，按键按下拉低触发复位；监控芯片实现上电/掉电复位，防止异常死机&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;BOOT0(PB8)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;10kΩ下拉电阻R2接地&lt;/td&gt;
+          &lt;td&gt;启动模式选择引脚：下拉为0时，默认&lt;strong&gt;主闪存启动&lt;/strong&gt;（正常运行程序）；拉高为1时，进入串口下载模式&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;BOOT1(PB2)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;原理图悬空（默认下拉）&lt;/td&gt;
+          &lt;td&gt;配合BOOT0选择启动模式，默认0，与BOOT0下拉组合为主闪存启动&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;13-电源与接地引脚&#34;&gt;1.3 电源与接地引脚
+&lt;/h3&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;引脚&lt;/th&gt;
+          &lt;th&gt;电路连接&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;VDD_1~VDD_4 / VDDA&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;统一接3V3_MCU，每个引脚旁接0.1μF（104）去耦电容，电源总线增加多组104滤波电容&lt;/td&gt;
+          &lt;td&gt;为MCU内核、I/O、ADC等模块供电；去耦电容滤除电源高频噪声，保证供电稳定&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;VSS_1~VSS_4 / VSSA&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;数字地与模拟地通过0Ω电阻R3&lt;strong&gt;单点连接&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;电源参考地，模拟地VSSA为ADC提供干净参考，减少数字噪声对模拟采样的干扰&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;通用gpio功能电路按模块分类&#34;&gt;通用GPIO功能电路（按模块分类）
+&lt;/h2&gt;&lt;h3 id=&#34;21-人机交互led状态指示电路&#34;&gt;2.1 人机交互：LED状态指示电路
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RGB_MOS.png&#34;
+	width=&#34;1674&#34;
+	height=&#34;1623&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RGB_MOS_hu_a8ec786781a91327.png 480w, https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RGB_MOS_hu_ba83e9daccffbf41.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;RGB&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;103&#34;
+		data-flex-basis=&#34;247px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;引脚&lt;/th&gt;
+          &lt;th&gt;电路连接&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PA1&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;推挽输出，接红色LED（LED_R）&lt;/td&gt;
+          &lt;td&gt;控制红色LED亮灭：输出低电平时点亮，高电平时熄灭，用于告警、故障状态指示&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PA2&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;推挽输出，接绿色LED（LED_G）&lt;/td&gt;
+          &lt;td&gt;控制绿色LED亮灭，用于系统正常运行、通信正常等状态指示&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PA6&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;推挽输出，接蓝色LED（LED_B）&lt;/td&gt;
+          &lt;td&gt;控制蓝色LED亮灭，用于自定义状态（如配置完成、数据传输）指示&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;22-通信接口串口与485控制电路&#34;&gt;2.2 通信接口：串口与485控制电路
+&lt;/h3&gt;&lt;p&gt;STM32F103内置3个USART，原理图中分别用于不同通信场景：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;接口&lt;/th&gt;
+          &lt;th&gt;涉及引脚&lt;/th&gt;
+          &lt;th&gt;电路连接&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;USART1（调试串口）&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;PA9(TX1) / PA10(RX1)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;连接USB转串口电路，对接上位机&lt;/td&gt;
+          &lt;td&gt;用于打印调试日志、接收上位机指令，是开发调试的核心串口&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;USART2（WIFI串口）&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;PA2(TX2) / PA3(RX2)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;连接WIFI模块（如ESP8266）&lt;/td&gt;
+          &lt;td&gt;实现无线通信，透传数据到云端/上位机，用于物联网场景&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;USART3（扩展串口）&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;PB10(TX3) / PB11(RX3)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;预留/外接485/蓝牙模块&lt;/td&gt;
+          &lt;td&gt;扩展串口资源，用于工业通信、外设连接&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;485收发控制&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;PA4(485_SELECT)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;推挽输出，控制RS485芯片DE/RE引脚&lt;/td&gt;
+          &lt;td&gt;RS485半双工通信的方向控制：高电平发送、低电平接收，实现远距离工业总线通信&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink.png&#34;
+	width=&#34;2182&#34;
+	height=&#34;1343&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink_hu_eb71a84be09115a1.png 480w, https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink_hu_186213001f7a0751.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;DPLink&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;162&#34;
+		data-flex-basis=&#34;389px&#34;
+	
+&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/WiFi%E4%B8%B2%E5%8F%A3%E6%A8%A1%E5%9D%97.png&#34;
+	width=&#34;1994&#34;
+	height=&#34;1497&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/WiFi%E4%B8%B2%E5%8F%A3%E6%A8%A1%E5%9D%97_hu_104f4c33cd6f15d5.png 480w, https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/WiFi%E4%B8%B2%E5%8F%A3%E6%A8%A1%E5%9D%97_hu_34a0d1b4f52c21b6.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;WiFi串口模块&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RS485.png&#34;
+	width=&#34;1505&#34;
+	height=&#34;459&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RS485_hu_32efa070dedb6b03.png 480w, https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/RS485_hu_2d9e4dc513a1f39f.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;RS485&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;327&#34;
+		data-flex-basis=&#34;786px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;23-调试接口swd下载电路&#34;&gt;2.3 调试接口：SWD下载电路
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink.png&#34;
+	width=&#34;2182&#34;
+	height=&#34;1343&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink_hu_eb71a84be09115a1.png 480w, https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/DPLink_hu_186213001f7a0751.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;DPLink&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;162&#34;
+		data-flex-basis=&#34;389px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;引脚&lt;/th&gt;
+          &lt;th&gt;电路连接&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PA13(SWCLK)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;10kΩ上拉电阻R4接3V3_MCU，SWD时钟线&lt;/td&gt;
+          &lt;td&gt;SWD调试接口的时钟信号，配合SWDIO实现程序烧录、在线调试&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PA14(SWDIO)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;10kΩ上拉电阻R5接3V3_MCU，SWD数据线&lt;/td&gt;
+          &lt;td&gt;SWD调试接口的数据信号，与调试器（GAPLINK）通信，下载/调试程序&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;24-电机控制pwm输出电路&#34;&gt;2.4 电机控制：PWM输出电路
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/Motor.png&#34;
+	width=&#34;1130&#34;
+	height=&#34;491&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/Motor_hu_fc3ac4068e08660b.png 480w, https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/Motor_hu_7d4d2bd01d24c5af.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Motor&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;230&#34;
+		data-flex-basis=&#34;552px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;引脚&lt;/th&gt;
+          &lt;th&gt;电路连接&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PC6&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;复用为TIM8_CH1，输出PWM（PC6_PWM_MOTOR1）&lt;/td&gt;
+          &lt;td&gt;高级定时器PWM输出，控制电机1的转速/转向，用于无刷电机FOC驱动&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PC7&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;复用为TIM8_CH2，输出PWM（PC7_PWM_MOTOR2）&lt;/td&gt;
+          &lt;td&gt;高级定时器PWM输出，控制电机2的转速/转向，双电机驱动场景&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;25-模拟采样adc输入电路&#34;&gt;2.5 模拟采样：ADC输入电路
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/ADC.png&#34;
+	width=&#34;1791&#34;
+	height=&#34;994&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/ADC_hu_989e38f75cef4f72.png 480w, https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/ADC_hu_a43381ed49fbb660.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;ADC&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;180&#34;
+		data-flex-basis=&#34;432px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;引脚&lt;/th&gt;
+          &lt;th&gt;电路连接&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PC1(ADC1_IN11)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;模拟输入，标注&lt;code&gt;V&lt;/code&gt;（电压采样）&lt;/td&gt;
+          &lt;td&gt;采集电源电压、电池电压等模拟信号，用于电源监测、过压保护&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;code&gt;PC2(ADC1_IN12)&lt;/code&gt;&lt;/td&gt;
+          &lt;td&gt;模拟输入，标注&lt;code&gt;A&lt;/code&gt;（电流采样）&lt;/td&gt;
+          &lt;td&gt;采集电机电流、负载电流等模拟信号，用于过流保护、FOC电流闭环控制&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;26-gpio扩展排针引出电路&#34;&gt;2.6 GPIO扩展：排针引出电路
+&lt;/h3&gt;&lt;p&gt;原理图中设计了2路排针（&lt;code&gt;U7&lt;/code&gt;/&lt;code&gt;U9&lt;/code&gt;），引出MCU剩余GPIO：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;U7（20Pin排针）&lt;/strong&gt;：引出&lt;code&gt;PA0-PA7&lt;/code&gt;、&lt;code&gt;PB0-PB1&lt;/code&gt;、&lt;code&gt;PB12-PB15&lt;/code&gt;、&lt;code&gt;PA8-PA12&lt;/code&gt;、&lt;code&gt;PC13&lt;/code&gt;等GPIO&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;U9（15Pin排针）&lt;/strong&gt;：引出&lt;code&gt;PB3-PB9&lt;/code&gt;、&lt;code&gt;PB12-PB15&lt;/code&gt;、&lt;code&gt;PC10-PC12&lt;/code&gt;等GPIO&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;核心作用&lt;/strong&gt;：将GPIO对外引出，方便外接传感器、模块、外设，用于二次开发、功能扩展（如I2C OLED、SPI Flash、外部中断等）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;27-预留gpio电路&#34;&gt;2.7 预留GPIO电路
+&lt;/h3&gt;&lt;p&gt;原理图中未接线的GPIO（如&lt;code&gt;PB0/PB1&lt;/code&gt;、&lt;code&gt;PB6/PB7&lt;/code&gt;、&lt;code&gt;PD0-PD7&lt;/code&gt;、&lt;code&gt;PA15&lt;/code&gt;等），均为预留功能：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PB6/PB7&lt;/code&gt;：复用为I2C1_SCL/SDA，可连接I2C设备&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PB3/PB4/PA15&lt;/code&gt;：复用为SPI1_SCK/MISO/NSS，可连接SPI设备&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PA11/PA12&lt;/code&gt;：复用为USB_DM/DP，可实现USB通信&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PD0-PD7&lt;/code&gt;：通用GPIO，可用于外部中断、GPIO输出等自定义功能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;stm32f103rct6-各io口外接电路作用分析&#34;&gt;STM32F103RCT6 各IO口外接电路作用分析
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;片IO基础说明
+STM32F103RCT6为&lt;strong&gt;64脚LQFP封装&lt;/strong&gt;，含&lt;strong&gt;GPIOA、GPIOB、GPIOC&lt;/strong&gt; 3组通用IO，外加电源、复位、时钟、调试、启动配置等专用IO；所有IO支持&lt;strong&gt;输入/输出/上拉/下拉/复用&lt;/strong&gt;，外接电路围绕&lt;strong&gt;电平匹配、驱动、保护、通信、采样、控制&lt;/strong&gt;设计。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5.png&#34;
+	width=&#34;3846&#34;
+	height=&#34;2431&#34;
+	srcset=&#34;https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5_hu_89148dc078a4ff52.png 480w, https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5_hu_4bf1d2e1986f3a3d.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;PCB&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;158&#34;
+		data-flex-basis=&#34;379px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;系统专用io非通用gpio电路作用&#34;&gt;系统专用IO（非通用GPIO）电路作用
+&lt;/h2&gt;&lt;h3 id=&#34;21-电源与地引脚&#34;&gt;2.1 电源与地引脚
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;VDDx（1/16/32/48脚）&lt;/strong&gt;：接3.3V，每脚并联&lt;strong&gt;0.1μF去耦电容&lt;/strong&gt;到地
+作用：为内核、IO、外设供电，电容滤除高频噪声，保证供电稳定。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;VDDA（51脚）&lt;/strong&gt;：接3.3V，串联磁珠+并联电容
+作用：为ADC、DAC提供&lt;strong&gt;纯净模拟电源&lt;/strong&gt;，隔离数字噪声。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;VSSx/VSSA（8/23/35/47/52脚）&lt;/strong&gt;：接GND，VSSA与VSS单点共地
+作用：数字/模拟参考地，提升ADC采样精度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;VBAT（36脚）&lt;/strong&gt;：接3.3V或备用电池
+作用：主电掉电时为RTC、备份寄存器供电，保留时间与数据。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;22-复位引脚&#34;&gt;2.2 复位引脚
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NRST（7脚）&lt;/strong&gt;：10kΩ上拉到3.3V+按键接地+复位芯片
+作用：低电平复位；上拉保证常态稳定，按键手动复位，监控芯片实现上电/掉电复位。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;23-时钟引脚&#34;&gt;2.3 时钟引脚
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;PD0/OSC_IN（53脚）、PD1/OSC_OUT（54脚）&lt;/strong&gt;：接8MHz晶振+22pF负载电容
+作用：构成&lt;strong&gt;HSE外部高速时钟&lt;/strong&gt;，提供系统主时钟源。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PC14/OSC32_IN（46脚）、PC15/OSC32_OUT（45脚）&lt;/strong&gt;：接32.768kHz晶振
+作用：构成&lt;strong&gt;LSE外部低速时钟&lt;/strong&gt;，为RTC提供精准时钟。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;24-启动配置引脚&#34;&gt;2.4 启动配置引脚
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BOOT0（60脚，PB8）&lt;/strong&gt;：10kΩ下拉电阻
+作用：常态为&lt;strong&gt;主闪存启动&lt;/strong&gt;；拉高进入ISP串口下载模式。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;BOOT1（33脚，PB2）&lt;/strong&gt;：下拉/悬空
+作用：与BOOT0配合选择启动区域，默认闪存启动。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;25-调试引脚&#34;&gt;2.5 调试引脚
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;PA13/SWDIO（40脚）、PA14/SWCLK（41脚）&lt;/strong&gt;：10kΩ上拉到3.3V
+作用：SWD下载调试接口，上拉防止浮空干扰，保证程序烧录稳定。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;gpioa-全io外接电路作用&#34;&gt;GPIOA 全IO外接电路作用
+&lt;/h2&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;IO引脚&lt;/th&gt;
+          &lt;th&gt;典型外接电路&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA0&lt;/td&gt;
+          &lt;td&gt;按键上拉/下拉、ADC采样、PWM&lt;/td&gt;
+          &lt;td&gt;通用输入/模拟采样/定时器PWM&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA1&lt;/td&gt;
+          &lt;td&gt;LED推挽输出、ADC、PWM&lt;/td&gt;
+          &lt;td&gt;状态指示/模拟采集/电机调速&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA2&lt;/td&gt;
+          &lt;td&gt;USART2_TX、LED、PWM&lt;/td&gt;
+          &lt;td&gt;串口发送/指示灯/定时器输出&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA3&lt;/td&gt;
+          &lt;td&gt;USART2_RX、ADC、PWM&lt;/td&gt;
+          &lt;td&gt;串口接收/电压采样&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA4&lt;/td&gt;
+          &lt;td&gt;SPI1_NSS、DAC、485_DE&lt;/td&gt;
+          &lt;td&gt;SPI片选/模拟输出/485方向控制&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA5&lt;/td&gt;
+          &lt;td&gt;SPI1_SCK、ADC&lt;/td&gt;
+          &lt;td&gt;SPI时钟/模拟输入&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA6&lt;/td&gt;
+          &lt;td&gt;SPI1_MISO、PWM、ADC&lt;/td&gt;
+          &lt;td&gt;SPI数据输入/电机PWM&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA7&lt;/td&gt;
+          &lt;td&gt;SPI1_MOSI、PWM、ADC&lt;/td&gt;
+          &lt;td&gt;SPI数据输出/驱动控制&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA8&lt;/td&gt;
+          &lt;td&gt;TIM1_CH1、PWM&lt;/td&gt;
+          &lt;td&gt;高级定时器PWM、高频输出&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA9&lt;/td&gt;
+          &lt;td&gt;USART1_TX&lt;/td&gt;
+          &lt;td&gt;调试串口发送&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA10&lt;/td&gt;
+          &lt;td&gt;USART1_RX&lt;/td&gt;
+          &lt;td&gt;调试串口接收&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA11&lt;/td&gt;
+          &lt;td&gt;USB_D-、CAN_RX&lt;/td&gt;
+          &lt;td&gt;USB负端/CAN接收&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA12&lt;/td&gt;
+          &lt;td&gt;USB_D+、CAN_TX&lt;/td&gt;
+          &lt;td&gt;USB正端/CAN发送&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PA15&lt;/td&gt;
+          &lt;td&gt;SPI1_NSS、复用IO&lt;/td&gt;
+          &lt;td&gt;SPI片选/通用IO&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;gpiob-全io外接电路作用&#34;&gt;GPIOB 全IO外接电路作用
+&lt;/h2&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;IO引脚&lt;/th&gt;
+          &lt;th&gt;典型外接电路&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB0&lt;/td&gt;
+          &lt;td&gt;ADC、PWM、按键&lt;/td&gt;
+          &lt;td&gt;模拟采样/电机控制/按键输入&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB1&lt;/td&gt;
+          &lt;td&gt;ADC、PWM、LED&lt;/td&gt;
+          &lt;td&gt;电压采集/指示灯/PWM输出&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB2&lt;/td&gt;
+          &lt;td&gt;BOOT1、下拉电阻&lt;/td&gt;
+          &lt;td&gt;启动配置/通用IO&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB3&lt;/td&gt;
+          &lt;td&gt;SPI1_SCK、复用&lt;/td&gt;
+          &lt;td&gt;SPI时钟/JTAG复用&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB4&lt;/td&gt;
+          &lt;td&gt;SPI1_MISO、上拉&lt;/td&gt;
+          &lt;td&gt;SPI数据输入&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB5&lt;/td&gt;
+          &lt;td&gt;SPI1_MOSI、I2C_SMBA&lt;/td&gt;
+          &lt;td&gt;SPI数据输出/I2C管理&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB6&lt;/td&gt;
+          &lt;td&gt;I2C1_SCL、上拉4.7kΩ&lt;/td&gt;
+          &lt;td&gt;I2C时钟，上拉保证总线稳定&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB7&lt;/td&gt;
+          &lt;td&gt;I2C1_SDA、上拉4.7kΩ&lt;/td&gt;
+          &lt;td&gt;I2C数据，开漏必须上拉&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB8&lt;/td&gt;
+          &lt;td&gt;BOOT0、TIM4_CH1&lt;/td&gt;
+          &lt;td&gt;启动配置/定时器PWM&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB9&lt;/td&gt;
+          &lt;td&gt;TIM4_CH2、I2C1_SCL&lt;/td&gt;
+          &lt;td&gt;PWM输出/I2C复用&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB10&lt;/td&gt;
+          &lt;td&gt;USART3_TX、I2C2_SCL&lt;/td&gt;
+          &lt;td&gt;串口3发送/I2C时钟&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB11&lt;/td&gt;
+          &lt;td&gt;USART3_RX、I2C2_SDA&lt;/td&gt;
+          &lt;td&gt;串口3接收/I2C数据&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB12&lt;/td&gt;
+          &lt;td&gt;SPI2_NSS、USB&lt;/td&gt;
+          &lt;td&gt;SPI2片选/USB控制&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB13&lt;/td&gt;
+          &lt;td&gt;SPI2_SCK、PWM&lt;/td&gt;
+          &lt;td&gt;SPI2时钟/定时器输出&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB14&lt;/td&gt;
+          &lt;td&gt;SPI2_MISO、PWM&lt;/td&gt;
+          &lt;td&gt;SPI2数据输入/电机控制&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PB15&lt;/td&gt;
+          &lt;td&gt;SPI2_MOSI、PWM&lt;/td&gt;
+          &lt;td&gt;SPI2数据输出/驱动输出&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;gpioc-全io外接电路作用&#34;&gt;GPIOC 全IO外接电路作用
+&lt;/h2&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;IO引脚&lt;/th&gt;
+          &lt;th&gt;典型外接电路&lt;/th&gt;
+          &lt;th&gt;核心作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC0&lt;/td&gt;
+          &lt;td&gt;ADC1_IN10、传感器输入&lt;/td&gt;
+          &lt;td&gt;模拟采样/传感器信号采集&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC1&lt;/td&gt;
+          &lt;td&gt;ADC1_IN11、电压检测&lt;/td&gt;
+          &lt;td&gt;电源电压监测&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC2&lt;/td&gt;
+          &lt;td&gt;ADC1_IN12、电流采样&lt;/td&gt;
+          &lt;td&gt;负载电流采集&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC3&lt;/td&gt;
+          &lt;td&gt;ADC1_IN13、温度采样&lt;/td&gt;
+          &lt;td&gt;模拟温度信号输入&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC4&lt;/td&gt;
+          &lt;td&gt;ADC1_IN14、按键&lt;/td&gt;
+          &lt;td&gt;模拟输入/数字按键&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC5&lt;/td&gt;
+          &lt;td&gt;ADC1_IN15、LED&lt;/td&gt;
+          &lt;td&gt;模拟采集/状态指示&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC6&lt;/td&gt;
+          &lt;td&gt;TIM8_CH1、PWM&lt;/td&gt;
+          &lt;td&gt;高级定时器PWM、电机驱动&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC7&lt;/td&gt;
+          &lt;td&gt;TIM8_CH2、PWM&lt;/td&gt;
+          &lt;td&gt;双电机PWM控制&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC8&lt;/td&gt;
+          &lt;td&gt;TIM8_CH3、PWM&lt;/td&gt;
+          &lt;td&gt;舵机/LED调光&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC9&lt;/td&gt;
+          &lt;td&gt;TIM8_CH4、PWM&lt;/td&gt;
+          &lt;td&gt;通用PWM输出&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC10&lt;/td&gt;
+          &lt;td&gt;UART4_TX、SPI3_SCK&lt;/td&gt;
+          &lt;td&gt;串口4发送/SPI时钟&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC11&lt;/td&gt;
+          &lt;td&gt;UART4_RX、SPI3_MISO&lt;/td&gt;
+          &lt;td&gt;串口4接收/SPI数据输入&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC12&lt;/td&gt;
+          &lt;td&gt;UART5_TX、SPI3_MOSI&lt;/td&gt;
+          &lt;td&gt;串口5发送/SPI数据输出&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PC13&lt;/td&gt;
+          &lt;td&gt;按键/LED、低功耗输出&lt;/td&gt;
+          &lt;td&gt;通用IO/状态指示&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;io外接电路通用规则&#34;&gt;IO外接电路通用规则
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;输出类（LED/继电器/驱动）&lt;/strong&gt;
+推挽输出：IO直接驱动，低电平点亮LED；大功率外设加三极管/MOS管隔离。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;输入类（按键/传感器）&lt;/strong&gt;
+上拉/下拉电阻：按键接地=上拉输入；传感器信号=下拉/跟随电平。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;通信类（I2C/SPI/串口）&lt;/strong&gt;
+I2C必须&lt;strong&gt;4.7kΩ上拉&lt;/strong&gt;；串口加TVS管防静电；485加收发器与方向控制。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;模拟类（ADC）&lt;/strong&gt;
+串联限流电阻+并联电容滤波，避免高压损坏，提升采样稳定。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;保护类&lt;/strong&gt;
+所有IO可加&lt;strong&gt;ESD管、限流电阻&lt;/strong&gt;，防止静电、过压烧坏芯片。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;总结&#34;&gt;总结
+&lt;/h2&gt;&lt;p&gt;STM32F103RCT6的IO电路围绕&lt;strong&gt;供电稳定、通信可靠、驱动安全、采样精准&lt;/strong&gt;设计：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;专用IO保障系统启动、时钟、复位、调试；&lt;/li&gt;
+&lt;li&gt;通用IO适配&lt;strong&gt;输入检测、输出控制、通信交互、模拟采样、PWM驱动&lt;/strong&gt;；&lt;/li&gt;
+&lt;li&gt;外接电阻、电容、晶振、接口芯片，决定IO的实际功能与稳定性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;常见问题与调试提示&#34;&gt;常见问题与调试提示
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;SWD下载失败&lt;/strong&gt;：检查PA13/PA14的上拉电阻是否焊接，调试器接线是否正确，BOOT0是否为低电平&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ADC采样不准&lt;/strong&gt;：检查模拟地与数字地的单点连接，VDDA是否接3V3，是否有电源噪声&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;485通信异常&lt;/strong&gt;：检查PA4的控制逻辑是否正确（发送时拉高、接收时拉低）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;电机不转&lt;/strong&gt;：检查PC6/PC7的PWM输出是否正常，驱动电路接线是否正确&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

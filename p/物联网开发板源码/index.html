@@ -1,0 +1,2744 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="STM32F103RCT6 IO电路作用分析">
+<title>物联网开发板源码</title>
+
+<link rel='canonical' href='https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E6%BA%90%E7%A0%81/'>
+
+<link rel="stylesheet" href="/scss/style.min.e91936884f007f6384dc964080b77d088358e782d41c7ac0e2be79c8dd22f48f.css"><meta property='og:title' content="物联网开发板源码">
+<meta property='og:description' content="STM32F103RCT6 IO电路作用分析">
+<meta property='og:url' content='https://jeffrey-ljf.github.io/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E6%BA%90%E7%A0%81/'>
+<meta property='og:site_name' content='Jeffrey-刘俊丰'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='物联网' /><meta property='article:tag' content='智能家居' /><meta property='article:tag' content='Code' /><meta property='article:published_time' content='2025-03-06T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-06T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="物联网开发板源码">
+<meta name="twitter:description" content="STM32F103RCT6 IO电路作用分析">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_84fcb3b5b4dc3fa5.png" width="300"
+                            height="282" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🐇</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Jeffrey-刘俊丰</a></h1>
+            <h2 class="site-description">Hi，欢迎来到我的世界</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/250193290'
+                        target="_blank"
+                        title="bilibili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 10a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-6" /><path d="M8 3l2 3" /><path d="M16 3l-2 3" /><path d="M9 13v-2" /><path d="M15 11v2" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Jeffrey-ljf'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页 | Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E-about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于 | About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档 | Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索 | Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%8A%80%E6%9C%AF%E9%93%BE%E6%8E%A5-links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>技术链接 | Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://jeffrey-ljf.github.io/en/" >English</option>
+                                
+                                    <option value="https://jeffrey-ljf.github.io/" selected>中文</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#adc">ADC</a></li>
+    <li><a href="#rbg">RBG</a></li>
+    <li><a href="#rs485">rs485</a></li>
+    <li><a href="#串口重定向">串口重定向</a></li>
+    <li><a href="#esp">ESP</a></li>
+    <li><a href="#key">Key</a></li>
+    <li><a href="#adc-open">ADC Open</a></li>
+    <li><a href="#dma">DMA</a></li>
+    <li><a href="#gpio">GPIO</a></li>
+    <li><a href="#usart">USART</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/code/" >
+                Code
+            </a>
+        
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/" >
+                物联网
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E6%BA%90%E7%A0%81/">物联网开发板源码</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            STM32F103RCT6 IO电路作用分析
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+
+    <footer class="article-time">
+
+    
+    <span class="post-author">作者：刘俊丰</span>
+   
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-03-6</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 14 分钟
+                </time>
+            </div>
+        
+
+          
+
+            
+        <div id="viewCount">
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+            <time class="article-time--reading">
+                
+                <span id="vercount_value_page_pv">loading... </span>次
+            </time>
+        </div>
+
+
+
+    </footer>
+    
+
+
+
+
+
+
+
+
+
+
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <hr>
+<h2 id="adc">ADC
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">#include <span class="p">&lt;</span><span class="nt">adc.h</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">#include &#34;power.h&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 电流检测时运放放大倍数
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">#define BIG_V 5
+</span></span><span class="line"><span class="cl">#define SAMPLE_RES 0.4
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 切换ADC通道
+</span></span><span class="line"><span class="cl"> * @param hadc  ： ADC句柄
+</span></span><span class="line"><span class="cl"> * @param Channel ：通道 ADC_CHANNEL_0 - ADC_CHANNEL_17
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void changeChannel(ADC_HandleTypeDef* hadc,uint32_t Channel)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    ADC_ChannelConfTypeDef sConfig = {0};
+</span></span><span class="line"><span class="cl">    sConfig.Channel = Channel;
+</span></span><span class="line"><span class="cl">    sConfig.Rank = ADC_REGULAR_RANK_1;
+</span></span><span class="line"><span class="cl">    sConfig.SamplingTime = ADC_SAMPLETIME_7CYCLES_5;
+</span></span><span class="line"><span class="cl">    if (HAL_ADC_ConfigChannel(hadc, <span class="err">&amp;</span>sConfig) != HAL_OK)
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        Error_Handler();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 获取输入电压值 ,单位V
+</span></span><span class="line"><span class="cl"> * 备注 ： 由于未加电压跟随器，所以做了补偿值 0.05 *2
+</span></span><span class="line"><span class="cl"> * @return
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">float getVoltage(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    uint32_t adc=0;
+</span></span><span class="line"><span class="cl">    changeChannel(<span class="ni">&amp;hadc1,ADC_CHANNEL_11);</span>
+</span></span><span class="line"><span class="cl">    HAL_Delay(1);
+</span></span><span class="line"><span class="cl">    HAL_ADC_Start(<span class="ni">&amp;hadc1);</span>
+</span></span><span class="line"><span class="cl">    HAL_ADC_PollForConversion(<span class="ni">&amp;hadc1,100);</span>
+</span></span><span class="line"><span class="cl">    if (HAL_IS_BIT_SET(HAL_ADC_GetState(<span class="err">&amp;</span>hadc1),HAL_ADC_STATE_REG_EOC)){
+</span></span><span class="line"><span class="cl">        adc = HAL_ADC_GetValue(<span class="ni">&amp;hadc1);</span>
+</span></span><span class="line"><span class="cl">        return ( (adc*3.3) / (float )4096 + 0.05) *2 ;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 采集电流值
+</span></span><span class="line"><span class="cl"> * @return ：采集的电流值，单位mA
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">uint32_t getCurr(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    uint32_t adc=0;
+</span></span><span class="line"><span class="cl">    float v1,v2,curr;
+</span></span><span class="line"><span class="cl">    changeChannel(<span class="ni">&amp;hadc1,ADC_CHANNEL_12);</span>
+</span></span><span class="line"><span class="cl">    HAL_Delay(1);
+</span></span><span class="line"><span class="cl">    HAL_ADC_Start(<span class="ni">&amp;hadc1);</span>
+</span></span><span class="line"><span class="cl">    HAL_ADC_PollForConversion(<span class="ni">&amp;hadc1,100);</span>
+</span></span><span class="line"><span class="cl">    adc = HAL_ADC_GetValue(<span class="ni">&amp;hadc1);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    v1 = (adc*3.3) / (float )4096;
+</span></span><span class="line"><span class="cl">    //计算未放大的电压值
+</span></span><span class="line"><span class="cl">    v2 = v1/BIG_V;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    curr = v2/SAMPLE_RES;
+</span></span><span class="line"><span class="cl">    return curr*1000;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="rbg">RBG
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">bool rgbFlag=false;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">RGB_t rgb;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 设置RGB颜色
+</span></span><span class="line"><span class="cl"> * @param rPWM ： 红色的配比  0-4999
+</span></span><span class="line"><span class="cl"> * @param gPWM ： 绿色的配比  0-4999
+</span></span><span class="line"><span class="cl"> * @param bPWM ： 蓝色的配比  0-4999
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void setRGBColor(uint32_t rPWM,uint32_t gPWM,uint32_t bPWM)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    setPWMPulse(<span class="ni">&amp;htim2,TIM_CHANNEL_2,rPWM);</span>
+</span></span><span class="line"><span class="cl">    setPWMPulse(<span class="ni">&amp;htim3,TIM_CHANNEL_2,gPWM);</span>
+</span></span><span class="line"><span class="cl">    setPWMPulse(<span class="ni">&amp;htim3,TIM_CHANNEL_1,bPWM);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    rgb.r = rPWM;
+</span></span><span class="line"><span class="cl">    rgb.g = gPWM;
+</span></span><span class="line"><span class="cl">    rgb.b = bPWM;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 呼吸灯循环执行
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void breathingLamp(void){
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    static uint32_t count=0;
+</span></span><span class="line"><span class="cl">    static bool flag=true;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (!rgbFlag){
+</span></span><span class="line"><span class="cl">        return;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    if (flag){
+</span></span><span class="line"><span class="cl">        count=count+20;
+</span></span><span class="line"><span class="cl">    } else{
+</span></span><span class="line"><span class="cl">        count=count-20;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    if (4500==count)
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        flag=false;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    if (0==count)
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        flag=true;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    setRGBColor(count,count,count);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 初始化rgb
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void rgbInit(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    HAL_TIM_PWM_Start(<span class="ni">&amp;htim3,TIM_CHANNEL_1);</span>
+</span></span><span class="line"><span class="cl">    HAL_TIM_PWM_Start(<span class="ni">&amp;htim3,TIM_CHANNEL_2);</span>
+</span></span><span class="line"><span class="cl">    HAL_TIM_PWM_Start(<span class="ni">&amp;htim2,TIM_CHANNEL_2);</span>
+</span></span><span class="line"><span class="cl">    //关闭RGB
+</span></span><span class="line"><span class="cl">    setRGBColor(0,0,0);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 打开呼吸灯
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void onBreathingLamp(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    HAL_TIM_Base_Start_IT(<span class="ni">&amp;htim5);</span>
+</span></span><span class="line"><span class="cl">    rgbFlag=true;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 关闭呼吸灯
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void offBreathingLamp(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    rgbFlag=false;
+</span></span><span class="line"><span class="cl">    HAL_TIM_Base_Stop_IT(<span class="ni">&amp;htim5);</span>
+</span></span><span class="line"><span class="cl">    setRGBColor(0,0,0);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 远程控制RGB调色
+</span></span><span class="line"><span class="cl"> * @param pJson
+</span></span><span class="line"><span class="cl"> *  * {
+</span></span><span class="line"><span class="cl">        &#34;r&#34;:1000,
+</span></span><span class="line"><span class="cl">        &#34;g&#34;:2000,
+</span></span><span class="line"><span class="cl">        &#34;b&#34;:3000,
+</span></span><span class="line"><span class="cl">        &#34;num&#34;:0
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void mqttCtlRGB(cJSON *pJson) {
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (cJSON_GetObjectItem(pJson, &#34;r&#34;)==NULL){
+</span></span><span class="line"><span class="cl">        return;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    if (cJSON_GetObjectItem(pJson, &#34;g&#34;)==NULL){
+</span></span><span class="line"><span class="cl">        return;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    if (cJSON_GetObjectItem(pJson, &#34;b&#34;)==NULL){
+</span></span><span class="line"><span class="cl">        return;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    uint32_t r = cJSON_GetObjectItem(pJson, &#34;r&#34;)-&gt;valueint;
+</span></span><span class="line"><span class="cl">    uint32_t g = cJSON_GetObjectItem(pJson, &#34;g&#34;)-&gt;valueint;
+</span></span><span class="line"><span class="cl">    uint32_t b = cJSON_GetObjectItem(pJson, &#34;b&#34;)-&gt;valueint;
+</span></span><span class="line"><span class="cl">    setRGBColor(r,g,b);
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="rs485">rs485
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">uint8_t recv[200]={0};
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 485发送函数
+</span></span><span class="line"><span class="cl"> * @param data ：要发送的数据指针
+</span></span><span class="line"><span class="cl"> * @param len ： 要发送的数据长度
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void send_485(uint8_t *data,uint32_t len)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    HAL_GPIO_WritePin(SELECT_485_GPIO_Port,SELECT_485_Pin,GPIO_PIN_SET);
+</span></span><span class="line"><span class="cl">    delay_ms(5);
+</span></span><span class="line"><span class="cl">    HAL_UART_Transmit(<span class="ni">&amp;huart3,data,len,500);</span>
+</span></span><span class="line"><span class="cl">    HAL_GPIO_WritePin(SELECT_485_GPIO_Port,SELECT_485_Pin,GPIO_PIN_RESET);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * rs485初始化
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void rs485Init(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    HAL_GPIO_WritePin(SELECT_485_GPIO_Port,SELECT_485_Pin,GPIO_PIN_RESET);
+</span></span><span class="line"><span class="cl">    HAL_UARTEx_ReceiveToIdle_DMA(<span class="ni">&amp;huart3,recv,sizeof(recv));</span>
+</span></span><span class="line"><span class="cl">    __HAL_DMA_DISABLE_IT(<span class="ni">&amp;hdma_usart3_rx,DMA_IT_HT);</span>
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 485接收函数
+</span></span><span class="line"><span class="cl"> * @param Size ： 接收到数据的实际长度
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void rs485Recv(uint16_t Size)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    printf_uart1(&#34;recv = %s\r\n&#34;,recv);
+</span></span><span class="line"><span class="cl">    printf_uart1(&#34;Size = %d\r\n&#34;,Size);
+</span></span><span class="line"><span class="cl">    memset(recv,0,sizeof (recv));
+</span></span><span class="line"><span class="cl">    rs485Init();
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="串口重定向">串口重定向
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">void printf_uart1(char *format,...){
+</span></span><span class="line"><span class="cl">    uint8_t buffer[1000];
+</span></span><span class="line"><span class="cl">    va_list arg;
+</span></span><span class="line"><span class="cl">    va_start(arg, format);
+</span></span><span class="line"><span class="cl">    vsnprintf(buffer, sizeof(buffer), format, arg);
+</span></span><span class="line"><span class="cl">    va_end(arg);
+</span></span><span class="line"><span class="cl">    for (int i = 0; i<span class="p">&lt;</span> <span class="nt">strlen</span><span class="err">(</span><span class="na">buffer</span><span class="err">);</span> <span class="err">++</span><span class="na">i</span><span class="err">)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="na">HAL_UART_Transmit</span><span class="err">(&amp;</span><span class="na">huart1</span><span class="err">,</span>  <span class="err">&amp;</span><span class="na">buffer</span><span class="err">[</span><span class="na">i</span><span class="err">],</span> <span class="na">1</span><span class="err">,</span><span class="na">100</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="na">void</span> <span class="na">printf_uart2</span><span class="err">(</span><span class="na">char</span> <span class="err">*</span><span class="na">format</span><span class="err">,...){</span>
+</span></span><span class="line"><span class="cl">    <span class="na">uint8_t</span> <span class="na">buffer</span><span class="err">[</span><span class="na">1000</span><span class="err">];</span>
+</span></span><span class="line"><span class="cl">    <span class="na">va_list</span> <span class="na">arg</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">va_start</span><span class="err">(</span><span class="na">arg</span><span class="err">,</span> <span class="na">format</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="na">vsnprintf</span><span class="err">(</span><span class="na">buffer</span><span class="err">,</span> <span class="na">sizeof</span><span class="err">(</span><span class="na">buffer</span><span class="err">),</span> <span class="na">format</span><span class="err">,</span> <span class="na">arg</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="na">va_end</span><span class="err">(</span><span class="na">arg</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="na">for</span> <span class="err">(</span><span class="na">int</span> <span class="na">i </span><span class="o">=</span> <span class="s">0;</span> <span class="na">i</span><span class="err">&lt;</span> <span class="na">strlen</span><span class="err">(</span><span class="na">buffer</span><span class="err">);</span> <span class="err">++</span><span class="na">i</span><span class="err">)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="na">HAL_UART_Transmit</span><span class="err">(&amp;</span><span class="na">huart2</span><span class="err">,</span>  <span class="err">&amp;</span><span class="na">buffer</span><span class="err">[</span><span class="na">i</span><span class="err">],</span> <span class="na">1</span><span class="err">,</span><span class="na">500</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="na">void</span> <span class="na">printf_uart3</span><span class="err">(</span><span class="na">char</span> <span class="err">*</span><span class="na">format</span><span class="err">,...){</span>
+</span></span><span class="line"><span class="cl">    <span class="na">uint8_t</span> <span class="na">buffer</span><span class="err">[</span><span class="na">1000</span><span class="err">];</span>
+</span></span><span class="line"><span class="cl">    <span class="na">va_list</span> <span class="na">arg</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">va_start</span><span class="err">(</span><span class="na">arg</span><span class="err">,</span> <span class="na">format</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="na">vsnprintf</span><span class="err">(</span><span class="na">buffer</span><span class="err">,</span> <span class="na">sizeof</span><span class="err">(</span><span class="na">buffer</span><span class="err">),</span> <span class="na">format</span><span class="err">,</span> <span class="na">arg</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="na">va_end</span><span class="err">(</span><span class="na">arg</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="na">for</span> <span class="err">(</span><span class="na">int</span> <span class="na">i </span><span class="o">=</span> <span class="s">0;</span> <span class="na">i</span><span class="err">&lt;</span> <span class="na">strlen</span><span class="err">(</span><span class="na">buffer</span><span class="err">);</span> <span class="err">++</span><span class="na">i</span><span class="err">)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="na">HAL_UART_Transmit</span><span class="err">(&amp;</span><span class="na">huart3</span><span class="err">,</span>  <span class="err">&amp;</span><span class="na">buffer</span><span class="err">[</span><span class="na">i</span><span class="err">],</span> <span class="na">1</span><span class="err">,</span><span class="na">100</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="esp">ESP
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">uint8_t espRecvBuf[1000];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">bool mqttIpFlag=false;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 执行AT指令。执行错误重启模块
+</span></span><span class="line"><span class="cl"> * @param cmd ： 要执行的AT命令指针
+</span></span><span class="line"><span class="cl"> * @return ： 执行成功 ： true   执行失败： false
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">bool exeATCmd(uint8_t *cmd)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    printf_uart2(cmd);
+</span></span><span class="line"><span class="cl">    delay_ms(1000);
+</span></span><span class="line"><span class="cl">    getRecvBuf(2);
+</span></span><span class="line"><span class="cl">    if(strstr(netCmd.buf,&#34;OK&#34;)==NULL){
+</span></span><span class="line"><span class="cl">        printf_uart2(AT_RST);
+</span></span><span class="line"><span class="cl">        delay_ms(2000);
+</span></span><span class="line"><span class="cl">        //再次设置进入串口接收
+</span></span><span class="line"><span class="cl">        esp01sRecvMode();
+</span></span><span class="line"><span class="cl">        return false;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    return true;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 进入配网模式
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void enterAirkiss(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    if (getKeyFlag()){
+</span></span><span class="line"><span class="cl">        //查询是否处在AT命令模式
+</span></span><span class="line"><span class="cl">        printf_uart2(AT_);
+</span></span><span class="line"><span class="cl">        delay_ms(1000);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        //判断是否处在AT命令，如果不在则退出透传模式
+</span></span><span class="line"><span class="cl">        getRecvBuf(2);
+</span></span><span class="line"><span class="cl">        if(strstr(netCmd.buf,&#34;OK&#34;)==NULL){
+</span></span><span class="line"><span class="cl">            printf_uart2(EXIT_PASS);
+</span></span><span class="line"><span class="cl">            delay_ms(2000);
+</span></span><span class="line"><span class="cl">            esp01sRecvMode();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        //执行配网第1条指令
+</span></span><span class="line"><span class="cl">        if (!exeATCmd(AT_NET1)){
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        //执行配网第2条指令
+</span></span><span class="line"><span class="cl">        if (!exeATCmd(AT_NET2)){
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        //执行配网第3条指令
+</span></span><span class="line"><span class="cl">        if (!exeATCmd(AT_NET3)){
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        /**
+</span></span><span class="line"><span class="cl">         * 进入配网模式整个流程正确执行
+</span></span><span class="line"><span class="cl">         */
+</span></span><span class="line"><span class="cl">        printf_uart1(&#34;打开呼吸灯\r\n&#34;);
+</span></span><span class="line"><span class="cl">        onBreathingLamp();
+</span></span><span class="line"><span class="cl">        cleanKeyFlag();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 设置mqtt服务器ip
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void setMqttIp(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    static uint8_t count=0;
+</span></span><span class="line"><span class="cl">    uint8_t mqtt_at[60];
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (!mqttIpFlag){
+</span></span><span class="line"><span class="cl">        //查询是否处在AT命令模式
+</span></span><span class="line"><span class="cl">        printf_uart2(AT_);
+</span></span><span class="line"><span class="cl">        delay_ms(1000);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        //判断是否处在AT命令，如果不在则退出透传模式
+</span></span><span class="line"><span class="cl">        getRecvBuf(2);
+</span></span><span class="line"><span class="cl">        if(strstr((const char *)netCmd.buf,&#34;OK&#34;)==NULL){
+</span></span><span class="line"><span class="cl">            printf_uart2(EXIT_PASS);
+</span></span><span class="line"><span class="cl">            delay_ms(2000);
+</span></span><span class="line"><span class="cl">            esp01sRecvMode();
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        printf_uart1(&#34;EXIT_PASS！&#34;);
+</span></span><span class="line"><span class="cl">        printf_uart2(AT_CIPSTA);
+</span></span><span class="line"><span class="cl">        delay_ms(1000);
+</span></span><span class="line"><span class="cl">        getRecvBuf(2);
+</span></span><span class="line"><span class="cl">        if(strstr((const char *)netCmd.buf,&#34;OK&#34;)!=NULL){
+</span></span><span class="line"><span class="cl">            //没有连接到路由器
+</span></span><span class="line"><span class="cl">            if(strstr((const char *)netCmd.buf,&#34;0.0.0.0&#34;)!=NULL){
+</span></span><span class="line"><span class="cl">                count++;
+</span></span><span class="line"><span class="cl">                if (count&gt;10){
+</span></span><span class="line"><span class="cl">                    count=0;
+</span></span><span class="line"><span class="cl">                    printf_uart2(AT_RST);
+</span></span><span class="line"><span class="cl">                    delay_ms(2000);
+</span></span><span class="line"><span class="cl">                    //再次设置进入串口接收
+</span></span><span class="line"><span class="cl">                    esp01sRecvMode();
+</span></span><span class="line"><span class="cl">                }
+</span></span><span class="line"><span class="cl">                return;
+</span></span><span class="line"><span class="cl">            }
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        //执行设置mqtt服务器第1条指令
+</span></span><span class="line"><span class="cl">        if (!exeATCmd((uint8_t *)AT_MQTT1)){
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        //执行设置mqtt服务器第2条指令
+</span></span><span class="line"><span class="cl">        if (!exeATCmd((uint8_t *)AT_MQTT2)){
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        //执行设置mqtt服务器第3条指令
+</span></span><span class="line"><span class="cl">        sprintf((char *)mqtt_at,AT_MQTT3,MQTT_HOST);
+</span></span><span class="line"><span class="cl">        if (!exeATCmd(mqtt_at)){
+</span></span><span class="line"><span class="cl">            return;
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">        mqttIpFlag=true;
+</span></span><span class="line"><span class="cl">        printf_uart2(AT_RST);
+</span></span><span class="line"><span class="cl">        delay_ms(2000);
+</span></span><span class="line"><span class="cl">        //再次设置进入串口接收
+</span></span><span class="line"><span class="cl">        esp01sRecvMode();
+</span></span><span class="line"><span class="cl">        //这里获取到ip即使在配网模式应该也退出，关闭呼吸灯
+</span></span><span class="line"><span class="cl">        offBreathingLamp();
+</span></span><span class="line"><span class="cl">        printf_uart1(&#34;mqtt服务器设置成功\r\n&#34;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 获取串口接收不定长度数据
+</span></span><span class="line"><span class="cl"> * @param loop ： 如果数据还在接收中，这里循环几次判断
+</span></span><span class="line"><span class="cl"> * @param buf ： 获取到的数据buf,由调用方传入
+</span></span><span class="line"><span class="cl"> * @param size ： buf长度
+</span></span><span class="line"><span class="cl"> * @return
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">uint32_t getRecvBuf(uint32_t loop)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    uint32_t len=0;
+</span></span><span class="line"><span class="cl">    uint32_t count=0;
+</span></span><span class="line"><span class="cl">    memset(netCmd.buf,0,sizeof(netCmd.buf));
+</span></span><span class="line"><span class="cl">    netCmd.len=0;
+</span></span><span class="line"><span class="cl">    for (int i = 0; i <span class="p">&lt;</span> <span class="nt">loop</span><span class="err">;</span> <span class="err">++</span><span class="na">i</span><span class="err">)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="na">if</span> <span class="err">(</span><span class="na">hdma_usart2_rx</span><span class="err">.</span><span class="na">Instance-</span><span class="p">&gt;</span>CNDTR<span class="p">&lt;</span><span class="nt">sizeof</span><span class="err">(</span><span class="na">espRecvBuf</span><span class="err">)){</span>
+</span></span><span class="line"><span class="cl">            <span class="na">count </span><span class="o">=</span> <span class="s">hdma_usart2_rx.Instance-</span><span class="p">&gt;</span>CNDTR;
+</span></span><span class="line"><span class="cl">            delay_ms(30);
+</span></span><span class="line"><span class="cl">            if (hdma_usart2_rx.Instance-&gt;CNDTR==count){
+</span></span><span class="line"><span class="cl">                len = sizeof(espRecvBuf) - count;
+</span></span><span class="line"><span class="cl">                for (int j = 0; j <span class="p">&lt;</span> <span class="nt">len</span><span class="err">;</span> <span class="err">++</span><span class="na">j</span><span class="err">)</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="na">netCmd</span><span class="err">.</span><span class="na">buf</span><span class="err">[</span><span class="na">j</span><span class="err">]</span> <span class="err">=</span> <span class="na">espRecvBuf</span><span class="err">[</span><span class="na">j</span><span class="err">];</span>
+</span></span><span class="line"><span class="cl">                <span class="err">}</span>
+</span></span><span class="line"><span class="cl">                <span class="na">printf_uart1</span><span class="err">(&#34;</span><span class="na">buf </span><span class="o">=</span> <span class="s">%s\r\n&#34;,netCmd.buf);</span>
+</span></span><span class="line"><span class="cl">                <span class="na">esp01sRecvMode</span><span class="err">();</span>
+</span></span><span class="line"><span class="cl">                <span class="na">netCmd</span><span class="err">.</span><span class="na">len</span><span class="o">=</span><span class="s">len;</span>
+</span></span><span class="line"><span class="cl">                <span class="na">return</span> <span class="na">len</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">            <span class="err">}</span>
+</span></span><span class="line"><span class="cl">        <span class="err">}</span>
+</span></span><span class="line"><span class="cl">    <span class="err">}</span>
+</span></span><span class="line"><span class="cl">    <span class="na">return</span> <span class="na">0</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">/**</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*</span> <span class="na">模块at命令返回处理</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*</span> <span class="err">@</span><span class="na">return</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*/</span>
+</span></span><span class="line"><span class="cl"><span class="na">bool</span> <span class="na">espCmdProcess</span><span class="err">(</span><span class="na">void</span><span class="err">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="na">if</span> <span class="err">(</span><span class="na">strstr</span><span class="err">(</span><span class="na">netCmd</span><span class="err">.</span><span class="na">buf</span><span class="err">,&#34;</span><span class="na">smartconfig</span> <span class="na">connected</span> <span class="na">wifi</span><span class="err">&#34;)!=</span><span class="na">NULL</span><span class="err">){</span>
+</span></span><span class="line"><span class="cl">        <span class="na">printf_uart1</span><span class="err">(&#34;</span><span class="na">自动配网成功</span><span class="err">！&#34;);</span>
+</span></span><span class="line"><span class="cl">        <span class="na">offBreathingLamp</span><span class="err">();</span>
+</span></span><span class="line"><span class="cl">        <span class="na">software_reset</span><span class="err">();</span>
+</span></span><span class="line"><span class="cl">        <span class="na">return</span> <span class="na">true</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="err">}</span>
+</span></span><span class="line"><span class="cl">    <span class="na">return</span> <span class="na">false</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">/**</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*</span> <span class="na">esp01s总循环函数</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*/</span>
+</span></span><span class="line"><span class="cl"><span class="na">void</span> <span class="na">loopEsp01s</span><span class="err">(</span><span class="na">void</span><span class="err">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">//</span><span class="na">循环调用配网函数</span>
+</span></span><span class="line"><span class="cl">    <span class="na">enterAirkiss</span><span class="err">();</span>
+</span></span><span class="line"><span class="cl">    <span class="err">//</span><span class="na">设置mqtt服务器IP</span>
+</span></span><span class="line"><span class="cl">    <span class="na">setMqttIp</span><span class="err">();</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">/**</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*</span> <span class="na">注册循环执行函数</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*/</span>
+</span></span><span class="line"><span class="cl"><span class="na">void</span> <span class="na">registerLoop</span><span class="err">(</span><span class="na">void</span><span class="err">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="na">LoopFunc_t</span> <span class="na">loopFunc</span><span class="err">;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">loopFunc</span><span class="err">.</span><span class="na">LoopCallBack</span><span class="o">=</span><span class="s">loopEsp01s;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">strcpy</span><span class="err">(</span><span class="na">loopFunc</span><span class="err">.</span><span class="na">funcName</span><span class="err">,&#34;</span><span class="na">loopEsp01s</span><span class="err">&#34;);</span>
+</span></span><span class="line"><span class="cl">    <span class="na">registerLoopCallBack</span><span class="err">(</span><span class="na">loopFunc</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">/**</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*</span> <span class="na">esp01s初始化</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*/</span>
+</span></span><span class="line"><span class="cl"><span class="na">void</span> <span class="na">esp01sInit</span><span class="err">(</span><span class="na">void</span><span class="err">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="na">esp01sRecvMode</span><span class="err">();</span>
+</span></span><span class="line"><span class="cl">    <span class="na">registerLoop</span><span class="err">();</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">/**</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*</span> <span class="na">esp01s接收模式设置</span>
+</span></span><span class="line"><span class="cl"> <span class="err">*/</span>
+</span></span><span class="line"><span class="cl"><span class="na">void</span> <span class="na">esp01sRecvMode</span><span class="err">(</span><span class="na">void</span><span class="err">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">{</span>
+</span></span><span class="line"><span class="cl">    <span class="na">__HAL_DMA_DISABLE</span><span class="err">(&amp;</span><span class="na">hdma_usart2_rx</span><span class="err">);</span>
+</span></span><span class="line"><span class="cl">    <span class="na">hdma_usart2_rx</span><span class="err">.</span><span class="na">Instance-</span><span class="p">&gt;</span>CNDTR=sizeof(espRecvBuf);
+</span></span><span class="line"><span class="cl">    UART_Start_Receive_DMA(<span class="ni">&amp;huart2,espRecvBuf,sizeof(espRecvBuf));</span>
+</span></span><span class="line"><span class="cl">    memset(espRecvBuf,0,sizeof(espRecvBuf));
+</span></span><span class="line"><span class="cl">    __HAL_DMA_ENABLE(<span class="ni">&amp;hdma_usart2_rx);</span>
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="key">Key
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">volatile bool keyFlag=false;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 获取长按事件状态
+</span></span><span class="line"><span class="cl"> * @return
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">bool getKeyFlag(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    return keyFlag;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 清除长按标志
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void cleanKeyFlag(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    keyFlag=false;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 定时器中断3s
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void keyEvent(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    if (!keyFlag){
+</span></span><span class="line"><span class="cl">        keyFlag=true;
+</span></span><span class="line"><span class="cl">        setRGBColor(500,500,500);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    HAL_TIM_Base_Stop_IT(<span class="ni">&amp;htim4);</span>
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl"> * 按键中断
+</span></span><span class="line"><span class="cl"> */
+</span></span><span class="line"><span class="cl">void keyProcess(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    //按键按下，下降沿触发
+</span></span><span class="line"><span class="cl">    if (HAL_GPIO_ReadPin(KEY_GPIO_Port,KEY_Pin)==0)
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">        __HAL_TIM_CLEAR_FLAG(<span class="err">&amp;</span>htim4, TIM_SR_UIF);
+</span></span><span class="line"><span class="cl">        htim4.Instance-&gt;CNT=0;
+</span></span><span class="line"><span class="cl">        HAL_TIM_Base_Start_IT(<span class="ni">&amp;htim4);</span>
+</span></span><span class="line"><span class="cl">    } else{
+</span></span><span class="line"><span class="cl">        HAL_TIM_Base_Stop_IT(<span class="ni">&amp;htim4);</span>
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="adc-open">ADC Open
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">hadc1.Instance = ADC1;
+</span></span><span class="line"><span class="cl">  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
+</span></span><span class="line"><span class="cl">  hadc1.Init.ContinuousConvMode = DISABLE;
+</span></span><span class="line"><span class="cl">  hadc1.Init.DiscontinuousConvMode = DISABLE;
+</span></span><span class="line"><span class="cl">  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+</span></span><span class="line"><span class="cl">  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+</span></span><span class="line"><span class="cl">  hadc1.Init.NbrOfConversion = 1;
+</span></span><span class="line"><span class="cl">  if (HAL_ADC_Init(<span class="err">&amp;</span>hadc1) != HAL_OK)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">    Error_Handler();
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">  /** Configure Regular Channel
+</span></span><span class="line"><span class="cl">  */
+</span></span><span class="line"><span class="cl">  sConfig.Channel = ADC_CHANNEL_11;
+</span></span><span class="line"><span class="cl">  sConfig.Rank = ADC_REGULAR_RANK_1;
+</span></span><span class="line"><span class="cl">  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+</span></span><span class="line"><span class="cl">  if (HAL_ADC_ConfigChannel(<span class="err">&amp;</span>hadc1, <span class="err">&amp;</span>sConfig) != HAL_OK)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">    Error_Handler();
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN ADC1_Init 2 */
+</span></span><span class="line"><span class="cl">  /* USER CODE END ADC1_Init 2 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  GPIO_InitTypeDef GPIO_InitStruct = {0};
+</span></span><span class="line"><span class="cl">  if(adcHandle-&gt;Instance==ADC1)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN ADC1_MspInit 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END ADC1_MspInit 0 */
+</span></span><span class="line"><span class="cl">    /* ADC1 clock enable */
+</span></span><span class="line"><span class="cl">    __HAL_RCC_ADC1_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    __HAL_RCC_GPIOC_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">    /**ADC1 GPIO Configuration
+</span></span><span class="line"><span class="cl">    PC1     ------&gt; ADC1_IN11
+</span></span><span class="line"><span class="cl">    PC2     ------&gt; ADC1_IN12
+</span></span><span class="line"><span class="cl">    */
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+</span></span><span class="line"><span class="cl">    HAL_GPIO_Init(GPIOC, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN ADC1_MspInit 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END ADC1_MspInit 1 */
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  if(adcHandle-&gt;Instance==ADC1)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN ADC1_MspDeInit 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END ADC1_MspDeInit 0 */
+</span></span><span class="line"><span class="cl">    /* Peripheral clock disable */
+</span></span><span class="line"><span class="cl">    __HAL_RCC_ADC1_CLK_DISABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**ADC1 GPIO Configuration
+</span></span><span class="line"><span class="cl">    PC1     ------&gt; ADC1_IN11
+</span></span><span class="line"><span class="cl">    PC2     ------&gt; ADC1_IN12
+</span></span><span class="line"><span class="cl">    */
+</span></span><span class="line"><span class="cl">    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_1|GPIO_PIN_2);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN ADC1_MspDeInit 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END ADC1_MspDeInit 1 */
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="dma">DMA
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">void MX_DMA_Init(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* DMA controller clock enable */
+</span></span><span class="line"><span class="cl">  __HAL_RCC_DMA1_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* DMA interrupt init */
+</span></span><span class="line"><span class="cl">  /* DMA1_Channel3_IRQn interrupt configuration */
+</span></span><span class="line"><span class="cl">  HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
+</span></span><span class="line"><span class="cl">  HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
+</span></span><span class="line"><span class="cl">  /* DMA1_Channel6_IRQn interrupt configuration */
+</span></span><span class="line"><span class="cl">  HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 0, 0);
+</span></span><span class="line"><span class="cl">  HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="gpio">GPIO
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">void MX_GPIO_Init(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  GPIO_InitTypeDef GPIO_InitStruct = {0};
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* GPIO Ports Clock Enable */
+</span></span><span class="line"><span class="cl">  __HAL_RCC_GPIOD_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">  __HAL_RCC_GPIOC_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">  __HAL_RCC_GPIOA_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">  __HAL_RCC_GPIOB_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /*Configure GPIO pin Output Level */
+</span></span><span class="line"><span class="cl">  HAL_GPIO_WritePin(SELECT_485_GPIO_Port, SELECT_485_Pin, GPIO_PIN_RESET);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /*Configure GPIO pin Output Level */
+</span></span><span class="line"><span class="cl">  HAL_GPIO_WritePin(JD_PIN_GPIO_Port, JD_PIN_Pin, GPIO_PIN_RESET);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /*Configure GPIO pin : PtPin */
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Pin = KEY_Pin;
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Pull = GPIO_NOPULL;
+</span></span><span class="line"><span class="cl">  HAL_GPIO_Init(KEY_GPIO_Port, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /*Configure GPIO pin : PtPin */
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Pin = SELECT_485_Pin;
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Pull = GPIO_NOPULL;
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+</span></span><span class="line"><span class="cl">  HAL_GPIO_Init(SELECT_485_GPIO_Port, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /*Configure GPIO pin : PtPin */
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Pin = JD_PIN_Pin;
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Pull = GPIO_NOPULL;
+</span></span><span class="line"><span class="cl">  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+</span></span><span class="line"><span class="cl">  HAL_GPIO_Init(JD_PIN_GPIO_Port, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* EXTI interrupt init*/
+</span></span><span class="line"><span class="cl">  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+</span></span><span class="line"><span class="cl">  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="usart">USART
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">#include &#34;stdio.h&#34;
+</span></span><span class="line"><span class="cl">#ifdef __GNUC__
+</span></span><span class="line"><span class="cl">#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+</span></span><span class="line"><span class="cl">#else
+</span></span><span class="line"><span class="cl">#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+</span></span><span class="line"><span class="cl">#endif
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PUTCHAR_PROTOTYPE
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">    HAL_UART_Transmit(<span class="err">&amp;</span>huart1,(uint8_t *)<span class="ni">&amp;ch,1,0xFFFF);</span>//阻塞方式打印,串口1
+</span></span><span class="line"><span class="cl">    return ch;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/* USER CODE END 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">UART_HandleTypeDef huart1;
+</span></span><span class="line"><span class="cl">UART_HandleTypeDef huart2;
+</span></span><span class="line"><span class="cl">UART_HandleTypeDef huart3;
+</span></span><span class="line"><span class="cl">DMA_HandleTypeDef hdma_usart2_rx;
+</span></span><span class="line"><span class="cl">DMA_HandleTypeDef hdma_usart3_rx;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/* USART1 init function */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">void MX_USART1_UART_Init(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART1_Init 0 */
+</span></span><span class="line"><span class="cl">    // 设置buffer缓存 ??0，这样一有数据就发 ? ，不然会等到缓存满或有回车换行符才发 ??
+</span></span><span class="line"><span class="cl">    setvbuf(stdout, NULL, _IONBF, 0) ;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART1_Init 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART1_Init 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART1_Init 1 */
+</span></span><span class="line"><span class="cl">  huart1.Instance = USART1;
+</span></span><span class="line"><span class="cl">  huart1.Init.BaudRate = 115200;
+</span></span><span class="line"><span class="cl">  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+</span></span><span class="line"><span class="cl">  huart1.Init.StopBits = UART_STOPBITS_1;
+</span></span><span class="line"><span class="cl">  huart1.Init.Parity = UART_PARITY_NONE;
+</span></span><span class="line"><span class="cl">  huart1.Init.Mode = UART_MODE_TX_RX;
+</span></span><span class="line"><span class="cl">  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+</span></span><span class="line"><span class="cl">  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+</span></span><span class="line"><span class="cl">  if (HAL_UART_Init(<span class="err">&amp;</span>huart1) != HAL_OK)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">    Error_Handler();
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART1_Init 2 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART1_Init 2 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">/* USART2 init function */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">void MX_USART2_UART_Init(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART2_Init 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART2_Init 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART2_Init 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART2_Init 1 */
+</span></span><span class="line"><span class="cl">  huart2.Instance = USART2;
+</span></span><span class="line"><span class="cl">  huart2.Init.BaudRate = 115200;
+</span></span><span class="line"><span class="cl">  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+</span></span><span class="line"><span class="cl">  huart2.Init.StopBits = UART_STOPBITS_1;
+</span></span><span class="line"><span class="cl">  huart2.Init.Parity = UART_PARITY_NONE;
+</span></span><span class="line"><span class="cl">  huart2.Init.Mode = UART_MODE_TX_RX;
+</span></span><span class="line"><span class="cl">  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+</span></span><span class="line"><span class="cl">  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+</span></span><span class="line"><span class="cl">  if (HAL_UART_Init(<span class="err">&amp;</span>huart2) != HAL_OK)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">    Error_Handler();
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART2_Init 2 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART2_Init 2 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">/* USART3 init function */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">void MX_USART3_UART_Init(void)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART3_Init 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART3_Init 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART3_Init 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART3_Init 1 */
+</span></span><span class="line"><span class="cl">  huart3.Instance = USART3;
+</span></span><span class="line"><span class="cl">  huart3.Init.BaudRate = 9600;
+</span></span><span class="line"><span class="cl">  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+</span></span><span class="line"><span class="cl">  huart3.Init.StopBits = UART_STOPBITS_1;
+</span></span><span class="line"><span class="cl">  huart3.Init.Parity = UART_PARITY_NONE;
+</span></span><span class="line"><span class="cl">  huart3.Init.Mode = UART_MODE_TX_RX;
+</span></span><span class="line"><span class="cl">  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+</span></span><span class="line"><span class="cl">  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+</span></span><span class="line"><span class="cl">  if (HAL_UART_Init(<span class="err">&amp;</span>huart3) != HAL_OK)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">    Error_Handler();
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART3_Init 2 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART3_Init 2 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  GPIO_InitTypeDef GPIO_InitStruct = {0};
+</span></span><span class="line"><span class="cl">  if(uartHandle-&gt;Instance==USART1)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART1_MspInit 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART1_MspInit 0 */
+</span></span><span class="line"><span class="cl">    /* USART1 clock enable */
+</span></span><span class="line"><span class="cl">    __HAL_RCC_USART1_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    __HAL_RCC_GPIOA_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">    /**USART1 GPIO Configuration
+</span></span><span class="line"><span class="cl">    PA9     ------&gt; USART1_TX
+</span></span><span class="line"><span class="cl">    PA10     ------&gt; USART1_RX
+</span></span><span class="line"><span class="cl">    */
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pin = GPIO_PIN_9;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+</span></span><span class="line"><span class="cl">    HAL_GPIO_Init(GPIOA, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pin = GPIO_PIN_10;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pull = GPIO_NOPULL;
+</span></span><span class="line"><span class="cl">    HAL_GPIO_Init(GPIOA, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART1_MspInit 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART1_MspInit 1 */
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">  else if(uartHandle-&gt;Instance==USART2)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART2_MspInit 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART2_MspInit 0 */
+</span></span><span class="line"><span class="cl">    /* USART2 clock enable */
+</span></span><span class="line"><span class="cl">    __HAL_RCC_USART2_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    __HAL_RCC_GPIOA_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">    /**USART2 GPIO Configuration
+</span></span><span class="line"><span class="cl">    PA2     ------&gt; USART2_TX
+</span></span><span class="line"><span class="cl">    PA3     ------&gt; USART2_RX
+</span></span><span class="line"><span class="cl">    */
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pin = GPIO_PIN_2;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+</span></span><span class="line"><span class="cl">    HAL_GPIO_Init(GPIOA, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pin = GPIO_PIN_3;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pull = GPIO_NOPULL;
+</span></span><span class="line"><span class="cl">    HAL_GPIO_Init(GPIOA, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /* USART2 DMA Init */
+</span></span><span class="line"><span class="cl">    /* USART2_RX Init */
+</span></span><span class="line"><span class="cl">    hdma_usart2_rx.Instance = DMA1_Channel6;
+</span></span><span class="line"><span class="cl">    hdma_usart2_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+</span></span><span class="line"><span class="cl">    hdma_usart2_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+</span></span><span class="line"><span class="cl">    hdma_usart2_rx.Init.MemInc = DMA_MINC_ENABLE;
+</span></span><span class="line"><span class="cl">    hdma_usart2_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+</span></span><span class="line"><span class="cl">    hdma_usart2_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+</span></span><span class="line"><span class="cl">    hdma_usart2_rx.Init.Mode = DMA_NORMAL;
+</span></span><span class="line"><span class="cl">    hdma_usart2_rx.Init.Priority = DMA_PRIORITY_LOW;
+</span></span><span class="line"><span class="cl">    if (HAL_DMA_Init(<span class="err">&amp;</span>hdma_usart2_rx) != HAL_OK)
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">      Error_Handler();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart2_rx);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /* USART2 interrupt Init */
+</span></span><span class="line"><span class="cl">    HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+</span></span><span class="line"><span class="cl">    HAL_NVIC_EnableIRQ(USART2_IRQn);
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART2_MspInit 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART2_MspInit 1 */
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">  else if(uartHandle-&gt;Instance==USART3)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART3_MspInit 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART3_MspInit 0 */
+</span></span><span class="line"><span class="cl">    /* USART3 clock enable */
+</span></span><span class="line"><span class="cl">    __HAL_RCC_USART3_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    __HAL_RCC_GPIOB_CLK_ENABLE();
+</span></span><span class="line"><span class="cl">    /**USART3 GPIO Configuration
+</span></span><span class="line"><span class="cl">    PB10     ------&gt; USART3_TX
+</span></span><span class="line"><span class="cl">    PB11     ------&gt; USART3_RX
+</span></span><span class="line"><span class="cl">    */
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pin = GPIO_PIN_10;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+</span></span><span class="line"><span class="cl">    HAL_GPIO_Init(GPIOB, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pin = GPIO_PIN_11;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+</span></span><span class="line"><span class="cl">    GPIO_InitStruct.Pull = GPIO_NOPULL;
+</span></span><span class="line"><span class="cl">    HAL_GPIO_Init(GPIOB, <span class="ni">&amp;GPIO_InitStruct);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /* USART3 DMA Init */
+</span></span><span class="line"><span class="cl">    /* USART3_RX Init */
+</span></span><span class="line"><span class="cl">    hdma_usart3_rx.Instance = DMA1_Channel3;
+</span></span><span class="line"><span class="cl">    hdma_usart3_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;
+</span></span><span class="line"><span class="cl">    hdma_usart3_rx.Init.PeriphInc = DMA_PINC_DISABLE;
+</span></span><span class="line"><span class="cl">    hdma_usart3_rx.Init.MemInc = DMA_MINC_ENABLE;
+</span></span><span class="line"><span class="cl">    hdma_usart3_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+</span></span><span class="line"><span class="cl">    hdma_usart3_rx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+</span></span><span class="line"><span class="cl">    hdma_usart3_rx.Init.Mode = DMA_NORMAL;
+</span></span><span class="line"><span class="cl">    hdma_usart3_rx.Init.Priority = DMA_PRIORITY_LOW;
+</span></span><span class="line"><span class="cl">    if (HAL_DMA_Init(<span class="err">&amp;</span>hdma_usart3_rx) != HAL_OK)
+</span></span><span class="line"><span class="cl">    {
+</span></span><span class="line"><span class="cl">      Error_Handler();
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    __HAL_LINKDMA(uartHandle,hdmarx,hdma_usart3_rx);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /* USART3 interrupt Init */
+</span></span><span class="line"><span class="cl">    HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
+</span></span><span class="line"><span class="cl">    HAL_NVIC_EnableIRQ(USART3_IRQn);
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART3_MspInit 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART3_MspInit 1 */
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  if(uartHandle-&gt;Instance==USART1)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART1_MspDeInit 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART1_MspDeInit 0 */
+</span></span><span class="line"><span class="cl">    /* Peripheral clock disable */
+</span></span><span class="line"><span class="cl">    __HAL_RCC_USART1_CLK_DISABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**USART1 GPIO Configuration
+</span></span><span class="line"><span class="cl">    PA9     ------&gt; USART1_TX
+</span></span><span class="line"><span class="cl">    PA10     ------&gt; USART1_RX
+</span></span><span class="line"><span class="cl">    */
+</span></span><span class="line"><span class="cl">    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9|GPIO_PIN_10);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART1_MspDeInit 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART1_MspDeInit 1 */
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">  else if(uartHandle-&gt;Instance==USART2)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART2_MspDeInit 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART2_MspDeInit 0 */
+</span></span><span class="line"><span class="cl">    /* Peripheral clock disable */
+</span></span><span class="line"><span class="cl">    __HAL_RCC_USART2_CLK_DISABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**USART2 GPIO Configuration
+</span></span><span class="line"><span class="cl">    PA2     ------&gt; USART2_TX
+</span></span><span class="line"><span class="cl">    PA3     ------&gt; USART2_RX
+</span></span><span class="line"><span class="cl">    */
+</span></span><span class="line"><span class="cl">    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2|GPIO_PIN_3);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /* USART2 DMA DeInit */
+</span></span><span class="line"><span class="cl">    HAL_DMA_DeInit(uartHandle-&gt;hdmarx);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /* USART2 interrupt Deinit */
+</span></span><span class="line"><span class="cl">    HAL_NVIC_DisableIRQ(USART2_IRQn);
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART2_MspDeInit 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART2_MspDeInit 1 */
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">  else if(uartHandle-&gt;Instance==USART3)
+</span></span><span class="line"><span class="cl">  {
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART3_MspDeInit 0 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART3_MspDeInit 0 */
+</span></span><span class="line"><span class="cl">    /* Peripheral clock disable */
+</span></span><span class="line"><span class="cl">    __HAL_RCC_USART3_CLK_DISABLE();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**USART3 GPIO Configuration
+</span></span><span class="line"><span class="cl">    PB10     ------&gt; USART3_TX
+</span></span><span class="line"><span class="cl">    PB11     ------&gt; USART3_RX
+</span></span><span class="line"><span class="cl">    */
+</span></span><span class="line"><span class="cl">    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_10|GPIO_PIN_11);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /* USART3 DMA DeInit */
+</span></span><span class="line"><span class="cl">    HAL_DMA_DeInit(uartHandle-&gt;hdmarx);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /* USART3 interrupt Deinit */
+</span></span><span class="line"><span class="cl">    HAL_NVIC_DisableIRQ(USART3_IRQn);
+</span></span><span class="line"><span class="cl">  /* USER CODE BEGIN USART3_MspDeInit 1 */
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  /* USER CODE END USART3_MspDeInit 1 */
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+        
+            <a href="/tags/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/">智能家居</a>
+        
+            <a href="/tags/code/">Code</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/python%E4%B8%B2%E5%8F%A3%E5%8A%A9%E6%89%8B%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD1/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Python串口助手基础功能(1)</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E7%89%A9%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%9D%E4%BD%93%E9%AA%8C/%E6%B5%B7%E6%8A%A5.abba1d777a762c1323c6343340cbcafe_hu_ea043cb9f0982f04.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 物联网开发板初体验"
+                        
+                        data-hash="md5-q7odd3p2LBMjxjQzQMvK/g==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">物联网开发板初体验</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2026 Jeffrey-刘俊丰
+    </section>
+    
+    <section class="powerby">
+        
+            希望这一个开始，将是永恒的初心 <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+
+
+
+<script>
+
+const cssPath = "https://jeffrey-ljf.github.io/waifu/waifu.css"
+const tipsJsonPath = "https://jeffrey-ljf.github.io/waifu/waifu-tips.json"
+const live2d_path = "https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/";
+
+
+
+
+
+function loadExternalResource(url, type) {
+	return new Promise((resolve, reject) => {
+		let tag;
+
+		if (type === "css") {
+			tag = document.createElement("link");
+			tag.rel = "stylesheet";
+			tag.href = url;
+		}
+		else if (type === "js") {
+			tag = document.createElement("script");
+			tag.src = url;
+		}
+		if (tag) {
+			tag.onload = () => resolve(url);
+			tag.onerror = () => reject(url);
+			document.head.appendChild(tag);
+		}
+	});
+}
+
+
+if (screen.width >= 768) {
+	Promise.all([
+		loadExternalResource(cssPath, "css"),
+		loadExternalResource(live2d_path + "live2d.min.js", "js"),
+		loadExternalResource(live2d_path + "waifu-tips.js", "js")
+	]).then(() => {
+		
+		initWidget({
+			waifuPath: tipsJsonPath,
+                         
+			
+			cdnPath: "https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/",
+			tools: ["hitokoto", "asteroids", "switch-model", "switch-texture", "photo", "info", "quit"]
+		});
+	});
+}
+
+console.log(`
+  く__,.ヘヽ.        /  ,ー､ 〉
+           ＼ ', !-─‐-i  /  /´
+           ／｀ｰ'       L/／｀ヽ､
+         /   ／,   /|   ,   ,       ',
+       ｲ   / /-‐/  ｉ  L_ ﾊ ヽ!   i
+        ﾚ ﾍ 7ｲ｀ﾄ   ﾚ'ｧ-ﾄ､!ハ|   |
+          !,/7 '0'     ´0iソ|    |
+          |.从"    _     ,,,, / |./    |
+          ﾚ'| i＞.､,,__  _,.イ /   .i   |
+            ﾚ'| | / k_７_/ﾚ'ヽ,  ﾊ.  |
+              | |/i 〈|/   i  ,.ﾍ |  i  |
+             .|/ /  ｉ：    ﾍ!    ＼  |
+              kヽ>､ﾊ    _,.ﾍ､    /､!
+              !'〈//｀Ｔ´', ＼ ｀'7'ｰr'
+              ﾚ'ヽL__|___i,___,ンﾚ|ノ
+                  ﾄ-,/  |___./
+                  'ｰ'    !_,.:
+`);
+</script>
+
+
+
+<div id="particles-js"></div>
+
+<script src=https://jeffrey-ljf.github.io/background/particles.min.js></script>
+<script>
+  particlesJS.load('particles-js', "https://jeffrey-ljf.github.io/background/particlesjs-config.json", function() {
+    console.log('particles.js loaded - callback');
+  });
+</script>
+
+<style>
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;         
+  min-height: 100vh;    
+  z-index: -1;
+  pointer-events: none; 
+  overflow: hidden;     
+}
+ 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+	
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
+
+
+    </body>
+</html>
